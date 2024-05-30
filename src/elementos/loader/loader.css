@@ -1,0 +1,35 @@
+.loaderContainer {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.loaderImagenContainer {
+  margin-top: 120px;
+}
+
+.loaderImagenContainer.chico {
+  margin-top: 0px;
+}
+
+.loaderImagenContainer.chico .loaderImagen {
+  width: 50px;
+}
+
+.loaderImagen {
+  width: 100px;
+  animation: rotation 2s infinite linear;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loaderTexto {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
