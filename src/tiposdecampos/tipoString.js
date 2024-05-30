@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import Etiqueta from "../elementos/etiqueta/etiqueta";
 
 export default function TipoString(props) {
   const { placeholderSelct, regexSelct, etiquetaSelct, infoSelct } = props;
@@ -39,6 +40,7 @@ export default function TipoString(props) {
   return (
     <div>
       <label>{etiqueta}</label>
+      <Etiqueta etiqueta={etiquetaSelct} />
       <input
         type="text"
         ref={inputRef}
