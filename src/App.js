@@ -1,7 +1,6 @@
-import logo from "./logo.svg";
 import "./App.css";
-import TipoString from "./campos/tipoString";
-import TipoCheckbox from "./campos/tipoCheckbox";
+import TipoString from "./tiposdecampos/tipoString";
+import TipoCheckbox from "./tiposdecampos/tipoCheckbox";
 
 function App() {
   return (
@@ -9,7 +8,7 @@ function App() {
       <TipoString
         placeholderSelct="Nombre"
         regexSelct="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
-        etiquetaSelct="escribí tu nombre"
+        etiquetaSelct="escribí tu "
         infoSelct=""
       />
       <TipoCheckbox
