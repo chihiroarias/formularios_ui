@@ -5,15 +5,17 @@ import { selectItems } from "../../../Utils/selectUtils.js";
 import { useState } from "react";
 import TipoCampoFijo from "../TipoCampoFijo/TipoCampoFijo.jsx";
 import DatoInput from "../DatoInput/DatoInput.jsx";
+import CreateSelect from "../selects/createSelect.jsx";
+import CreateString from "../DatoInput/createString.jsx";
 
 function TipoCampo() {
   const [selectedType, setSelectedType] = useState("");
   const renderComponent = () => {
     switch (selectedType) {
       case "dato":
-        return <DatoInput />;
+        return <CreateString />;
       case "select":
-        return <Select />;
+        return <CreateSelect />;
       /* case 'seccion':
             return <Seccion />;
           case 'fecha':

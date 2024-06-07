@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import Label from "../Label/Label";
 
 const InputField = ({
   id,
@@ -26,13 +27,15 @@ const InputField = ({
   ];
 
   // Si el prop type no es un tipo válido será del tipo text por default
-  if (!validTypes.includes(type)) type = "text";
+  //if (!validTypes.includes(type)) type = "text";
 
   let stringInputClass =
     "input input-sm w-full text-gray-700 bg-white text-base border-gray-300 py-4 rounded box-shadow-none focus:outline-none focus:border-gray-500 disabled:bg-gray-200 disabled:border-gray-300 disabled:text-gray-600 disabled:font-medium";
 
   return (
     <div className="form-control">
+      <Label name={name} htmlFor={id ?? name} />
+      <br />
       <input
         id={id ?? name}
         name={name}
@@ -71,7 +74,7 @@ InputField.propTypes = {
 
 // specifies the default values for type prop
 InputField.defaultProps = {
-  type: "text",
+  type: "number",
   name: "input",
 };
 

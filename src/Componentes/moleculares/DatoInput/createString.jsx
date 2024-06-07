@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import InputField from "../../atomicos/InputField/InputField";
 import Label from "../../atomicos/Label/Label";
 import Button from "../../atomicos/Button/Button";
+import PeticionesGenerales from "../../peticionesGenerales/peticionesGenericas";
 export default function CreateString() {
   const [placeholder, setPlaceholder] = useState("");
   const [etiqueta, setEtiqueta] = useState("");
@@ -25,8 +26,9 @@ export default function CreateString() {
     const etiqueta = labelRef.current.value;
     const info = infoRef.current.value;
     const regex = regexRef.current.value;
-    const obl = oblRef.current.value;
+    const obl = oblRef.current.checked; // Cambiado a .checked para checkbox
     const type = typeRef.current.value;
+    console.log(type);
     const indice = indiceRef.current.value;
 
     // Guarda el componente generado en el estado
@@ -77,10 +79,10 @@ export default function CreateString() {
         />
       </div>
       <div>
-        <Label name={"Tipo de Dato"} htmlFor={"dato"} />
-        <select htmlFor="dato" ref={typeRef}>
+        <Label name={"Tipo de Dato"} htmlFor={"tipoDeDato"} />
+        <select htmlFor="tipoDeDato" ref={typeRef}>
           <option value="text">Texto</option>
-          <option value="number">Numero</option>
+          <option value="Number">Numero</option>
           <option value="date">Fecha</option>
           <option value="email">Email</option>
           <option value="tel">Telefono</option>
@@ -120,7 +122,7 @@ export default function CreateString() {
         </div>
         <Button type="submit" onClick={crearCampoString} text="Crear Campo" />
         <br />
-
+        <PeticionesGenerales />
         <br />
         <div>{campoString}</div>
       </div>

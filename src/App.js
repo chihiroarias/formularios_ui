@@ -5,39 +5,16 @@ import FormContainer from "./Componentes/atomicos/FormContainer/FormContainer.js
 import CreateString from "./Componentes/moleculares/DatoInput/createString.jsx";
 import CreateSelect from "./Componentes/moleculares/selects/createSelect.jsx";
 import Formulario from "./Componentes/organismos/Formulario/Formulario.jsx";
-//import Logo from "./Images/logo-qualis-horizontal-azul.png";
+import PeticionesGenerales from "./Componentes/peticionesGenerales/peticionesGenericas.jsx";
+import TipoCampo from "../src/Componentes/moleculares/TipoCampo/TipoCampo.jsx";
+import InputDate from "./Componentes/atomicos/Date/inputDate.js";
 
-// import TipoString from "./tiposdecampos/tipoString";
-// import TipoCheckbox from "./tiposdecampos/tipoCheckbox";
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <TipoString
-//         placeholderSelct="Nombre"
-//         regexSelct="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
-//         etiquetaSelct="escribí tu "
-//         infoSelct=""
-//       />
-//       <TipoCheckbox
-//         etiquetaSelct="¿Aceptas los términos?"
-//         infoSelct="Seleccione una opción"
-//         opciones={[
-//           { valor: "si", nombre: "Sí" },
-//           { valor: "no", nombre: "No" },
-//         ]}
-//       />
-//     </div>
-//   );
-// }
-
-/* <FormContainer>
-          <Formulario />
-      </FormContainer>* */
 function App() {
   return (
     <>
-      <CreateSelect />
+      <FormContainer>
+        <CreateSelect />
+      </FormContainer>
     </>
   );
 }
