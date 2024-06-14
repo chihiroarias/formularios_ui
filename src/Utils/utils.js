@@ -7,22 +7,48 @@ export function readFromLS(key) {
 export function storeInLS(key, data) {
   localStorage.setItem(key, data);
 }
-
-export function accessAPI(verb, endpoint, data, callbackSuccess, callbackFail) {
+export function accessAPI(
+  verb,
+  endpoint,
+  data,
+  callbackSuccess,
+  callbackFail,
+  file
+) {
   const url = process.env.REACT_APP_API_URL + "/" + endpoint;
   const accessToken = readFromLS(process.env.REACT_APP_LS_LOGIN_TOKEN);
-  var fetchConfig = {
+
+  let fetchConfig = {
     method: verb,
     headers: {
-      "accept-encoding": "gzip, deflate",
       Authorization: "Bearer " + accessToken,
-      "Content-Type": "application/json",
-      withCredentials: true,
     },
-    body: data,
   };
+
+  let dataParaEnviar;
+
+  // Si hay un archivo para enviar, genera el form data
+  if (file) {
+    let formData = new FormData();
+    formData.append("archivo", file);
+    if (data) {
+      // Se agregan al form data el resto de los campos del payload
+      let datosArray = Object.entries(data);
+      for (const [key, value] of datosArray) {
+        formData.append(key, value);
+      }
+    }
+    dataParaEnviar = formData;
+  } else if (data) {
+    // Si no hay archivos y es sólo data, se debe agregar el content-type adecuado en el header
+    fetchConfig.headers["Content-Type"] = "application/json";
+    fetchConfig.headers["accept-encoding"] = "gzip, deflate";
+    dataParaEnviar = JSON.stringify(data);
+  }
+  fetchConfig.body = dataParaEnviar;
+
   Promise.race([
-    // Generate two promies, one with the fecth and the other with the timeout
+    // Generate two promises, one with the fetch and the other with the timeout
     // the one that finishes first resolves
     fetch(url, fetchConfig),
     new Promise(function (resolve, reject) {
@@ -35,7 +61,9 @@ export function accessAPI(verb, endpoint, data, callbackSuccess, callbackFail) {
     .then((response) => {
       // When race resolves, it verifies the status of the API response
       // If it's 200 or 201, it was successful, then the success callback is run
-      if (response.status >= 200 && response.status < 300) {
+      if (response.status === 204) {
+        callbackSuccess();
+      } else if (response.status >= 200 && response.status < 300) {
         response.json().then((data) => {
           callbackSuccess(data);
         });
@@ -47,9 +75,10 @@ export function accessAPI(verb, endpoint, data, callbackSuccess, callbackFail) {
       }
     })
     .catch((e) => {
+      console.log(e);
       var response = {
         status: 500,
-        msg: [{ msg: "Error en la comunicación con la API", e }],
+        msg: "Ocurrió un error en la API",
       };
       callbackFail(response);
     });

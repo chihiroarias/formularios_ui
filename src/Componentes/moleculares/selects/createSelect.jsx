@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Select from "../../atomicos/Select/Select";
 import { accessAPI } from "../../../Utils/utils";
 
@@ -6,8 +6,6 @@ const CreateSelect = () => {
   const [selectName, setSelectName] = useState("");
   const [options, setOptions] = useState([{ name: "", value: "" }]);
   const [selectedValue, setSelectedValue] = useState("");
-
-  const [configSelect, setConfigSelect] = useState(null);
 
   const handleOptionChange = (index, event) => {
     const newOptions = [...options];
@@ -24,15 +22,25 @@ const CreateSelect = () => {
   };
 
   function createSelectPrecargado(options) {
+    const payload = {
+      selectName: selectName,
+      precargaSelects: options.map((option) => ({
+        name: option.name,
+        value: option.value || option.name, // Use name as value if value is empty
+      })),
+    };
+
     accessAPI(
       "POST",
       "admin/form/selectprecargado",
-      options,
+      payload,
       (response) => {
         console.log(response);
+        console.log(options);
       },
-      (response) => {
-        console.log(response);
+      (error) => {
+        console.log(error);
+        console.log(options);
       }
     );
   }
@@ -57,19 +65,31 @@ const CreateSelect = () => {
               value={option.name}
               onChange={(e) => handleOptionChange(index, e)}
             />
+            <input
+              type="text"
+              name="value"
+              placeholder={`Valor de la opción ${index + 1} (opcional)`}
+              value={option.value}
+              onChange={(e) => handleOptionChange(index, e)}
+            />
           </div>
         ))}
       </div>
       <button onClick={addOption}>Añadir opción</button>
-      <Select
-        selectName={selectName}
-        options={options}
-        onChange={handleSelectChange}
-        selectedValue={selectedValue}
-      />
+      <br />
       <button onClick={() => createSelectPrecargado(options)}>
         Crear Select
       </button>
+      <br />
+      <Select
+        selectName={selectName}
+        options={options.map((option) => ({
+          ...option,
+          value: option.value || option.name,
+        }))}
+        onChange={handleSelectChange}
+        selectedValue={selectedValue}
+      />
     </div>
   );
 };
