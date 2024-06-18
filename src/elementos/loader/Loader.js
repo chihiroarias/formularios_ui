@@ -1,5 +1,5 @@
-import loaderImagen from "../../images/loaderImagen.png";
-import loaderImagenBlanco from "../../images/loaderImagenBlanco.png";
+import loaderImagen from "../../elementos/Images/loaderImagen.png";
+import loaderImagenBlanco from "../../elementos/Images/loaderImagenBlanco.png";
 import "./loader.css";
 
 export default function Loader(props) {

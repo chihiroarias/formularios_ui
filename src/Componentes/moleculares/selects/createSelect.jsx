@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import Select from "../../atomicos/Select/Select";
 import { accessAPI } from "../../../Utils/utils";
+import InputField from "../../atomicos/InputField/InputField";
 
 const CreateSelect = () => {
   const [selectName, setSelectName] = useState("");
-  const [options, setOptions] = useState([{ name: "", value: "" }]);
+  const [options, setOptions] = useState([{ etiqueta: "", value: "" }]);
   const [selectedValue, setSelectedValue] = useState("");
 
   const handleOptionChange = (index, event) => {
@@ -14,7 +15,7 @@ const CreateSelect = () => {
   };
 
   const addOption = () => {
-    setOptions([...options, { name: "", value: "" }]);
+    setOptions([...options, { etiqueta: "", value: "" }]);
   };
 
   const handleSelectChange = (event) => {
@@ -25,8 +26,8 @@ const CreateSelect = () => {
     const payload = {
       selectName: selectName,
       precargaSelects: options.map((option) => ({
-        name: option.name,
-        value: option.value || option.name, // Use name as value if value is empty
+        name: option.etiqueta,
+        value: option.value || option.etiqueta, // Use etiqueta as value if value is empty
       })),
     };
 
@@ -58,14 +59,14 @@ const CreateSelect = () => {
         <label>Opciones</label>
         {options.map((option, index) => (
           <div key={index}>
-            <input
+            <InputField
               type="text"
-              name="name"
+              name="etiqueta"
               placeholder={`Nombre de la opción ${index + 1}`}
-              value={option.name}
+              value={option.etiqueta}
               onChange={(e) => handleOptionChange(index, e)}
             />
-            <input
+            <InputField
               type="text"
               name="value"
               placeholder={`Valor de la opción ${index + 1} (opcional)`}
@@ -82,10 +83,11 @@ const CreateSelect = () => {
       </button>
       <br />
       <Select
+        endpoint={"admin/norma"}
         selectName={selectName}
         options={options.map((option) => ({
           ...option,
-          value: option.value || option.name,
+          value: option.value || option.etiqueta,
         }))}
         onChange={handleSelectChange}
         selectedValue={selectedValue}

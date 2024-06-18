@@ -1,5 +1,6 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import { accessAPI } from "../../../Utils/utils";
 
 const Select = ({
   selectName,
@@ -10,8 +11,28 @@ const Select = ({
   validation,
   selectStyles,
   classes,
+  endpoint,
   ...props
 }) => {
+  const [optionsEndpoint, setOptionsEndpoint] = useState(null);
+
+  useEffect(() => {
+    if (endpoint) {
+      accessAPI(
+        "GET",
+        `${endpoint}`,
+        null,
+        (response) => {
+          setOptionsEndpoint(response);
+          console.log(response);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+  }, [endpoint]);
+
   return (
     <select
       className={`bg-white ${classes}`}
@@ -23,11 +44,17 @@ const Select = ({
       style={selectStyles}
       {...props}
     >
-      {options.map((option, index) => (
-        <option key={index} value={option.value}>
-          {option.name}
-        </option>
-      ))}
+      {optionsEndpoint
+        ? optionsEndpoint.map((option, index) => (
+            <option key={index} value={option.value}>
+              {option.etiqueta}
+            </option>
+          ))
+        : options.map((option, index) => (
+            <option key={index} value={option.value}>
+              {option.name}
+            </option>
+          ))}
     </select>
   );
 };
@@ -40,6 +67,7 @@ Select.propTypes = {
       value: PropTypes.string.isRequired,
     })
   ).isRequired,
+  endpoint: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   selectedValue: PropTypes.any,
   register: PropTypes.func,

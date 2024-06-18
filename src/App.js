@@ -4,6 +4,7 @@ import "./App.css";
 import FormContainer from "./Componentes/atomicos/FormContainer/FormContainer.jsx";
 import CreateString from "./Componentes/moleculares/DatoInput/createString.jsx";
 import CreateSelect from "./Componentes/moleculares/selects/createSelect.jsx";
+import Campo from "./Componentes/organismos/Campo/Campo.jsx";
 import Formulario from "./Componentes/organismos/Formulario/Formulario.jsx";
 //import Logo from "./Images/logo-qualis-horizontal-azul.png";
 
@@ -37,7 +38,16 @@ import Formulario from "./Componentes/organismos/Formulario/Formulario.jsx";
 function App() {
   return (
     <>
-      <CreateSelect />
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <Campo />
+      </div>
     </>
   );
 }
