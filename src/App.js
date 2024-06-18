@@ -38,7 +38,16 @@ import Formulario from "./Componentes/organismos/Formulario/Formulario.jsx";
 function App() {
   return (
     <>
-      <Campo />
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <Campo />
+      </div>
     </>
   );
 }
