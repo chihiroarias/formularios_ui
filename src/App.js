@@ -1,11 +1,7 @@
 import "./App.css";
 //import InputField from "./Componentes/atomicos/InputField/InputField.jsx";
 //import Label from "./Componentes/atomicos/Label/Label.jsx";
-import FormContainer from "./Componentes/atomicos/FormContainer/FormContainer.jsx";
-import CreateString from "./Componentes/moleculares/DatoInput/createString.jsx";
-import CreateSelect from "./Componentes/moleculares/selects/createSelect.jsx";
 import Campo from "./Componentes/organismos/Campo/Campo.jsx";
-import Formulario from "./Componentes/organismos/Formulario/Formulario.jsx";
 //import Logo from "./Images/logo-qualis-horizontal-azul.png";
 
 // import TipoString from "./tiposdecampos/tipoString";
