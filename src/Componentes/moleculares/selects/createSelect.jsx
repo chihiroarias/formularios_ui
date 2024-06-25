@@ -1,25 +1,19 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Select from "../../atomicos/Select/Select";
 import { accessAPI } from "../../../Utils/utils";
 import InputField from "../../atomicos/InputField/InputField";
 
 const CreateSelect = () => {
-  const [selectName, setSelectName] = useState("");
   const [options, setOptions] = useState([{ etiqueta: "", value: "" }]);
   const [selectedValue, setSelectedValue] = useState("");
-
-  // Estado para las opciones
-  const [opcionesDeMapeo, setOpcionesDeMapeo] = useState([]);
-  const [inputOpcionesDeMapeo, setInputOpcionesDeMapeo] = useState("");
-
   const [tipoSeleccionado, setTipoSeleccionado] = useState(null);
+  const [endpoint, setEndpoint] = useState("");
+  const [selectName, setSelectName] = useState("");
+  const [selectOptions, setSelectOptions] = useState([]);
+  const [payload, setPayload] = useState(null);
 
-  const endp = useRef();
   const tipoSelect = useRef();
-
-  const handleSelectNameChange = (event) => {
-    setSelectName(event.target.value);
-  };
+  const nombredelselect = useRef();
 
   const handleOptionChange = (index, event) => {
     const newOptions = [...options];
@@ -40,66 +34,72 @@ const CreateSelect = () => {
   };
 
   const createSelectPrecargado = () => {
-    const payload = {
-      selectName: selectName,
-      precargaSelects: options.map((option) => ({
-        name: option.etiqueta,
-        value: option.value || option.etiqueta, // Usa etiqueta como valor si value está vacío
-      })),
-    };
-
-    accessAPI(
-      "POST",
-      "admin/form/selectprecargado",
-      payload,
-      (response) => {
-        console.log(response);
-        console.log(options);
-      },
-      (error) => {
-        console.log(error);
-        console.log(options);
-      }
-    );
+    const stirngtopost = options
+      .map((optn) => `${optn.value} - ${optn.name || optn.etiqueta}`)
+      .join(" ; ");
+    console.log(stirngtopost);
+    setPayload({
+      precargaSelects: stirngtopost,
+      nombre: nombredelselect.current ? nombredelselect.current.value : "name",
+    });
   };
 
+  useEffect(() => {
+    if (payload) {
+      accessAPI(
+        "POST",
+        "admin/form/selectprecargado",
+        payload,
+        (response) => {
+          console.log(response);
+          console.log(options);
+        },
+        (error) => {
+          console.log(error);
+          console.log(options);
+        }
+      );
+    }
+  }, [payload]);
+
+  useEffect(() => {
+    if (tipoSeleccionado === "2" && endpoint) {
+      accessAPI(
+        "GET",
+        endpoint,
+        null,
+        (response) => {
+          setSelectOptions(response.data);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+  }, [tipoSeleccionado, endpoint]);
+
   const optionsForSelect = [
-    {
-      value: 1,
-      name: "Crear mi propio Select",
-    },
-    {
-      value: 2,
-      name: "Select precargado",
-    },
-    {
-      value: 3,
-      name: "Select anidado",
-    },
+    { value: "1", name: "Crear mi propio Select" },
+    { value: "2", name: "Select precargado" },
+    { value: "3", name: "Select anidado" },
   ];
 
   return (
-    <div>
-      <label htmlFor="selectName">Nombre del Select</label>
-      <input
-        type="text"
-        id="selectName"
-        value={selectName}
-        onChange={(e) => setSelectName(e.target.value)}
-      />
+    <>
       <div>
-        <label htmlFor="selecttipos">Tipos</label>
-        <Select
-          id="selecttipos"
-          name="selecttipos"
-          ref={tipoSelect}
-          options={optionsForSelect}
-          onChange={handleTipoSelectChange}
-        />
-      </div>
+        <br />
+        <div>
+          <label htmlFor="selecttipos">Tipos</label>
+          <Select
+            id="selecttipos"
+            selectName="selecttipos"
+            ref={tipoSelect}
+            options={optionsForSelect}
+            onChange={handleTipoSelectChange}
+          />
+        </div>
 
-      <div>
-        {tipoSeleccionado == 1 && (
+        {tipoSeleccionado === "1" && (
           <div>
             <label>Opciones</label>
             {options.map((option, index) => (
@@ -120,31 +120,44 @@ const CreateSelect = () => {
                 />
               </div>
             ))}
+            <button onClick={addOption}>Añadir opción</button>
           </div>
         )}
-      </div>
-      <InputField
-        text="text"
-        name="endpoint"
-        placeholder="Endpoint"
-        ref={endp}
-      />
-      <button onClick={addOption}>Añadir opción</button>
-      <br />
-      <button onClick={createSelectPrecargado}>Crear Select</button>
-      <br />
 
-      <Select
-        endpoint={endp.current?.value}
-        selectName={selectName}
-        options={options.map((option) => ({
-          ...option,
-          value: option.value || option.etiqueta,
-        }))}
-        onChange={handleSelectChange}
-        selectedValue={selectedValue}
-      />
-    </div>
+        {tipoSeleccionado === "2" && (
+          <InputField
+            type="text"
+            name="endpoint"
+            placeholder="Endpoint"
+            value={endpoint}
+            onChange={(e) => setEndpoint(e.target.value)}
+          />
+        )}
+
+        {tipoSeleccionado === "3" && <Select />}
+
+        <br />
+        <InputField
+          type="text"
+          name="nombredelselect"
+          placeholder="Nombre del Select"
+          value={selectName}
+          ref={nombredelselect}
+          onChange={(e) => setSelectName(e.target.value)}
+        />
+        <br />
+        <button onClick={createSelectPrecargado}>Crear Select</button>
+        <br />
+
+        <Select
+          selectName={selectName}
+          endpoint={endpoint}
+          options={tipoSeleccionado === "2" ? selectOptions : options}
+          onChange={handleSelectChange}
+          selectedValue={selectedValue}
+        />
+      </div>
+    </>
   );
 };
 
