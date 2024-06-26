@@ -7,7 +7,7 @@ import TipoCampoFijo from "../TipoCampoFijo/TipoCampoFijo.jsx";
 import DatoInput from "../DatoInput/DatoInput.jsx";
 import { accessAPI } from "../../../Utils/utils.js";
 import Loader from "../../../elementos/loader/Loader.js";
-import CreateSelect from "../selects/createSelect.jsx";
+import CreateSelect from "../selects/configureSelect.jsx";
 import CreateString from "../DatoInput/createString.jsx";
 import CreateDate from "../CampoDate/createDate.jsx";
 
