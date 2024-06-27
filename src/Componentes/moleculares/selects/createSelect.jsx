@@ -10,6 +10,7 @@ const CreateSelect = () => {
   const [selectName, setSelectName] = useState("");
   const [selectOptions, setSelectOptions] = useState([]);
   const [payload, setPayload] = useState(null);
+  const [ingresarEndpoint, setIngresEndpoint] = useState(false);
 
   const handleOptionChange = (index, event) => {
     const newOptions = [...options];
@@ -48,11 +49,11 @@ const CreateSelect = () => {
         },
         (error) => {
           console.log(error);
-          console.log(options);
         }
       );
     }
   }, [payload]);
+
 
   return (
     <>
@@ -66,14 +67,14 @@ const CreateSelect = () => {
               <InputField
                 type="text"
                 name="etiqueta"
-                placeholder={`Nombre de la opción ${index + 1}`}
+                placeholder={`Nombre ${index + 1}`}
                 value={option.etiqueta}
                 onChange={(e) => handleOptionChange(index, e)}
               />
               <InputField
                 type="text"
                 name="value"
-                placeholder={`Valor de la opción ${index + 1} (opcional)`}
+                placeholder={`Valor ${index + 1} (opcional)`}
                 value={option.value}
                 onChange={(e) => handleOptionChange(index, e)}
               />

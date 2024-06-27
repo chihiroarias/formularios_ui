@@ -2,12 +2,14 @@ import React, { useState, useRef, useEffect } from "react";
 import Select from "../../atomicos/Select/Select";
 import { accessAPI } from "../../../Utils/utils";
 
+import InputField from "../../atomicos/InputField/InputField";
 const SelectsExistentes = () => {
   const [options, setOptions] = useState([{ etiqueta: "", value: "" }]);
   const [selectedValue, setSelectedValue] = useState("");
   const [endpoint, setEndpoint] = useState("");
   const [selectName, setSelectName] = useState("");
   const [selectConfig, setSelectConfig] = useState(null);
+  const [ingresarEndpoint, setIngresEndpoint] = useState(false);
 
   const [idcompetente, setIdcompetente] = useState(null);
 
@@ -71,7 +73,39 @@ const SelectsExistentes = () => {
           </button>
           {selectConfig && <div>{selectConfig}</div>}
         </div>
-        <button>¿Desea ingresar otra precarga?</button>
+        <button
+          onClick={() => {
+            setIngresEndpoint(true);
+          }}
+        >
+          ¿Desea ingresar otra precarga?
+        </button>
+
+        {ingresarEndpoint && (
+          <div>
+            <InputField
+              type="text"
+              name="endpoint"
+              placeholder="Endpoint"
+              value={endpoint}
+              onChange={(e) => setEndpoint(e.target.value)}
+            />
+            <Select
+              selectName={"Endpoint"}
+              endpoint={endpoint}
+              onChange={handleSelectChange}
+              selectedValue={selectedValue}
+            />
+            <br />
+            <button
+              onClick={() => {
+                setIngresEndpoint(false);
+              }}
+            >
+              Cancelar
+            </button>
+          </div>
+        )}
       </div>
     </>
   );
