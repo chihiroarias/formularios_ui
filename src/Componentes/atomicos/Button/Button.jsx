@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
+import classNames from "classnames";
 
 const Button = ({
   icon,
   clickHandler,
-  size,
   type,
   color,
   text,
@@ -30,6 +30,9 @@ const Button = ({
   const toogleHover = () => {
     setHover(!hover);
   };
+  const btnClass = classNames({
+    btnStyle
+  })
 
   return (
     <>
@@ -39,11 +42,7 @@ const Button = ({
         onMouseLeave={toogleHover}
         onClick={clickHandler}
         type={type}
-        className={`btn gap-2 ${
-          size ? size : color
-        } ${roundedCorner} ${btnStyle} ${textColor} ${
-          block ? "btn-block" : ""
-        }`}
+        className={`btn ${roundedCorner} ${btnClass} ${textColor} ${ block ? "btn-block" : "" }`}
         {...props}
       >
         {icon} {text}
@@ -55,28 +54,18 @@ const Button = ({
 Button.propTypes = {
   icon: PropTypes.node,
   clickHandler: PropTypes.func,
-  size: PropTypes.oneOf(["btn-xs", "btn-sm", "btn-lg"]),
   type: PropTypes.string.isRequired,
-  color: PropTypes.oneOf(["red", "green", "blue"]).isRequired,
   text: PropTypes.string.isRequired,
-  block: PropTypes.bool,
-  roundedCorner: PropTypes.oneOf([
-    "rounded-none",
-    "rounded",
-    "rounded-md",
-    "rounded-lg",
-    "rounded-full",
-  ]),
+  block: PropTypes.bool,  
   btnStyle: PropTypes.string,
   textColor: PropTypes.string,
 };
 
 Button.defaultProps = {
   icon: null,
-  size: null,
   block: false,
   textColor: "text-white",
-  roundedCorner: "rounded-none",
+  
 };
 
 export default Button;

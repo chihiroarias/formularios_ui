@@ -1,38 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { properties } from '../../../Utils/utilitiesLabel';
 
-const Label = ({ name, forUsername, variant, color, difClass, ...props }) => {
+const Label = ({ 
+	labelForm, 
+	htmlFor, 
+	...props }) => {
 	return (
 		<label
-			htmlFor={forUsername}
-			className={
-				variant
-					? `${properties[variant].transform} 
-								${properties[variant].fontWeight} 
-								${properties[variant].size} 
-								${color ? `text-` + color : properties[variant].color}`
-					: `${difClass}`
-			}
+			style={{marginRight:'10px'}}
+			htmlFor={htmlFor}
 			{...props}
 		>
-			{name}
+			{labelForm}
 		</label>
 	);
 };
 
 Label.propTypes = {
-	name: PropTypes.string,
-	forUsername: PropTypes.string,
-	variant: PropTypes.string,
-	color: PropTypes.string,
-	fontWeight: PropTypes.string,
-	difClass: PropTypes.string,
+	labelForm: PropTypes.string,
+	htmlFor: PropTypes.string,
 };
 
 Label.defaultProps = {
-	name: 'Example Label Small',
-	forUsername: 'UserName',
+	labelForm: 'Example Label Small',
+	htmlFor: 'UserName',
 };
 
 export default Label;

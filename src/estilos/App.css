@@ -1,0 +1,287 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+/*Agregado por GR*/
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+:root {
+  --azulQualis: #56638a;
+  --rojoQualis: #cd2735;
+  --verdeQualis: #689b41;
+  --beigeQualis: #f7f6fb;
+  --amarilloQualis: #efa320;
+  --grisTextos: #aaaaaa;
+}
+
+body {
+  margin: 0;
+  height: 100%;
+  font-family: "Montserrat", sans-serif;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+/* Secciones */
+
+.seccion {
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Flex layout */
+
+.flexContainer {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
+}
+
+.vertical {
+  flex-direction: column;
+}
+
+.centrado {
+  align-self: center;
+}
+
+.izquierda {
+  justify-content: flex-start;
+}
+
+.inline {
+  display: inline;
+}
+
+.block {
+  display: block;
+}
+
+/* Text */
+
+h1 {
+  font-size: 1.3em;
+  font-weight: 400;
+  color: var(--azulQualis);
+}
+
+/* Elementos */
+
+.recuadro {
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #ffffff;
+}
+
+.recuadro .recuadroContent {
+  padding: 0px 50px;
+}
+
+.recuadro .blueSection {
+  margin-top: 15px;
+  background-color: #88bcec;
+  border-top: 1px solid #e5e5e5;
+  color: #ffffff;
+}
+
+.recuadro .blueSection .message {
+  color: #ffffff;
+}
+
+.recuadro .blueSection button {
+  border: 1px solid #ffffff;
+  color: #ffffff;
+}
+
+button {
+  padding: 8px 30px;
+  border-radius: 10px;
+  font-size: 1em;
+  margin: 15px 5px;
+  background-color: rgba(0, 0, 0, 0);
+  width: fit-content;
+  color: var(--azulQualis);
+  cursor: pointer;
+  outline: none;
+  border: 1px solid var(--azulQualis);
+}
+
+button.azul {
+  border: 1px solid var(--azulQualis);
+  color: var(--azulQualis);
+}
+
+button.verde {
+  border: 1px solid var(--verdeQualis);
+  color: var(--verdeQualis);
+}
+
+button.rojo {
+  border: 1px solid var(--rojoQualis);
+  color: var(--rojoQualis);
+}
+
+button.gris {
+  border: 1px solid var(--grisTextos);
+  color: var(--grisTextos);
+}
+
+button.blanco {
+  border: 1px solid #ffffff;
+  color: #ffffff;
+}
+
+button.relleno {
+  border: none;
+  background-color: var(--azulQualis);
+  color: white;
+  padding: 9px 45px;
+}
+
+button.relleno.azul {
+  background-color: var(--azulQualis);
+}
+
+button.relleno.rojo {
+  background-color: var(--rojoQualis);
+}
+
+button.relleno.verde {
+  background-color: var(--verdeQualis);
+}
+
+button.relleno.gris {
+  background-color: var(--grisTextos);
+}
+
+button:hover {
+  box-shadow: 2px 2px 6px 0px #bbbbbb;
+}
+
+button.texto:hover {
+  box-shadow: none;
+}
+
+button.texto {
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+button.confirm {
+  border: 1px solid #86c38c;
+  color: #86c38c;
+}
+
+button.noBorder {
+  border: none;
+}
+
+button.relleno.disabled {
+  background-color: var(--grisTextos);
+  color: white;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+button.cargando {
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.linkTexto {
+  cursor: pointer;
+  color: var(--grisTextos);
+}
+
+.message {
+  color: #88bcec;
+  font-size: 0.9em;
+  font-weight: 400;
+  margin-top: 20px;
+}
+
+.message.large {
+  font-size: 1.2em;
+}
+
+.divisor {
+  border-bottom: 1px solid var(--azulQualis);
+  width: 100%;
+}
+
+/* Genéricos  */
+
+.margenArriba {
+  margin-top: 40px;
+}
+
+.margenAbajo {
+  margin-bottom: 40px;
+}
+
+.azul {
+  color: var(--azulQualis);
+}
+
+.verde {
+  color: var(--verdeQualis);
+}
+
+.amarillo {
+  color: var(--amarilloQualis);
+}
+
+.gris {
+  color: var(--grisTextos);
+}
+
+.negrita {
+  font-weight: 600;
+}
+
+/* unvisited link */
+a:link,
+a:visited,
+a:hover,
+a:active {
+  text-decoration: none;
+  color: inherit;
+}

@@ -12,6 +12,7 @@ const Select = ({
   selectStyles,
   classes,
   endpoint,
+  error,
   ...props
 }) => {
   const [endpointParams, setEndpointParams] = useState("");
@@ -63,6 +64,53 @@ const Select = ({
         ? renderOptions(optionsEndpoint)
         : renderOptions(options)}
     </select>
+
+    <div>
+      <div style={{
+        //border: '1px solid red',
+        display: 'flex',
+        alignItems:'center',
+        justifyContent: 'space-between',
+        margin:'5px 0 5px 10px',
+        }}>
+        <select
+          className=" prettyInput centrado"
+          name={selectName}
+          id={selectName}
+          onChange={onChange}
+          value={selectedValue}
+          {...(register && { ...register(selectName, validation) })}
+          style={selectStyles}
+          {...props}>
+          {optionsEndpoint
+            ? optionsEndpoint.map((option, index) => (
+                <option key={index} value={option.value}>
+                  {option.etiqueta}
+                </option>
+              ))
+            : options.map((option, index) => (
+                <option key={index} value={option.value}>
+                  {option.name}
+                </option>
+              ))}
+        </select>
+        
+        </div>
+        <div>
+        {
+        error &&
+      <div style={{
+        //border: '1px solid red',
+        color: 'red',
+        display:'flex',
+        justifyContent: 'end',
+        fontSize: '0.75em'
+        }}>
+          {error}
+      </div>
+        }
+      </div>
+    </div>
   );
 };
 

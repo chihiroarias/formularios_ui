@@ -1,21 +1,27 @@
 import PropTypes from 'prop-types';
-//import { formDescription } from '../../../Utils/formDescriptionUtils.js';
-import Label from '../../atomicos/Label/Label.jsx';
-import InputField from '../../../Componentes/atomicos/InputField/InputField.jsx';
+//import CustomTextArea from '../CustomTextarea/CustomTextarea.jsx';
+import CustomTextArea from '../CustomTextArea/CustomTextArea';
 
-function FormDescription({ text, ...props }) {
-
+const FormDescription=({ description, setDescription })=> {
 	return (
-		<>
-		    <Label name={'Descripción'} />
-			<InputField type={'textarea'} />
-           
-		</>
-	);
-}
+		<div>
+			<CustomTextArea 
+			    name={'Description'} 
+				id={'description'}
+				htmlFor={'description'}
+				labelForm={'Descripción'} 
+				type={"textarea"} 
+				value={description}
+				onChange={(e) => setDescription(e.target.value)}/>
+		</div>
+		);
+	};
+	
+	
+	FormDescription.propTypes = {
+		CustomTextArea: PropTypes.string.isRequired,
+	};
+	
 
-FormDescription.propTypes = {
-	text: PropTypes.string.isRequired,
-};
 
 export default FormDescription;
