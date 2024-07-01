@@ -1,6 +1,6 @@
 // Read from LS
 export function readFromLS(key) {
-  localStorage.setItem("qualis", "gpjLHUxgWuXBC6UsxuMDavnQD");
+  localStorage.setItem("qualis", "RkyjwmG5CgnRCMn4hqabDAtmw");
   return localStorage.getItem(key);
 }
 
@@ -83,5 +83,3 @@ export function accessAPI(
       callbackFail(response);
     });
 }
-
-
