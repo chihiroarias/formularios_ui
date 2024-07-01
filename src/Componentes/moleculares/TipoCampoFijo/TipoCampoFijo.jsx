@@ -1,15 +1,12 @@
-import Label from "../../atomicos/Label/Label";
-import InputField from "../../atomicos/InputField/InputField";
-
+import CustomInputField from "../CustomInput/CustomInputField";
 
 
 function TipoCampoFijo() {
     return (
-        <div>
-            <Label name={'N° Índice'} />
-            <InputField type={'text'} />
-            <Label name={'Nombre campo'} />
-            <InputField type={'text'}/>
+        <div > 
+            <CustomInputField name={'indexCampo'} label={'Indexado'} type={'text'}/>   
+
+            <CustomInputField  label={'Nombre campo'} type={'text'}/>          
         </div>
     )
 }

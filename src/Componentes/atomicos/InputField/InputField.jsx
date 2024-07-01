@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 
+
 const InputField = ({
   id,
   name,
@@ -13,33 +14,33 @@ const InputField = ({
   obl,
   ...props
 }) => {
-  // if (type) type = type.trim().toLowerCase();
+ // if (type) type = type.trim().toLowerCase();
 
-  let validTypes = [
+  const validTypes = [
     "email",
     "number",
     "tel",
     "text",
-    "textarea",
     "url",
     "date",
+    "file",
+    "checkbox",
+    "radio",
   ];
 
   // Si el prop type no es un tipo válido será del tipo text por default
-  if (!validTypes.includes(type)) type = "text";
-
-  let stringInputClass =
-    "input input-sm w-full text-gray-700 bg-white text-base border-gray-300 py-4 rounded box-shadow-none focus:outline-none focus:border-gray-500 disabled:bg-gray-200 disabled:border-gray-300 disabled:text-gray-600 disabled:font-medium";
+  const inputType = validTypes.includes(type)? type : "text";
 
   return (
-    <div className="form-control">
+    <div >
       <input
-        id={id ?? name}
-        name={name}
-        type={type}
+        style={{fontFamily: "Montserrat"}}
+        id={id}
+        name={name??id}
+        type={inputType}
         onChange={onChange}
         placeholder={placeholder}
-        className={`input-field ${type} ${stringInputClass} ${hight}`}
+        className={`input-field ${type} ${hight}`}
         value={value}
         required={obl}
         {...(register && { ...register(name, validation) })}
@@ -55,10 +56,11 @@ InputField.propTypes = {
     "number",
     "tel",
     "text",
-    "textarea",
     "url",
     "date",
-  ]),
+    "file",
+    "checkbox",
+    "radio",]),
   placeholder: PropTypes.string,
   name: PropTypes.string,
   validation: PropTypes.object,
@@ -71,7 +73,6 @@ InputField.propTypes = {
 
 // specifies the default values for type prop
 InputField.defaultProps = {
-  type: "text",
   name: "input",
 };
 

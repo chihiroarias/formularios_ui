@@ -1,0 +1,78 @@
+.submitContainer {
+  justify-content: center;
+}
+
+.loaderBotonFormulario {
+  height: 18px;
+  margin-left: 10px;
+  animation: rotation 2s infinite linear;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+button.disabled {
+  cursor: not-allowed;
+}
+
+button.disabled:hover {
+  box-shadow: none;
+}
+
+form p {
+  color: var(--grisTextos);
+}
+
+.prettyInputContainer {
+  margin: 15px 0px;
+  width: 100%;
+  position: relative;
+}
+
+.prettyInput {
+  width: 100%;
+  display: block;
+  padding: 10px;
+  font-size: 1em;
+  color: var(--azulQualis);
+  border: 1px #aaaaaa solid;
+  border-radius: 10px;
+  box-shadow: inset 2px 2px 3px #eeeeee;
+}
+
+.prettyInputEtiquetaContainer {
+  width: 100%;
+}
+
+.prettyInputEtiqueta {
+  font-size: 0.8em;
+  font-weight: 700;
+  color: #aaaaaa;
+  margin-bottom: 5px;
+}
+
+input.error {
+  border: 1px solid var(--rojoQualis);
+}
+
+.prettyInput:focus {
+  outline: none;
+  border: 1px var(--azulQualis) solid;
+}
+
+.prettyInputContainer .mensajeError {
+  color: var(--rojoQualis);
+  font-weight: 600;
+}
+.container{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+
