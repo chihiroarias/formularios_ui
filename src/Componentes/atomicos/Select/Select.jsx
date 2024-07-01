@@ -4,7 +4,7 @@ import { accessAPI } from "../../../Utils/utils";
 
 const Select = ({
   selectName,
-  options,
+  options = [],
   onChange,
   selectedValue,
   register,
@@ -15,13 +15,20 @@ const Select = ({
   error,
   ...props
 }) => {
+  const [endpointParams, setEndpointParams] = useState("");
   const [optionsEndpoint, setOptionsEndpoint] = useState(null);
 
   useEffect(() => {
     if (endpoint) {
+      setEndpointParams(endpoint);
+    }
+  }, [endpoint]);
+
+  useEffect(() => {
+    if (endpointParams) {
       accessAPI(
         "GET",
-        `${endpoint}`,
+        endpointParams,
         null,
         (response) => {
           setOptionsEndpoint(response);
@@ -32,9 +39,32 @@ const Select = ({
         }
       );
     }
-  }, [endpoint]);
+  }, [endpointParams]);
+
+  const renderOptions = (opts) => {
+    return opts.map((option, index) => (
+      <option key={index} value={option.value}>
+        {option.name || option.etiqueta}
+      </option>
+    ));
+  };
 
   return (
+    <select
+      className={`bg-white ${classes}`}
+      name={selectName}
+      id={selectName}
+      onChange={onChange}
+      value={selectedValue}
+      {...(register && { ...register(selectName, validation) })}
+      style={selectStyles}
+      {...props}
+    >
+      {optionsEndpoint
+        ? renderOptions(optionsEndpoint)
+        : renderOptions(options)}
+    </select>
+
     <div>
       <div style={{
         //border: '1px solid red',
@@ -89,11 +119,11 @@ Select.propTypes = {
   options: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
-      value: PropTypes.string.isRequired,
+      value: PropTypes.string,
     })
-  ).isRequired,
+  ),
   endpoint: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
   selectedValue: PropTypes.any,
   register: PropTypes.func,
   validation: PropTypes.object,
