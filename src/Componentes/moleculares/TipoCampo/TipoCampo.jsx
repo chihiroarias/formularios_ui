@@ -1,49 +1,28 @@
 import Label from "../../atomicos/Label/Label";
-//import InputField from "../../atomicos/InputField/InputField";
 import Select from "../../atomicos/Select/Select.jsx";
-import { selectItems } from "../../../Utils/selectUtils.js";
-import { useEffect, useState } from "react";
-import TipoCampoFijo from "../TipoCampoFijo/TipoCampoFijo.jsx";
-import DatoInput from "../DatoInput/DatoInput.jsx";
-import { accessAPI } from "../../../Utils/utils.js";
-import Loader from "../../../elementos/loader/Loader.js";
+import { selectItemsCampo } from "../../../Utils/selectCampoUtils.js";
+import React, { useState } from "react";
 import CreateSelect from "../selects/createSelect.jsx";
-import CreateString from "../DatoInput/createString.jsx";
-import CreateDate from "../CampoDate/createDate.jsx";
+import CreateDato from "../CreateDato/CreateDato.jsx";
+//import CreateTextArea from "../../moleculares/CreateTextArea/CreateTextArea.jsx";
+//import Button from "../../atomicos/Button/Button";
 
-function TipoCampo() {
+function TipoCampo({addField, indice, setIndice}) {
+  
   const [selectedType, setSelectedType] = useState("");
-  const [loader, setLoader] = useState(true);
-  /*
-  const [tiposCampos, setTiposCampos] = useState();
-useEffect(() => {
-  accessAPI(
-    "GET",
-    "admin/Forms/obtenercampos",
-    null,
-    (response) => {
-      setTiposCampos(response.campoparaDropDown);
-      setLoader(false);
-    },
-    (error) => {
-      console.log(error);
-    }
-  );
-}, []);
-*/
+  
+  //const [loader, setLoader] = useState(true);
+
+
   const renderComponent = () => {
     switch (selectedType) {
-      case "dato":
-        return <CreateString />;
+      case "input":
+        return <CreateDato indice={indice} setIndice={setIndice} addField={addField} />;
       case "select":
-        return <CreateSelect />;
-      case "fecha":
-        return <CreateDate />;
-      /* case 'seccion':
-            return <Seccion />;
-          case 'checkbox':
-            return <Checkbox />;
-          case 'archivo':
+        return <CreateSelect indice={indice} setIndice={setIndice}  addField={addField} />;
+      //case 'checkbox':
+          //return <Checkbox />;
+       /*     case 'archivo':
             return <Archivo />;*/
       default:
         return null;
@@ -60,16 +39,25 @@ useEffect(() => {
   */
 
   return (
-    <div>
-      <Label name={"Tipo de Campo"} />
-      <Select
-        options={selectItems}
-        onChange={handleSelectChange}
-        selectName={"Tipo de Campo"}
-      />
-      <TipoCampoFijo />
-      <div>{renderComponent()}</div>
+    <div >
+      <div style={{
+      //border: '1px solid red',
+      display: 'flex',
+      alignItems:'center',
+      justifyContent: 'space-between',
+      margin:'5px 0 5px 10px',
+    }}>
+        <Label  htmlFor={'tipoCampo'} labelForm={"Tipo de Campo *"} />
+        <Select
+          id='tipoCampo'
+          options={selectItemsCampo}
+          onChange={handleSelectChange}
+          selectName={"Tipo de Campo"}
+        />
+      </div>
+      {renderComponent()}
     </div>
+    
   );
 }
 

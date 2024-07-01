@@ -3,13 +3,18 @@ import PropTypes from 'prop-types';
 const FormContainer = ({ children, logo }) => {
 	return (
 		<div id="formContainer" className="h-full">
-			<div style={{ paddingTop: '8vh', marginLeft: '5vh'}}>
-				<div className="flex pb-4">
+			<div style={{ 					
+					marginTop: '50px',
+					display: "flex",
+					justifyContent: "center", 
+					maxWidth: '600px',
+					}}>
+				{/* <div className="flex pb-4">
 					<img src={logo} alt="Imagen Logo" />{' '}
-				</div>
+				</div> */}
 				<div
-					className="mx-auto bg-white pt-5 px-8 pb-8"
-					style={{ maxWidth: '540px' }}
+					className="container-fluid"
+					style={{ backgroundColor: 'white' }}
 				>
 					{children}
 				</div>
