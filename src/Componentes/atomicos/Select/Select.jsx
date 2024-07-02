@@ -74,12 +74,12 @@ const Select = ({
             {optionsEndpoint
               ? optionsEndpoint.map((option, index) => (
                   <option key={index} value={option.value}>
-                    {option.etiqueta}
+                    {option.etiqueta || option.name}
                   </option>
                 ))
               : options.map((option, index) => (
                   <option key={index} value={option.value}>
-                    {option.name}
+                    {option.name || option.etiqueta}
                   </option>
                 ))}
           </select>
