@@ -2,7 +2,6 @@ import "./estilos/App.css";
 import "./estilos/formulario.css";
 import FormContainer from "./Componentes/atomicos/FormContainer/FormContainer.jsx";
 import Formulario from "./Componentes/organismos/Formulario/Formulario.jsx";
-//import ConfigureSelct from "../src/Componentes/moleculares/selects/configureSelect.jsx";
 function App() {
   return (
     <>
@@ -15,14 +14,15 @@ function App() {
          //  backgroundColor: "#f3f3",
          // fontFamily: "Poppins, sans-serif",
         }}
-      > <FormContainer>
-        <Formulario />        
-        </FormContainer>        
+      >
+        <FormContainer>
+          <Formulario />
+        </FormContainer>
+
       </div>
     </>
   );
 }
 
 export default App;
-
 

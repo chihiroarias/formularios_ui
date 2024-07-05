@@ -41,13 +41,6 @@ const Select = ({
     }
   }, [endpointParams]);
 
-  const renderOptions = (opts) => {
-    return opts.map((option, index) => (
-      <option key={index} value={option.value}>
-        {option.name || option.etiqueta}
-      </option>
-    ));
-  };
 
   return (
     <>
@@ -74,7 +67,9 @@ const Select = ({
             {optionsEndpoint
               ? optionsEndpoint.map((option, index) => (
                   <option key={index} value={option.value}>
+
                     {option.name || option.etiqueta}
+
                   </option>
                 ))
               : options.map((option, index) => (
@@ -122,21 +117,3 @@ Select.propTypes = {
 };
 
 export default Select;
-
-/*
-
-    <select
-      className={`bg-white ${classes}`}
-      name={selectName}
-      id={selectName}
-      onChange={onChange}
-      value={selectedValue}
-      {...(register && { ...register(selectName, validation) })}
-      style={selectStyles}
-      {...props}
-    >
-      {optionsEndpoint
-        ? renderOptions(optionsEndpoint)
-        : renderOptions(options)}
-    </select>
-*/
