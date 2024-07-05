@@ -4,6 +4,8 @@ import Button from "../../atomicos/Button/Button.jsx";
 import CustomInputField from "../CustomInputField/CustomInputField.jsx";
 import { selectDato } from "../../../Utils/selectDatoUtils.js";
 import Select from "../../atomicos/Select/Select.jsx";
+import ConfigureSelect from "../../moleculares/selects/configureSelect.jsx";
+import CreateSelect from "../selects/createSelect.jsx";
 //import CheckBox from "../../atomicos/Checkbox/Checkbox.jsx";
 
 
@@ -23,6 +25,9 @@ export default function CreateDato({addField, indice, setIndice}) {
     indexadoForm: '',
     type: '',
     agrupacionRadio:'',
+    selectName: '',
+    selectId:'',
+  
   });
 
   //Sección ERRORES
@@ -32,7 +37,13 @@ export default function CreateDato({addField, indice, setIndice}) {
   const [errorAgruparRadio, setErrorAgruparRadio]= useState('');
   const [errorIdCampo, setErrorIdCampo]= useState('');
   
-
+  const handleSelectCreate = (selectName,selectId) => {
+    setFieldData(fieldData => ({
+      ...fieldData,
+      selectName,
+      selectId
+    }));
+  };
 
   function validar(){
     let esValido = true;
@@ -72,26 +83,28 @@ export default function CreateDato({addField, indice, setIndice}) {
 
 
   function crearCampoString() {
-    if(validar()) { 
-      
-    addField({...fieldData, indice});
-    setIndice(indice + 1);
-      //Limpio los estados despues de agregar el campo 
-      setFieldData({
-        htmlFor:'',
-        id:'',
-        labelForm:'',
-        name: '',
-        placeholder: '',
-        info: '',
-        regex: '',
-        obl:'',
-        indexadoForm: '',
-        type: '',
-        checkbox:false,
-        agrupacionRadio:'',
+    if(validar()) {       
+      addField({...fieldData, indice});
+      setIndice(indice + 1);
+        //Limpio los estados despues de agregar el campo 
+        setFieldData({
+          htmlFor:'',
+          id:'',
+          labelForm:'',
+          name: '',
+          placeholder: '',
+          info: '',
+          regex: '',
+          obl:'',
+          indexadoForm: '',
+          type: '',
+          checkbox:false,
+          agrupacionRadio:'',
+          selectName:'',
+          selectId:'',
       });
-  }}
+    }
+  }
 
 
   return (<div >
@@ -102,7 +115,7 @@ export default function CreateDato({addField, indice, setIndice}) {
 				alignItems:'center',
 				justifyContent: 'space-between',
 				margin:'5px 0 5px 10px',
-			}}>
+			  }}>
         <Label labelForm={"Tipo de Campo *"} htmlFor={"dato"} />
         <Select 
           id="dato" 
@@ -111,7 +124,7 @@ export default function CreateDato({addField, indice, setIndice}) {
           options={selectDato} 
           error={errorTipoDato ? errorTipoDato : ""} 
           /> 
-      </div>    
+        </div>    
       {(fieldData.type ==='radio')? <div>
         <CustomInputField 
           id={'agrupacionRadio'}        
@@ -158,7 +171,7 @@ export default function CreateDato({addField, indice, setIndice}) {
             labelForm={'Nombre Campo *'}
             name={'fieldName'}
             htmlFor={'fieldName'}
-            placeholder={'Texto que tendrá el campo'}
+            placeholder={'Texto del campo'}
             type={'text'}
             value={fieldData.labelForm}
             onChange={(e) => setFieldData({ ...fieldData, labelForm: e.target.value })}
@@ -167,33 +180,55 @@ export default function CreateDato({addField, indice, setIndice}) {
             />
         </div>
       </div>:'' }
-      {(fieldData.type !=='checkbox' && fieldData.type !=='file' && fieldData.type!=='radio' && fieldData.type !=='date'&& fieldData.type!=='section'&& fieldData.type!=='')? 
-      <div>
-        <CustomInputField 
-          id={'placeholder'}
-          labelForm={'Placeholder'} 
-          name={'placeholder'} 
-          htmlFor={'placeholder'} 
-          type={'text'}
-          value={fieldData.placeholder}
-          onChange={(e) => setFieldData({ ...fieldData, placeholder: e.target.value })} 
-          />       
-      </div>:''}
+      {(fieldData.type !=='checkbox' 
+        && fieldData.type !=='select' 
+        && fieldData.type !=='file' 
+        && fieldData.type!=='radio' 
+        && fieldData.type !=='date'
+        && fieldData.type!=='section'
+        && fieldData.type!=='')? 
+        <div>
+          <CustomInputField 
+            id={'placeholder'}
+            labelForm={'Placeholder'} 
+            name={'placeholder'} 
+            htmlFor={'placeholder'} 
+            type={'text'}
+            value={fieldData.placeholder}
+            onChange={(e) => setFieldData({ ...fieldData, placeholder: e.target.value })} 
+            />       
+        </div>:''
+      }
+
       {( fieldData.type!=='')?
-      <div>
-        <CustomInputField 
-          id={'info'}
-          labelForm={'Info'} 
-          name={'info'} 
-          htmlFor={'info'} 
-          type={'text'}
-          value={fieldData.info}
-          onChange={(e) => setFieldData({ ...fieldData, info: e.target.value })}
-          
-          />
-      </div>:''}
+        <div>
+          <CustomInputField 
+            id={'info'}
+            labelForm={'Info'} 
+            name={'info'} 
+            htmlFor={'info'} 
+            type={'text'}
+            value={fieldData.info}
+            onChange={(e) => setFieldData({ ...fieldData, info: e.target.value })}
+            
+            />
+        </div>:''
+      }
+        {( fieldData.type==='select')?
+        <div>
+          <CreateSelect 
+            onCreate={(selectName, selectId) => handleSelectCreate(selectName, selectId)}
+           />
+        </div>:''}
       
-        {(fieldData.type!=='textarea'&& fieldData.type!=='checkbox'&& fieldData.type!=='date'&& fieldData.type!=='file'&& fieldData.type!=='radio'&& fieldData.type!=='section'&& fieldData.type!=='')?
+      {(fieldData.type!=='textarea'
+          && fieldData.type!=='checkbox' 
+          && fieldData.type !=='select'
+          && fieldData.type!=='date'
+          && fieldData.type!=='file'
+          && fieldData.type!=='radio'
+          && fieldData.type!=='section'
+          && fieldData.type!=='')?
         <div><CustomInputField 
           id={'regex'}
           labelForm={'Regex'} 
@@ -204,9 +239,12 @@ export default function CreateDato({addField, indice, setIndice}) {
           onChange={(e) => setFieldData({ ...fieldData, regex: e.target.value })}          
           /> 
       </div>:''}
-     
+     <div>
+     <ConfigureSelect />
+     </div>
       <div>
-      {( fieldData.type!=='')&& fieldData.type!=='section'?<div 
+      {( fieldData.type!=='')
+        && fieldData.type!=='section'?<div 
         style={{
 				//border: '1px solid red',
 				display: 'flex',

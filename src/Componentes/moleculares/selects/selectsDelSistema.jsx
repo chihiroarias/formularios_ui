@@ -4,10 +4,10 @@ import { accessAPI } from "../../../Utils/utils";
 
 import InputField from "../../atomicos/InputField/InputField";
 const SelectsExistentes = () => {
-  const [options, setOptions] = useState([{ etiqueta: "", value: "" }]);
+  //const [options, setOptions] = useState([{ etiqueta: "", value: "" }]);
   const [selectedValue, setSelectedValue] = useState("");
   const [endpoint, setEndpoint] = useState("");
-  const [selectName, setSelectName] = useState("");
+  //const [selectName, setSelectName] = useState("");
   const [selectConfig, setSelectConfig] = useState(null);
   const [ingresarEndpoint, setIngresEndpoint] = useState(false);
 
