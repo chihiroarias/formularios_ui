@@ -3,7 +3,12 @@ import Label from "../../atomicos/Label/Label.jsx";
 import Button from "../../atomicos/Button/Button.jsx";
 import CustomInputField from "../CustomInputField/CustomInputField.jsx";
 import Select from "../../atomicos/Select/Select.jsx";
+
 import { accessAPI } from "../../../Utils/utils.js";
+
+import ConfigureSelect from "../../moleculares/selects/configureSelect.jsx";
+import CreateSelect from "../selects/createSelect.jsx";
+
 //import CheckBox from "../../atomicos/Checkbox/Checkbox.jsx";
 
 export default function CreateDato({ addField, indice, setIndice }) {
@@ -17,17 +22,30 @@ export default function CreateDato({ addField, indice, setIndice }) {
     regex: "",
     checked: false,
     obl: false,
-    indexadoForm: "",
-    type: "",
-    agrupacionRadio: "",
+
+    indexadoForm: '',
+    type: '',
+    agrupacionRadio:'',
+    selectName: '',
+    selectId:'',
+  
   });
 
   //Sección ERRORES
-  const [errorNombreCampo, setErrorNombreCampo] = useState("");
-  const [errorIndexado, setErrorIndexado] = useState("");
-  const [errorTipoDato, setErrorTipoDato] = useState("");
-  const [errorAgruparRadio, setErrorAgruparRadio] = useState("");
-  const [errorIdCampo, setErrorIdCampo] = useState("");
+  const [errorNombreCampo, setErrorNombreCampo] = useState('');
+  const [errorIndexado, setErrorIndexado] = useState('');
+  const [errorTipoDato, setErrorTipoDato]= useState('');
+  const [errorAgruparRadio, setErrorAgruparRadio]= useState('');
+  const [errorIdCampo, setErrorIdCampo]= useState('');
+  
+  const handleSelectCreate = (selectName,selectId) => {
+    setFieldData(fieldData => ({
+      ...fieldData,
+      selectName,
+      selectId
+    }));
+  };
+
 
   function validar() {
     let esValido = true;
@@ -83,6 +101,7 @@ export default function CreateDato({ addField, indice, setIndice }) {
 
       setIndice(indice + 1);
 
+
       //Limpio los estados despues de agregar el campo
       setFieldData({
         htmlFor: "",
@@ -97,6 +116,8 @@ export default function CreateDato({ addField, indice, setIndice }) {
         type: "",
         checkbox: false,
         agrupacionRadio: "",
+           selectName:'',
+          selectId:'',
       });
     }
   }
@@ -112,6 +133,9 @@ export default function CreateDato({ addField, indice, setIndice }) {
           margin: "5px 0 5px 10px",
         }}
       >
+
+  
+
         <Label labelForm={"Tipo de Campo *"} htmlFor={"dato"} />
         <Select
           id="dato"
@@ -121,7 +145,23 @@ export default function CreateDato({ addField, indice, setIndice }) {
           error={errorTipoDato ? errorTipoDato : ""}
         />
       </div>
-      {fieldData.type === "7" ? (
+       
+        </div>    
+      {(fieldData.type ==='7')? <div>
+        <CustomInputField 
+          id={'agrupacionRadio'}        
+          labelForm={'Agrupación Radio *'} 
+          name={'agrupacionRadio'} 
+          htmlFor={'agrupacionRadio'} 
+          type={'text'}
+          required={true}
+          value={fieldData.agrupacionRadio}
+          onChange={(e) => setFieldData({ ...fieldData, agrupacionRadio: e.target.value, name: e.target.value })}
+          error={errorAgruparRadio ? errorAgruparRadio : ""}
+          /> 
+      </div>:'' }
+      {(fieldData.type !=="")? <div>
+
         <div>
           <CustomInputField
             id={"agrupacionRadio"}
@@ -224,6 +264,8 @@ export default function CreateDato({ addField, indice, setIndice }) {
       {fieldData.type !== "" ? (
         <div>
           <CustomInputField
+        
+/*
             id={"info"}
             labelForm={"Info"}
             name={"info"}
@@ -287,7 +329,105 @@ export default function CreateDato({ addField, indice, setIndice }) {
           </div>
         ) : (
           ""
-        )}
+
+*/
+            id={'fieldName'}
+            labelForm={'Nombre Campo *'}
+            name={'fieldName'}
+            htmlFor={'fieldName'}
+            placeholder={'Texto del campo'}
+            type={'text'}
+            value={fieldData.labelForm}
+            onChange={(e) => setFieldData({ ...fieldData, labelForm: e.target.value })}
+            error={errorNombreCampo ? errorNombreCampo : ""}
+        
+            />
+        </div>
+      </div>:'' }
+      {(fieldData.type !=='checkbox' 
+        && fieldData.type !=='select' 
+        && fieldData.type !=='file' 
+        && fieldData.type!=='radio' 
+        && fieldData.type !=='date'
+        && fieldData.type!=='section'
+        && fieldData.type!=='')? 
+        <div>
+          <CustomInputField 
+            id={'placeholder'}
+            labelForm={'Placeholder'} 
+            name={'placeholder'} 
+            htmlFor={'placeholder'} 
+            type={'text'}
+            value={fieldData.placeholder}
+            onChange={(e) => setFieldData({ ...fieldData, placeholder: e.target.value })} 
+            />       
+        </div>:''
+      }
+
+      {( fieldData.type!=='')?
+        <div>
+          <CustomInputField 
+            id={'info'}
+            labelForm={'Info'} 
+            name={'info'} 
+            htmlFor={'info'} 
+            type={'text'}
+            value={fieldData.info}
+            onChange={(e) => setFieldData({ ...fieldData, info: e.target.value })}
+            
+            />
+        </div>:''
+      }
+        {( fieldData.type==='select')?
+        <div>
+          <CreateSelect 
+            onCreate={(selectName, selectId) => handleSelectCreate(selectName, selectId)}
+           />
+        </div>:''}
+      
+      {(fieldData.type!=='textarea'
+          && fieldData.type!=='checkbox' 
+          && fieldData.type !=='select'
+          && fieldData.type!=='date'
+          && fieldData.type!=='file'
+          && fieldData.type!=='radio'
+          && fieldData.type!=='section'
+          && fieldData.type!=='')?
+        <div><CustomInputField 
+          id={'regex'}
+          labelForm={'Regex'} 
+          name={'regex'} 
+          htmlFor={'regex'} 
+          type={'text'}
+          value={fieldData.regex}
+          onChange={(e) => setFieldData({ ...fieldData, regex: e.target.value })}          
+          /> 
+      </div>:''}
+     <div>
+     <ConfigureSelect />
+     </div>
+      <div>
+      {( fieldData.type!=='')
+        && fieldData.type!=='section'?<div 
+        style={{
+				//border: '1px solid red',
+				display: 'flex',
+				alignItems:'center',
+			  justifyContent: 'start',
+				}}
+        >
+        <CustomInputField 
+        id={'campoObligatorio'}
+        labelForm={'Obligatorio'} 
+        name={'campoObligatorio'} 
+        htmlFor={'campoObligatorio'} 
+        type={'checkbox'}
+        checked= {fieldData.obl }
+        onChange={(e) => setFieldData({ ...fieldData, obl: e.target.checked })}  
+        
+        /> 
+        </div>:''}
+
         <Button type="submit" onClick={crearCampoString} text="Crear Campo" />
       </div>
       <br />
