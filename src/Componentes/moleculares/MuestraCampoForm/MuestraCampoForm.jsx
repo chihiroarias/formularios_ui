@@ -16,7 +16,7 @@ const MuestraCampoForm = (props) => {
         margin: "5px 0 5px 10px",
       }}
     >
-      {props.type === "textarea" ? (
+      {props.type === "1" ? (
         <div>
           <CustomTextArea
             labelForm={props.indexadoForm + " " + props.label}
@@ -38,7 +38,7 @@ const MuestraCampoForm = (props) => {
         ""
       )}
 
-      {props.type !== "textarea" && props.type !== "section" ? (
+      {props.type !== "1" && props.type !== "9" ? (
         <div>
           <CustomInputField
             labelForm={props.indexadoForm + " " + props.label}
@@ -59,7 +59,7 @@ const MuestraCampoForm = (props) => {
       ) : (
         ""
       )}
-      {props.type === "section" ? (
+      {props.type === "9" ? (
         <div>
           <SeccionField
             content={props.indexadoForm + " " + props.labelForm}
@@ -69,7 +69,7 @@ const MuestraCampoForm = (props) => {
       ) : (
         ""
       )}
-      {props.type === "select" && props.selectName ? (
+      {props.type === "12" && props.selectName ? (
         <div>
           <MuestraSelectDelSistema selectId={props.selectId} />
         </div>

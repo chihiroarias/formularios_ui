@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import Select from "../../atomicos/Select/Select";
 import { accessAPI } from "../../../Utils/utils";
-import {optionsForSelect} from "../../../Utils/configureSelectOptions.js";
+import { optionsForSelect } from "../../../Utils/configureSelectOptions.js";
 import InputField from "../../atomicos/InputField/InputField";
 import SelectsExistentes from "./selectsDelSistema";
 import CreateSelect from "./createSelect";
-import Label from "../../atomicos/Label/Label.jsx"
+import Label from "../../atomicos/Label/Label.jsx";
 
 const ConfigureSelect = () => {
   const [options, setOptions] = useState([{ etiqueta: "", value: "" }]);
@@ -48,21 +48,21 @@ const ConfigureSelect = () => {
     }
   }, [tipoSeleccionado, endpoint]);
 
-
   return (
-    <div 
-    className='customInput' 
-    style={{
-      //border: '1px solid red',
-      display: 'flex',
-      alignItems:'center',
-      justifyContent: 'space-between',
-      margin:'5px 0 5px 10px',
-      }}>
+    <div
+      className="customInput"
+      style={{
+        //border: '1px solid red',
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        margin: "5px 0 5px 10px",
+      }}
+    >
       <div>
         <br />
         <div>
-          <Label labelForm="Subtipo Select" htmlFor="selecttipos"/>
+          <Label labelForm="Subtipo Select" htmlFor="selecttipos" />
           <Select
             id="selecttipos"
             selectName="selecttipos"
@@ -95,7 +95,6 @@ const ConfigureSelect = () => {
           </div>
         )}
 
-        <br />
         {/* <InputField
           type="text"
           name="nombredelselect"
@@ -110,7 +109,7 @@ const ConfigureSelect = () => {
           options={tipoSeleccionado === "2" ? selectOptions : options}
           onChange={handleSelectChange}
           selectedValue={selectedValue}
-        /> 
+        />
       </div>
     </div>
   );

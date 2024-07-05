@@ -137,7 +137,7 @@ export default function CreateDato({ addField, indice, setIndice }) {
         />
       </div>
 
-      {fieldData.type === "7" && (
+      {fieldData.type === "6" && (
         <div>
           <CustomInputField
             id={"agrupacionRadio"}
@@ -209,11 +209,11 @@ export default function CreateDato({ addField, indice, setIndice }) {
         </>
       )}
 
-      {fieldData.type !== "3" &&
-        fieldData.type !== "14" &&
-        fieldData.type !== "7" &&
-        fieldData.type !== "4" &&
-        fieldData.type !== "2" &&
+      {fieldData.type !== "2" &&
+        fieldData.type !== "12" &&
+        fieldData.type !== "13" &&
+        fieldData.type !== "3" &&
+        fieldData.type !== "9" &&
         fieldData.type !== "" && (
           <div>
             <CustomInputField
@@ -246,19 +246,19 @@ export default function CreateDato({ addField, indice, setIndice }) {
         </div>
       )}
 
-      {fieldData.type === "select" && (
+      {fieldData.type === "12" && (
         <div>
           <CreateSelect onCreate={handleSelectCreate} />
         </div>
       )}
 
-      {fieldData.type !== "textarea" &&
-        fieldData.type !== "checkbox" &&
-        fieldData.type !== "select" &&
-        fieldData.type !== "date" &&
-        fieldData.type !== "file" &&
-        fieldData.type !== "radio" &&
-        fieldData.type !== "section" &&
+      {fieldData.type !== "1" &&
+        fieldData.type !== "2" &&
+        fieldData.type !== "12" &&
+        fieldData.type !== "3" &&
+        fieldData.type !== "13" &&
+        fieldData.type !== "6" &&
+        fieldData.type !== "9" &&
         fieldData.type !== "" && (
           <div>
             <CustomInputField
@@ -280,7 +280,7 @@ export default function CreateDato({ addField, indice, setIndice }) {
       </div>
 
       <div>
-        {fieldData.type !== "" && fieldData.type !== "section" && (
+        {fieldData.type !== "" && fieldData.type !== "9" && (
           <div
             style={{
               //border: '1px solid red',
