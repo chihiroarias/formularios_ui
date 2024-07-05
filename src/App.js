@@ -16,14 +16,12 @@ function App() {
           fontFamily: "Poppins, sans-serif",
         }}
       >
-        <ConfigureSelct></ConfigureSelct>
+        <FormContainer>
+          <Formulario />
+        </FormContainer>
       </div>
     </>
   );
 }
 
 export default App;
-
-// <FormContainer>
-//   <Formulario />
-// </FormContainer>
