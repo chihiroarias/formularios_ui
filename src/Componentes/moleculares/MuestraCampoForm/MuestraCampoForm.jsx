@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import CustomInputField from '../CustomInputField/CustomInputField';
 import CustomTextArea from '../CustomTextArea/CustomTextArea';
 import SeccionField from '../../atomicos/SectionField/SectionField';
+import MuestraSelectDelSistema from '../selects/MuestraSelectDelSistema';
 
 const MuestraCampoForm = (props) => {
 
@@ -14,62 +15,55 @@ const MuestraCampoForm = (props) => {
                 justifyContent: 'flex-end',
                 margin: '5px 0 5px 10px',
             }}
-        >
-           {(props.type ==='textarea')? <div>
-			<CustomTextArea
-                labelForm={props.indexadoForm + ' ' + props.label}
-                style={{ marginInline: '10px' }}
-                htmlFor={props.htmlFor}
-                className="prettyInput"
-                id={props.id}
-                name={props.name}
-                register={props.register}
-                validation={props.validation}
-                type={props.type}
-                onChange={props.onChange}
-                placeholder={props.placeholder}
-                required={props.required}
-                {...props}
-            />
-      </div>:'' }
+            >
+           {(props.type ==='textarea')? 
+           <div>
+                <CustomTextArea
+                    labelForm={props.indexadoForm + ' ' + props.label}
+                    style={{ marginInline: '10px' }}
+                    htmlFor={props.htmlFor}
+                    className="prettyInput"
+                    id={props.id}
+                    name={props.name}
+                    register={props.register}
+                    validation={props.validation}
+                    type={props.type}
+                    onChange={props.onChange}
+                    placeholder={props.placeholder}
+                    required={props.required}
+                    {...props}
+                />
+            </div>:'' }
 
-	  {(props.type !=='textarea'&&props.type !=='section')? 
-	  <div>
-		<CustomInputField
-                labelForm={props.indexadoForm + ' ' + props.label}
-                style={{ marginInline: '10px' }}
-                htmlFor={props.htmlFor}
-                className="prettyInput"
-                id={props.id}
-                name={props.name}
-                register={props.register}
-                validation={props.validation}
-                type={props.type}
-                onChange={props.onChange}
-                placeholder={props.placeholder}
-                required={props.required}
-                {...props}
-            />
-      	</div>:'' }
-	  {(props.type ==='section')? 
-	  <div>
-		<SeccionField
-				content={props.indexadoForm + ' ' + props.labelForm}
-                // labelForm='2222222'
-                // style={{ marginInline: '10px' }}
-                // htmlFor={props.htmlFor}
-                // className="prettyInput"
-                // id={props.id}
-                // name={props.name}
-                // register={props.register}
-                // validation={props.validation}
-                // type={props.type}
-                // onChange={props.onChange}
-                // placeholder={props.placeholder}
-                // required={props.required}
-                {...props}
-            />
-      </div>:'' }
+            {(props.type !=='textarea'&&props.type !=='section')? 
+            <div>
+                <CustomInputField
+                        labelForm={props.indexadoForm + ' ' + props.label}
+                        style={{ marginInline: '10px' }}
+                        htmlFor={props.htmlFor}
+                        className="prettyInput"
+                        id={props.id}
+                        name={props.name}
+                        register={props.register}
+                        validation={props.validation}
+                        type={props.type}
+                        onChange={props.onChange}
+                        placeholder={props.placeholder}
+                        required={props.required}
+                        {...props}
+                    />
+                </div>:'' }
+            {(props.type ==='section')? 
+            <div>
+                <SeccionField
+                        content={props.indexadoForm + ' ' + props.labelForm}
+                        {...props}
+                    />
+            </div>:'' }
+            {(props.type ==='select' && props.selectName)? 
+            <div>
+                <MuestraSelectDelSistema selectId={props.selectId}/>
+            </div>:'' }
         </div>
     );
 };

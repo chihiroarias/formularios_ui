@@ -1,20 +1,19 @@
 import Label from "../../atomicos/Label/Label";
 import Select from "../../atomicos/Select/Select.jsx";
+import CreateSelect from "../selects/configureSelect.jsx";
+import { useEffect, useState } from "react";
+import { selectItemsCampo } from "../../../Utils/selectCampoUtils.js";
+import CreateDato from "../CreateDato/CreateDato.jsx";
+
 
 import { selectItems } from "../../../Utils/selectUtils.js";
-import { useEffect, useState } from "react";
 import TipoCampoFijo from "../TipoCampoFijo/TipoCampoFijo.jsx";
 import DatoInput from "../DatoInput/DatoInput.jsx";
 import { accessAPI } from "../../../Utils/utils.js";
 import Loader from "../../../elementos/loader/Loader.js";
-import CreateSelect from "../selects/configureSelect.jsx";
 import CreateString from "../DatoInput/createString.jsx";
 import CreateDate from "../CampoDate/createDate.jsx";
 
-import { selectItemsCampo } from "../../../Utils/selectCampoUtils.js";
-import React, { useState } from "react";
-import CreateSelect from "../selects/createSelect.jsx";
-import CreateDato from "../CreateDato/CreateDato.jsx";
 
 
 function TipoCampo({addField, indice, setIndice}) {
