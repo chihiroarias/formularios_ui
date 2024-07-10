@@ -21,7 +21,10 @@ const CustomTextArea = ({
 	required,
 	indexadoForm,
 	...props
-}) => (
+}) => {
+	const labelText = required ? `${labelForm} *` : labelForm;
+
+	return(
 	<div>
 		<div className='customInput' 
 			style={{
@@ -32,8 +35,9 @@ const CustomTextArea = ({
 				margin:'5px 0 5px 10px',
 			}}
 			>
-			<Label labelForm={labelForm} htmlFor={htmlFor}/>
+			<Label labelForm={indexadoForm ? `${indexadoForm} ${labelText}` : labelText} htmlFor={htmlFor ?? id}/>
 			<TextAreaField 
+				width={'50px'}
                 id={id}
                 name={name??id} 
                 placeholder={placeholder}
@@ -63,6 +67,7 @@ const CustomTextArea = ({
 	</div>
 	
 );
+};
 
 CustomTextArea.propTypes = {
 	htmlFor: PropTypes.string,

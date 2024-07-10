@@ -10,7 +10,7 @@ const FormTitle = ({ title, setTitle, required }) => {
 			id={'title'}
 			htmlFor={'title'}
 			name={'title'} 
-			labelForm={'Título *'} 
+			labelForm={'Título'} 
 			type={"text"} 
 			value={title}
 			required={required} 

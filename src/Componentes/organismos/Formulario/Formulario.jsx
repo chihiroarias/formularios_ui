@@ -33,26 +33,31 @@ function Formulario() {
 
 return (
   <div >
-    <div>
-      <h1>Generador de Formularios</h1>
-      <FormTitle title={title} setTitle={setTitle} required={true} />
-      <FormDescription description={description} setDescription={setDescription} />
-      {/* <TipoCampo addField={addField} indice={indice} setIndice={setIndice} /> */}
-      <CreateDato addField={addField} indice={indice} setIndice={setIndice} />
-      {/* Renderizo los campos */}
-    </div>     
-    <div>        
-      <h2>{title}</h2>
-      <p>{description}</p>
-      {fields.map((field, index) => (
-        <div key={index} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <MuestraCampoForm { ...field} />
-          <MdDelete className={'delete-icon'} onClick={() => deleteField(field.indice)} />
+    
+      <div>
+        <h1>Generador de Formularios</h1>
+
+          <FormTitle title={title} setTitle={setTitle} required={true} />
+          <FormDescription description={description} setDescription={setDescription} required={false} />
+          <CreateDato addField={addField} indice={indice} setIndice={setIndice} />
+
+        {/* Renderizo los campos */}
+      </div>    
+      <form> 
+        <div>          
+          <h2><strong>{title}</strong></h2>
+          <p>{description}</p>
+
+            {fields.map((field, index) => (
+              <div key={index} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <MuestraCampoForm {...field} />
+                <MdDelete className={'delete-icon ml-5'} onClick={() => deleteField(field.indice)} />
+              </div>
+            ))}        
         </div>
-      ))}
-    </div>
-  
-      <Button onClick={generateForm} text={'Generar Formulario'}/>
+    
+        <Button onClick={generateForm} text={'Generar Formulario'}/>
+    </form>
   </div>
 );
 };

@@ -1,18 +1,16 @@
-import React, { useState, useRef, useEffect } from "react";
-//import Select from "../../atomicos/Select/Select";
+import React, { useState,  useEffect } from "react";
 import { accessAPI } from "../../../Utils/utils";
 import InputField from "../../atomicos/InputField/InputField";
 import Label from "../../atomicos/Label/Label";
 import { MdDelete } from "react-icons/md";
+import CustomInputField from "../CustomInputField/CustomInputField"
+import Button from "../../atomicos/Button/Button"
 
 const CreateSelect = ({onCreate}) => {
   const [options, setOptions] = useState([{ etiqueta: "", value: "" }]);
   const [selectName, setSelectName] = useState("");
   const [payload, setPayload] = useState(null);
-  //const [selectedValue, setSelectedValue] = useState("");
-  //const [endpoint, setEndpoint] = useState("");
-  //const [selectOptions, setSelectOptions] = useState([]);
-  //const [ingresarEndpoint, setIngresEndpoint] = useState(false);
+
 
   const handleOptionChange = (index, event) => {
     const newOptions = [...options];
@@ -31,10 +29,6 @@ const CreateSelect = ({onCreate}) => {
     }
   };
 
-  //  const handleSelectChange = (event) => {
-  //    const selectedOption = event.target.value || event.target.valor;
-  //    setSelectedValue(selectedOption);
-  //  };
 
   const createSelectPrecargado = () => {
     if (!selectName.trim()) {
@@ -53,8 +47,6 @@ const CreateSelect = ({onCreate}) => {
         precargaSelects: stirngtopost,
         nombre: selectName,
       });
-      //onCreate(selectName);
-      //alert("El select fue agregado exitosamente");
   };
 
   useEffect(() => {
@@ -66,8 +58,6 @@ const CreateSelect = ({onCreate}) => {
         (response) => {
           console.log(response);
           console.log(options);
-          // onCreate(selectName, response.id);
-          // alert("El select fue agregado exitosamente");
           if (response && response.selectPrecargado && response.selectPrecargado.id) {
             onCreate(selectName, response.selectPrecargado.id);
             alert("El select fue agregado exitosamente");
@@ -86,25 +76,20 @@ const CreateSelect = ({onCreate}) => {
   return (
     <div>
         <div>
-          <div
-            style={{
-              //border: '1px solid red',
-              display: 'flex',            
-              alignItems:'center',
-              justifyContent: 'space-between',
-              margin:'5px 0 5px 10px',
-      
-            }}  >          
-            <Label labelForm={'Nombre Select'} htmlFor={"nombredelselect"}/>
-            <InputField
+          <div> 
+            <CustomInputField
               id={"nombredelselect"}
+              labelForm={'Nombre Select'}
               className="prettyInput"
-              type="text"
-              name="nombredelselect"
+              name={"nombredelselect"}
+              htmlFor={"nombredelselect"}
               placeholder="Nombre del Select"
+              type={"text"}
+              required={true}
               value={selectName}
-              onChange={(e) => setSelectName(e.target.value)}
-            />
+              onChange={(e) => setSelectName(e.target.value)
+              }
+            />         
           </div>
           <Label labelForm={'Opciones'}/>
           {options.map((option, index) => (            
@@ -138,19 +123,11 @@ const CreateSelect = ({onCreate}) => {
                 <MdDelete className={'delete-icon'} onClick={() => deleteOption(index)} />
               </div>
           ))}
-          <button onClick={addOption}>Añadir opción</button>
+          <Button onClick={addOption} text="Añadir opción"/>
         </div>
 
+        <Button onClick={createSelectPrecargado} text="Crear Select"/>
 
-        <button onClick={createSelectPrecargado}>Crear Select</button>
-
-
-         {/* <Select
-          selectName={selectName}
-          endpoint={endpoint}
-          onChange={handleSelectChange}
-          selectedValue={selectedValue}
-        />  */}
       </div>
   );
 };

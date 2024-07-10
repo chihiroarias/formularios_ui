@@ -10,17 +10,17 @@ export const selectDato = [
   { name: "Telefono", value: "tel" },
   { name: "Texto", value: "text" },
   { name: "Sección", value: "section" },
-  //{ name: "Select", value: "select" },
-
   { name: "Select", value: "select" },
-  { name: "Select anidado", value: "3" },
-  { name: "Selects existentes", value: "4" },
-  { name: "Select precargado", value: "2" },
+  { name: "Select anidado", value: "sAnidado" },
+  { name: "Selects existentes", value: "sExistentes" },
+  { name: "Select precargado", value: "sPrecargado" },
   { name: "URL", value: "url" },
 ];
 /*
 id|nombreTipo            |
 --+----------------------+
+ 0|Elija un tipo         |
+13|Archivo               |
  1|Área de texto         |
  2|Checkbox              |
  3|Fecha                 |
@@ -30,8 +30,9 @@ id|nombreTipo            |
  7|Teléfono              |
  8|Texto                 |
  9|Sección               |
+11|Select 		           |
+12|Select anidado        |
+14|Selects existentes    |
+15|Selects precargado    |
 10|URL                   |
-11|Crear mi propio Select|
-12|Select                |
-13|Archivo               |
 */
