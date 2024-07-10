@@ -4,33 +4,23 @@ import CustomInputField from "../CustomInputField/CustomInputField";
 import CustomTextArea from "../CustomTextArea/CustomTextArea";
 import SeccionField from "../../atomicos/SectionField/SectionField";
 import MuestraSelectDelSistema from "../selects/MuestraSelectDelSistema";
+import MuestraSelectPrecargado from "../selects/MuestraSelectPrecargado";
 
 const MuestraCampoForm = (props) => {
   return (
     <div
       className="form-group"
       style={{
-        display: "flex",
+       // display: "flex",
         alignItems: "center",
-        justifyContent: "flex-end",
+       // justifyContent: "flex-end",
         margin: "5px 0 5px 10px",
       }}
     >
-      {props.type === "1" ? (
+      {props.type === "textarea" ? (
         <div>
           <CustomTextArea
-            labelForm={props.indexadoForm + " " + props.label}
             style={{ marginInline: "10px" }}
-            htmlFor={props.htmlFor}
-            className="prettyInput"
-            id={props.id}
-            name={props.name}
-            register={props.register}
-            validation={props.validation}
-            type={props.type}
-            onChange={props.onChange}
-            placeholder={props.placeholder}
-            required={props.required}
             {...props}
           />
         </div>
@@ -38,28 +28,21 @@ const MuestraCampoForm = (props) => {
         ""
       )}
 
-      {props.type !== "1" && props.type !== "9" ? (
+      {props.type !== "textarea" 
+        && props.type !== "section"
+        && props.type !== "select" 
+        && props.type !== "sExistentes"
+        && props.type !== "sPrecargado"? (
         <div>
-          <CustomInputField
-            labelForm={props.indexadoForm + " " + props.label}
+          <CustomInputField           
             style={{ marginInline: "10px" }}
-            htmlFor={props.htmlFor}
-            className="prettyInput"
-            id={props.id}
-            name={props.name}
-            register={props.register}
-            validation={props.validation}
-            type={props.type}
-            onChange={props.onChange}
-            placeholder={props.placeholder}
-            required={props.required}
             {...props}
           />
         </div>
       ) : (
         ""
       )}
-      {props.type === "9" ? (
+      {props.type === "section" ? (
         <div>
           <SeccionField
             content={props.indexadoForm + " " + props.labelForm}
@@ -69,13 +52,29 @@ const MuestraCampoForm = (props) => {
       ) : (
         ""
       )}
-      {props.type === "12" && props.selectName ? (
+
+      {(props.type === "select" || props.type==="sExistentes") && props.selectName ? (
         <div>
-          <MuestraSelectDelSistema selectId={props.selectId} />
+          <MuestraSelectDelSistema 
+            selectId={props.selectId} 
+            {...props}
+          />
         </div>
       ) : (
         ""
       )}
+
+      {props.type==="sPrecargado" && props.selectEndpoint ? (
+        <div>
+          <MuestraSelectPrecargado
+            selectEndpoint={props.selectEndpoint} 
+            {...props}
+          />
+        </div>
+      ) : (
+        ""
+      )}
+
     </div>
   );
 };

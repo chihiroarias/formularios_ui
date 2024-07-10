@@ -1,4 +1,4 @@
-.submitContainer {
+/* .submitContainer {
   justify-content: center;
 }
 
@@ -6,7 +6,7 @@
   height: 18px;
   margin-left: 10px;
   animation: rotation 2s infinite linear;
-}
+} */
 
 @keyframes rotation {
   from {
@@ -55,6 +55,11 @@ form p {
   font-weight: 700;
   color: #aaaaaa;
   margin-bottom: 5px;
+}
+
+.prettyInput::placeholder {
+  font-family: 'Montserrat', sans-serif;
+  color: #a0a0a0; /* Puedes cambiar el color según tus necesidades */
 }
 
 input.error {

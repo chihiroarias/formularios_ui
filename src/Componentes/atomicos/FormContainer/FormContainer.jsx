@@ -7,14 +7,15 @@ const FormContainer = ({ children, logo }) => {
 					marginTop: '50px',
 					display: "flex",
 					justifyContent: "center", 
-					maxWidth: '600px',
+					width: '800px',
+					maxWidth: '1000px',
 					}}>
 				{/* <div className="flex pb-4">
 					<img src={logo} alt="Imagen Logo" />{' '}
 				</div> */}
 				<div
-					className="container-fluid"
-					style={{ backgroundColor: 'white' }}
+					className="container-fluid bg-blancoQualis px-10"
+					//style={{ backgroundColor: 'white' }}
 				>
 					{children}
 				</div>

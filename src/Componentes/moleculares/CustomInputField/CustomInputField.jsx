@@ -18,8 +18,12 @@ const CustomInputField = ({
 	placeholder,
 	error,
 	required,
+	indexadoForm,
 	...props
-}) => (
+}) => {
+	const labelText = required ? `${labelForm} *` : labelForm;
+
+	return(
 	<div>
 		<div className='customInput' 
 			style={{
@@ -30,9 +34,9 @@ const CustomInputField = ({
 				margin:'5px 0 5px 10px',
 			}}
 			>
-			<Label labelForm={labelForm} htmlFor={htmlFor??id}/>
+			<Label labelForm={indexadoForm ? `${indexadoForm} ${labelText}` : labelText} htmlFor={htmlFor ?? id}/>
 			<InputField
-				className=" prettyInput centrado"
+				className="prettyInput centrado"
 				id={id}
 				name={name??id}
 				register={register}
@@ -61,6 +65,7 @@ const CustomInputField = ({
 	</div>
 	
 );
+};
 
 CustomInputField.propTypes = {
 	htmlFor: PropTypes.string,
@@ -68,7 +73,6 @@ CustomInputField.propTypes = {
 	labelForm: PropTypes.string.isRequired,
 	name: PropTypes.string.isRequired,
 	register: PropTypes.func,
-	//errors: PropTypes.object.isRequired,
 	validation: PropTypes.object,
 	type: PropTypes.string,
 	onChange: PropTypes.func,

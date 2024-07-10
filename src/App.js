@@ -6,6 +6,7 @@ function App() {
   return (
     <>
       <div
+        className="font-sans"
         style={{
          display: "flex",
           justifyContent: "center",

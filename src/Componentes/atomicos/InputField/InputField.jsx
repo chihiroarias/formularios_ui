@@ -34,13 +34,13 @@ const InputField = ({
   return (
     <div >
       <input
-        style={{fontFamily: "Montserrat"}}
+        //style={{fontFamily: "Montserrat"}}
         id={id}
         name={name??id}
         type={inputType}
         onChange={onChange}
         placeholder={placeholder}
-        className={`input-field ${type} ${hight}`}
+        className={`input-field ${type} ${hight} prettyInput`}
         value={value}
         required={obl}
         {...(register && { ...register(name, validation) })}
