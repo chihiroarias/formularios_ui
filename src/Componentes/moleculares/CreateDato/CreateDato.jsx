@@ -3,13 +3,17 @@ import Label from "../../atomicos/Label/Label.jsx";
 import Button from "../../atomicos/Button/Button.jsx";
 import CustomInputField from "../CustomInputField/CustomInputField.jsx";
 import Select from "../../atomicos/Select/Select.jsx";
-
+import SelectsExistentes from "../selects/selectsDelSistema.jsx"
+import {selectDato} from "../../../Utils/selectDatoUtils.js"
 import { accessAPI } from "../../../Utils/utils.js";
 
 import ConfigureSelect from "../../moleculares/selects/configureSelect.jsx";
 import CreateSelect from "../selects/createSelect.jsx";
+import SelectsPrecargado from "../selects/selectsPrecarga.jsx"
 
 export default function CreateDato({ addField, indice, setIndice }) {
+
+
   const [fieldData, setFieldData] = useState({
     htmlFor: "",
     id: "",
@@ -19,12 +23,13 @@ export default function CreateDato({ addField, indice, setIndice }) {
     info: "",
     regex: "",
     checked: false,
-    obl: false,
+    required: false,
     indexadoForm: "",
     type: "",
     agrupacionRadio: "",
     selectName: "",
     selectId: "",
+    selectEndpoint: "",
   });
 
   // Sección ERRORES
@@ -39,6 +44,13 @@ export default function CreateDato({ addField, indice, setIndice }) {
       ...fieldData,
       selectName,
       selectId,
+    }));
+  };
+
+  const handleSelectPrecarga = (selectEndpoint) => {
+    setFieldData((fieldData) => ({
+      ...fieldData,
+      selectEndpoint,
     }));
   };
 
@@ -75,7 +87,6 @@ export default function CreateDato({ addField, indice, setIndice }) {
       );
       esValido = false;
     }
-
     return esValido;
   }
 
@@ -105,13 +116,14 @@ export default function CreateDato({ addField, indice, setIndice }) {
         placeholder: "",
         info: "",
         regex: "",
-        obl: "",
+        required: false,
         indexadoForm: "",
         type: "",
         checkbox: false,
         agrupacionRadio: "",
         selectName: "",
         selectId: "",
+        selectEndpoint: "",
       });
     }
   }
@@ -132,16 +144,17 @@ export default function CreateDato({ addField, indice, setIndice }) {
           id="dato"
           value={fieldData.type}
           onChange={(e) => setFieldData({ ...fieldData, type: e.target.value })}
-          endpoint={"admin/form/tiposcampos"}
+          options={selectDato}
+          //endpoint={"admin/form/tiposcampos"}
           error={errorTipoDato ? errorTipoDato : ""}
         />
       </div>
 
-      {fieldData.type === "6" && (
-        <div>
+      {fieldData.type === "radio" && (
+        <div >
           <CustomInputField
             id={"agrupacionRadio"}
-            labelForm={"Agrupación Radio *"}
+            labelForm={"Agrupación Radio"}
             name={"agrupacionRadio"}
             htmlFor={"agrupacionRadio"}
             type={"text"}
@@ -160,12 +173,13 @@ export default function CreateDato({ addField, indice, setIndice }) {
           <div>
             <CustomInputField
               id={"indice"}
-              labelForm={"Indice *"}
+              labelForm={"Indice"}
               name={"indice"}
               placeholder={"Asigne índice al campo"}
               htmlFor={"indice"}
               type={"text"}
               value={fieldData.indexadoForm}
+              required={true}
               onChange={(e) =>
                 setFieldData({ ...fieldData, indexadoForm: e.target.value })
               }
@@ -175,11 +189,12 @@ export default function CreateDato({ addField, indice, setIndice }) {
           <div>
             <CustomInputField
               id={"idCampo"}
-              labelForm={"Identificador Campo *"}
+              labelForm={"Identificador Campo"}
               name={"idCampo"}
               htmlFor={"idCampo"}
               placeholder={"Asigne un id al campo"}
               type={"text"}
+              required={true}
               value={fieldData.id}
               onChange={(e) =>
                 setFieldData({
@@ -194,10 +209,11 @@ export default function CreateDato({ addField, indice, setIndice }) {
           <div>
             <CustomInputField
               id={"fieldName"}
-              labelForm={"Nombre Campo *"}
+              labelForm={"Nombre Campo"}
               name={"fieldName"}
               htmlFor={"fieldName"}
-              placeholder={"Texto que tendrá el campo"}
+              required={true}
+              placeholder={"Texto del campo"}
               type={"text"}
               value={fieldData.labelForm}
               onChange={(e) =>
@@ -209,11 +225,13 @@ export default function CreateDato({ addField, indice, setIndice }) {
         </>
       )}
 
-      {fieldData.type !== "2" &&
-        fieldData.type !== "12" &&
-        fieldData.type !== "13" &&
-        fieldData.type !== "3" &&
-        fieldData.type !== "9" &&
+      {fieldData.type !== "checkbox" &&
+        fieldData.type !== "select" &&
+        fieldData.type !== "sExistentes"&&
+        fieldData.type !== "file" &&
+        fieldData.type !== "radio" &&
+        fieldData.type !== "date" &&
+        fieldData.type !== "section" &&
         fieldData.type !== "" && (
           <div>
             <CustomInputField
@@ -246,19 +264,34 @@ export default function CreateDato({ addField, indice, setIndice }) {
         </div>
       )}
 
-      {fieldData.type === "12" && (
+      {fieldData.type === "select" && (
         <div>
           <CreateSelect onCreate={handleSelectCreate} />
         </div>
       )}
 
-      {fieldData.type !== "1" &&
-        fieldData.type !== "2" &&
-        fieldData.type !== "12" &&
-        fieldData.type !== "3" &&
-        fieldData.type !== "13" &&
-        fieldData.type !== "6" &&
-        fieldData.type !== "9" &&
+      {fieldData.type === "sExistentes" &&(
+      <div>
+        <SelectsExistentes onCreate={handleSelectCreate} />
+      </div>
+      )}
+
+      {fieldData.type === "sPrecargado" && (
+        <div>
+          <SelectsPrecargado onCreate={handleSelectPrecarga}/>
+        </div>
+        )}
+
+
+      {fieldData.type !== "textarea" &&
+        fieldData.type !== "checkbox" &&
+        fieldData.type !== "select" &&
+        fieldData.type !== "sExistentes"&&
+        fieldData.type !== "sPrecargado"&&
+        fieldData.type !== "date" &&
+        fieldData.type !== "file" &&
+        fieldData.type !== "radio" &&
+        fieldData.type !== "section" &&
         fieldData.type !== "" && (
           <div>
             <CustomInputField
@@ -274,13 +307,15 @@ export default function CreateDato({ addField, indice, setIndice }) {
             />
           </div>
         )}
+      {fieldData.type === "select" &&(
+        <div>
+          <ConfigureSelect />
+        </div>
+      )}
+ 
 
       <div>
-        <ConfigureSelect />
-      </div>
-
-      <div>
-        {fieldData.type !== "" && fieldData.type !== "9" && (
+        {fieldData.type !== "" && fieldData.type !== "section" && (
           <div
             style={{
               //border: '1px solid red',
@@ -295,9 +330,9 @@ export default function CreateDato({ addField, indice, setIndice }) {
               name={"campoObligatorio"}
               htmlFor={"campoObligatorio"}
               type={"checkbox"}
-              checked={fieldData.obl}
+              checked={fieldData.required}
               onChange={(e) =>
-                setFieldData({ ...fieldData, obl: e.target.checked })
+                setFieldData({ ...fieldData, required: e.target.checked })
               }
             />
           </div>

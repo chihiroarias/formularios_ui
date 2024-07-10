@@ -26,7 +26,7 @@ const Button = ({
 
   // el estado hover es para controlar el efecto de hover del background
   const [hover, setHover] = useState(false);
-  //const backColor = hover ? `dark${color.toLowerCase()}` : color.toLowerCase();
+ // const backColor = hover ? `dark-${color}` : color.toLowerCase();
   const toogleHover = () => {
     setHover(!hover);
   };
@@ -35,19 +35,20 @@ const Button = ({
   })
 
   return (
-    <>
+    <div
+      className="buttonsContainer flexContainer">
       <button
-        // style={{ backgroundColor: `${backColor}` }}
+        //style={{ backgroundColor: `${backColor}` }}
         onMouseEnter={toogleHover}
         onMouseLeave={toogleHover}
         onClick={clickHandler}
         type={type}
-        className={`btn ${roundedCorner} ${btnClass} ${textColor} ${ block ? "btn-block" : "" }`}
+        className={`btn ${roundedCorner} ${btnClass} ${textColor} ${ block ? "btn-block" : "" } `}
         {...props}
       >
         {icon} {text}
       </button>
-    </>
+    </div>
   );
 };
 
@@ -64,7 +65,6 @@ Button.propTypes = {
 Button.defaultProps = {
   icon: null,
   block: false,
-  textColor: "text-white",
   
 };
 

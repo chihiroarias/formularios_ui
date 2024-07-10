@@ -1,37 +1,18 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState} from "react";
 import Select from "../../atomicos/Select/Select";
 import { accessAPI } from "../../../Utils/utils";
+import Label from "../../atomicos/Label/Label"
 
-import InputField from "../../atomicos/InputField/InputField";
-const SelectsExistentes = () => {
-  //const [options, setOptions] = useState([{ etiqueta: "", value: "" }]);
+
+const SelectsExistentes = ({onCreate}) => {
+
   const [selectedValue, setSelectedValue] = useState("");
-  const [endpoint, setEndpoint] = useState("");
-  //const [selectName, setSelectName] = useState("");
-  const [selectConfig, setSelectConfig] = useState(null);
-  const [ingresarEndpoint, setIngresEndpoint] = useState(false);
 
-  const [idcompetente, setIdcompetente] = useState(null);
-
-  const handleSelectChange = (event) => {
-    const selectedOption = event.target.value || event.target.valor;
+  const handleSelectChange = (event) => { 
+    const selectedOption = event.target.value;
     setSelectedValue(selectedOption);
-    setIdcompetente(selectedOption);
+    addSelectExistente(selectedOption);
   };
-
-  useEffect(() => {
-    if (endpoint) {
-      accessAPI(
-        "GET",
-        endpoint,
-        null,
-        (response) => {},
-        (error) => {
-          console.log(error);
-        }
-      );
-    }
-  }, [endpoint]);
 
   function addSelectExistente(selectPrecargadoid) {
     if (selectPrecargadoid) {
@@ -40,13 +21,11 @@ const SelectsExistentes = () => {
         `admin/form/${selectPrecargadoid}`,
         null,
         (response) => {
-          setSelectConfig(
-            <Select
-              options={response.precargaSelects}
-              selectName={response.nombre}
-              onChange={handleSelectChange}
-            />
-          );
+          if(response && response.nombre && response.id ){
+            onCreate(response.nombre, response.id);
+            console.log("Select agregado");
+            console.log(response.nombre +' '+ response.id);
+          } 
         },
         (error) => {
           console.log(error);
@@ -58,56 +37,25 @@ const SelectsExistentes = () => {
   }
 
   return (
-    <>
-      <div>
-        <div>
+
+        <div
+        className="customInput"
+        style={{
+        //border: '1px solid red',
+        display: 'flex',
+        alignItems:'center',
+        justifyContent: 'space-between',
+        margin:'5px 0 5px 10px', 
+        }}  >
+          <Label labelForm={"Seleccione precarga"} htmlFor={"precarga"} />
           <Select
+            id={"precarga"}
             selectName={"Seleccione una precarga"}
             endpoint={"admin/form/precargas"}
             onChange={handleSelectChange}
             selectedValue={selectedValue}
           />
-          <br />
-          <button onClick={() => addSelectExistente(idcompetente)}>
-            Utilizar este select
-          </button>
-          {selectConfig && <div>{selectConfig}</div>}
-        </div>
-        <button
-          onClick={() => {
-            setIngresEndpoint(true);
-          }}
-        >
-          ¿Desea ingresar otra precarga?
-        </button>
-
-        {ingresarEndpoint && (
-          <div>
-            <InputField
-              type="text"
-              name="endpoint"
-              placeholder="Endpoint"
-              value={endpoint}
-              onChange={(e) => setEndpoint(e.target.value)}
-            />
-            <Select
-              selectName={"Endpoint"}
-              endpoint={endpoint}
-              onChange={handleSelectChange}
-              selectedValue={selectedValue}
-            />
-            <br />
-            <button
-              onClick={() => {
-                setIngresEndpoint(false);
-              }}
-            >
-              Cancelar
-            </button>
           </div>
-        )}
-      </div>
-    </>
   );
 };
 
