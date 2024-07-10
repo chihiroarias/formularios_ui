@@ -1,6 +1,6 @@
 // Read from LS
 export function readFromLS(key) {
-  localStorage.setItem("qualis", "3NUbcvvHbFB76FJCfHGA9JqTY");
+  localStorage.setItem("qualis", "cY6J3dFMdCm7RjaFmGjbBwpNT");
   return localStorage.getItem(key);
 }
 
