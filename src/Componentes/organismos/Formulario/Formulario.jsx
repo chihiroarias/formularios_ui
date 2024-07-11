@@ -8,9 +8,11 @@ import { MdDelete } from "react-icons/md";
 import Button from "../../atomicos/Button/Button.jsx";
 import CreateDato from "../../moleculares/CreateDato/CreateDato.jsx";
 import { accessAPI } from "../../../Utils/utils.js";
+import CustomInputField from "../../moleculares/CustomInputField/CustomInputField.jsx";
 
 function Formulario() {
   const [title, setTitle] = useState("");
+  const [codigo, setCodigo] = useState("");
   const [description, setDescription] = useState("");
   const [fields, setFields] = useState([]);
   const [indice, setIndice] = useState(1);
@@ -20,12 +22,27 @@ function Formulario() {
     setFields([...fields, { ...field, indice }]);
   };
 
-  const generateForm = () => {
-    console.log("Form Data:", { title, description, fields });
+  function generateForm() {
+    accessAPI(
+      "POST",
+      "admin/form/form",
+      { titulo: title, descripcion: description, codigo: codigo },
+      (response) => {
+        console.log(response);
+        agregarCampos(response.id);
+      },
+      (response) => {
+        console.log(response);
+      }
+    );
+  }
+
+  function agregarCampos(id) {
+    console.log("Form Data:", { title, description, codigo, fields });
     fields.forEach((field) => {
       accessAPI(
         "POST",
-        "admin/form/campo",
+        `admin/form/campo/${id}`,
         field,
         (response) => {
           console.log(response);
@@ -35,7 +52,7 @@ function Formulario() {
         }
       );
     });
-  };
+  }
 
   const deleteField = (indice) => {
     setFields(fields.filter((field) => field.indice !== indice));
@@ -46,6 +63,12 @@ function Formulario() {
       <div>
         <h1>Generador de Formularios</h1>
 
+        <CustomInputField
+          labelForm={"Código de formulario"}
+          type={"text"}
+          required={true}
+          onChange={(e) => setCodigo(e.target.value)}
+        />
         <FormTitle title={title} setTitle={setTitle} required={true} />
         <FormDescription
           description={description}
@@ -58,6 +81,7 @@ function Formulario() {
       </div>
       <div>
         <h2>
+          <p>{codigo}</p>
           <strong>{title}</strong>
         </h2>
         <p>{description}</p>
