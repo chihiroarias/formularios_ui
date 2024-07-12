@@ -9,6 +9,7 @@ import Button from "../../atomicos/Button/Button.jsx";
 import CreateDato from "../../moleculares/CreateDato/CreateDato.jsx";
 import { accessAPI } from "../../../Utils/utils.js";
 import CustomInputField from "../../moleculares/CustomInputField/CustomInputField.jsx";
+import MenuNavegacion from "./menuNavegacion/menuNavegacion.js";
 
 function Formulario() {
   const [title, setTitle] = useState("");
@@ -61,6 +62,7 @@ function Formulario() {
   return (
     <div>
       <div>
+        <MenuNavegacion submenuSeleccionado="formulario" />
         <h1>Generador de Formularios</h1>
 
         <CustomInputField
