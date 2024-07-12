@@ -1,0 +1,84 @@
+header {
+  position: fixed;
+  width: 100vw;
+  background-color: var(--azulQualis);
+  z-index: 10;
+}
+
+header .mainMenuContainer {
+  width: 100vw;
+  height: 50px;
+  background-color: var(--azulQualis);
+  filter: drop-shadow(0px 0px 14px #333333);
+}
+
+header .mainMenu {
+  width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+header .mainMenu .logoContainer {
+  margin-left: 20px;
+}
+
+header .mainMenu .logoContainer img {
+  width: 120px;
+  align-self: center;
+}
+
+header .mainMenu .logoContainer .logoSubtitle {
+  color: white;
+  font-weight: 100;
+}
+
+header .mainMenu .bordeLogo {
+  width: 20px;
+  border-right: 1px solid white;
+  height: 20px;
+  align-self: center;
+}
+
+header .mainMenu menu {
+  flex-grow: 100;
+  color: white;
+  font-weight: 100;
+}
+
+header .mainMenu menu a,
+header .mainMenu menu div {
+  flex-grow: 1;
+  cursor: pointer;
+}
+
+header .mainMenu .userContainer {
+  margin-right: 20px;
+  padding-left: 20px;
+  color: white;
+  font-weight: 100;
+  border-left: 1px white solid;
+}
+
+header .submenu {
+  background-color: var(--azulQualis);
+  color: white;
+  font-weight: 100;
+}
+
+header .submenu .submenuButtonsContainer {
+  width: 750px;
+  height: 40px;
+  justify-content: space-between;
+  padding-left: 250px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+header .submenu .submenuButtonsContainer .boton {
+  align-self: center;
+}
+
+.seleccionado,
+.active {
+  font-weight: 600;
+}

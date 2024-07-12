@@ -3,17 +3,14 @@ import Label from "../../atomicos/Label/Label.jsx";
 import Button from "../../atomicos/Button/Button.jsx";
 import CustomInputField from "../CustomInputField/CustomInputField.jsx";
 import Select from "../../atomicos/Select/Select.jsx";
-import SelectsExistentes from "../selects/selectsDelSistema.jsx"
-import {selectDato} from "../../../Utils/selectDatoUtils.js"
-import { accessAPI } from "../../../Utils/utils.js";
+import SelectsExistentes from "../selects/selectsDelSistema.jsx";
+import { selectDato } from "../../../Utils/selectDatoUtils.js";
 
 import ConfigureSelect from "../../moleculares/selects/configureSelect.jsx";
 import CreateSelect from "../selects/createSelect.jsx";
-import SelectsPrecargado from "../selects/selectsPrecarga.jsx"
+import SelectsPrecargado from "../selects/selectsPrecarga.jsx";
 
 export default function CreateDato({ addField, indice, setIndice }) {
-
-
   const [fieldData, setFieldData] = useState({
     htmlFor: "",
     id: "",
@@ -92,17 +89,6 @@ export default function CreateDato({ addField, indice, setIndice }) {
 
   function crearCampoString() {
     if (validar()) {
-      accessAPI(
-        "POST",
-        "admin/form/campo",
-        fieldData,
-        (response) => {
-          console.log(response);
-        },
-        (response) => {
-          console.log(response);
-        }
-      );
       addField({ ...fieldData, indice });
 
       setIndice(indice + 1);
@@ -151,7 +137,7 @@ export default function CreateDato({ addField, indice, setIndice }) {
       </div>
 
       {fieldData.type === "radio" && (
-        <div >
+        <div>
           <CustomInputField
             id={"agrupacionRadio"}
             labelForm={"Agrupación Radio"}
@@ -227,7 +213,7 @@ export default function CreateDato({ addField, indice, setIndice }) {
 
       {fieldData.type !== "checkbox" &&
         fieldData.type !== "select" &&
-        fieldData.type !== "sExistentes"&&
+        fieldData.type !== "sExistentes" &&
         fieldData.type !== "file" &&
         fieldData.type !== "radio" &&
         fieldData.type !== "date" &&
@@ -270,24 +256,23 @@ export default function CreateDato({ addField, indice, setIndice }) {
         </div>
       )}
 
-      {fieldData.type === "sExistentes" &&(
-      <div>
-        <SelectsExistentes onCreate={handleSelectCreate} />
-      </div>
+      {fieldData.type === "sExistentes" && (
+        <div>
+          <SelectsExistentes onCreate={handleSelectCreate} />
+        </div>
       )}
 
       {fieldData.type === "sPrecargado" && (
         <div>
-          <SelectsPrecargado onCreate={handleSelectPrecarga}/>
+          <SelectsPrecargado onCreate={handleSelectPrecarga} />
         </div>
-        )}
-
+      )}
 
       {fieldData.type !== "textarea" &&
         fieldData.type !== "checkbox" &&
         fieldData.type !== "select" &&
-        fieldData.type !== "sExistentes"&&
-        fieldData.type !== "sPrecargado"&&
+        fieldData.type !== "sExistentes" &&
+        fieldData.type !== "sPrecargado" &&
         fieldData.type !== "date" &&
         fieldData.type !== "file" &&
         fieldData.type !== "radio" &&
@@ -307,12 +292,11 @@ export default function CreateDato({ addField, indice, setIndice }) {
             />
           </div>
         )}
-      {fieldData.type === "select" &&(
+      {fieldData.type === "select" && (
         <div>
           <ConfigureSelect />
         </div>
       )}
- 
 
       <div>
         {fieldData.type !== "" && fieldData.type !== "section" && (
