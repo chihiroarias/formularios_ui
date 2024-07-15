@@ -11,7 +11,7 @@ export default function MenuNavegacion(props) {
         case "formulario":
           setBotonesSubmenu([
             { etiqueta: "Crear Formulario", uri: "/form/create" },
-            { etiqueta: "Listado de formularios", uri: "/form/list" },
+            { etiqueta: "Listado de formularios", uri: "formulario/form/list" },
             { etiqueta: "Home", uri: "/" },
           ]);
           break;
@@ -37,14 +37,24 @@ export default function MenuNavegacion(props) {
 
           <menu className="flexContainer">
             <NavLink
-              to={"/formulario"}
+              to={"/formulario/form/create"}
               className={
                 props.submenuSeleccionado === "formulario"
                   ? "boton seleccionado"
                   : "boton"
               }
             >
-              Formularios
+              Crear Formularios
+            </NavLink>
+            <NavLink
+              to={"/formulario/form/list"}
+              className={
+                props.submenuSeleccionado === "formulario"
+                  ? "boton seleccionado"
+                  : "boton"
+              }
+            >
+              Listado de Formularios
             </NavLink>
           </menu>
         </div>

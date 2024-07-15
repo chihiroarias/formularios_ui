@@ -1,0 +1,43 @@
+.tarjetasLaboratoriosContainer {
+  justify-content: flex-start;
+}
+
+.listadoLaboratorios {
+  width: 350px;
+  line-height: 2;
+  height: 100%;
+}
+
+.listadoLaboratorios .laboratorio {
+  color: #888888;
+  cursor: pointer;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.listadoLaboratorios .laboratorio.seleccionado {
+  font-weight: 400;
+  color: black;
+}
+
+.laboratorioSeleccionado h1 {
+  margin-bottom: 20px;
+  font-size: 1.2em;
+  font-weight: 400;
+}
+
+.laboratoriosContainer {
+  justify-content: flex-start;
+}
+
+.laboratoriosContainer .tarjeta h1 {
+  color: #888888;
+  align-self: center;
+  margin-bottom: 10px;
+  font-weight: 400;
+  font-size: 1.3em;
+}
+
+.nuevoLaboratorio {
+  width: 500px;
+}
