@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "./menuNavegacion.css";
 import { NavLink } from "react-router-dom";
-import logoHorizontalBlanco from "../../../../elementos/Images/logoHorizontalBlanco.png";
+import logoHorizontalBlanco from "../../../elementos/Images/logoHorizontalBlanco.png";
 export default function MenuNavegacion(props) {
   const [botonesSubmenu, setBotonesSubmenu] = useState([]);
 

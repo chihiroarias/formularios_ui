@@ -4,7 +4,7 @@ import CustomTextArea from '../CustomTextArea/CustomTextArea';
 
 const FormDescription=({ description, setDescription, required })=> {
 	return (
-		<div>
+		<>
 			<CustomTextArea 
 			    name={'Description'} 
 				id={'description'}
@@ -14,7 +14,7 @@ const FormDescription=({ description, setDescription, required })=> {
 				required={required}
 				value={description}
 				onChange={(e) => setDescription(e.target.value)}/>
-		</div>
+		</>
 		);
 	};
 	
