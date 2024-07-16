@@ -29,10 +29,10 @@ const CustomTextArea = ({
 		<div className='customInput' 
 			style={{
 				//border: '1px solid red',
-				display: 'flex',
+				//display: 'flex',
 				alignItems:'center',
-				justifyContent: 'space-between',
-				margin:'5px 0 5px 10px',
+				//justifyContent: 'space-between',
+				margin:'10px 0 5px 10px',
 			}}
 			>
 			<Label labelForm={indexadoForm ? `${indexadoForm} ${labelText}` : labelText} htmlFor={htmlFor ?? id}/>

@@ -25,29 +25,33 @@ const CustomInputField = ({
 
 	return(
 	<div>
-		<div className='customInput' 
+		<div //className='grid grid-cols-2 gap-2' 
 			style={{
 				//border: '1px solid red',
-				display: 'flex',
+				//display: 'grid',
 				alignItems:'center',
-				justifyContent: 'space-between',
-				margin:'5px 0 5px 10px',
+				//justifyContent: 'center',
+				margin:'10px 0 5px 10px',
 			}}
 			>
-			<Label labelForm={indexadoForm ? `${indexadoForm} ${labelText}` : labelText} htmlFor={htmlFor ?? id}/>
-			<InputField
-				className="prettyInput centrado"
-				id={id}
-				name={name??id}
-				register={register}
-				validation={validation}
-				type={type}
-				onChange={onChange}
-				placeholder={placeholder}
-				required={required}
-				value={value}
-				{...props}
-			/>
+				<Label 
+					labelForm={indexadoForm ? `${indexadoForm} ${labelText}` : labelText} 
+					htmlFor={htmlFor ?? id}
+				/>
+				<InputField
+					className={`${type !== "checkbox" ? "prettyInput" : ""} centrado`}
+					id={id}
+					name={name??id}
+					register={register}
+					validation={validation}
+					type={type}
+					onChange={onChange}
+					placeholder={placeholder}
+					required={required}
+					value={value}
+					{...props}
+				/>
+
 		</div>
 		<div>
 			{error &&

@@ -12,11 +12,11 @@ const MuestraCampoForm = (props) => {
       className="form-group"
       style={{
        // display: "flex",
-        alignItems: "center",
+       // alignItems: "center",
        // justifyContent: "flex-end",
-        margin: "5px 0 5px 10px",
+       // margin: "5px 0 5px 10px",
       }}
-    >
+     >
       {props.type === "textarea" ? (
         <div>
           <CustomTextArea

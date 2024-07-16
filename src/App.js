@@ -1,13 +1,13 @@
 import "./estilos/App.css";
 import "./estilos/formulario.css";
-import FormContainer from "./Componentes/atomicos/FormContainer/FormContainer.jsx";
-import Formulario from "./Componentes/organismos/Formulario/Formulario.jsx";
+//import FormContainer from "./Componentes/atomicos/FormContainer/FormContainer.jsx";
+//import Formulario from "./Componentes/organismos/Formulario/Formulario.jsx";
 import { BrowserRouter } from "react-router-dom";
 import Router from "./Router";
 function App() {
   return (
     <>
-      <div
+      {/* <div
         className="font-sans"
         style={{
           display: "flex",
@@ -17,7 +17,7 @@ function App() {
           //  backgroundColor: "#f3f3",
           // fontFamily: "Poppins, sans-serif",
         }}
-      ></div>
+      ></div> */}
 
       <BrowserRouter>
         <Router />

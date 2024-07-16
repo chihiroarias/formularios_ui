@@ -1,4 +1,4 @@
-import MenuNavegacion from "../Componentes/organismos/Formulario/menuNavegacion/menuNavegacion";
+import MenuNavegacion from "../Componentes/organismos/menuNavegacion/menuNavegacion";
 
 export default function Home() {
   return (
