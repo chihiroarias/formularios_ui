@@ -68,7 +68,7 @@ function Formulario() {
       }}
     >
       <MenuNavegacion submenuSeleccionado="formulario" />
-      <div className="mt-24">
+      <div className="mt-24 px-10">
         <div className="grid grid-cols-2 gap-12">
           <div className="mr-12">
             <h1 className="mb-5">Generador de Formularios</h1>
