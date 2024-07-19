@@ -27,13 +27,7 @@ const CustomTextArea = ({
 	return(
 	<div>
 		<div className='customInput' 
-			style={{
-				//border: '1px solid red',
-				//display: 'flex',
-				alignItems:'center',
-				//justifyContent: 'space-between',
-				margin:'10px 0 5px 10px',
-			}}
+			style={props.estiloCampo?props.estiloCampo:{margin: "5px 0 5px 0px"}}
 			>
 			<Label labelForm={indexadoForm ? `${indexadoForm} ${labelText}` : labelText} htmlFor={htmlFor ?? id}/>
 			<TextAreaField 

@@ -5,7 +5,7 @@ import Label from '../../atomicos/Label/Label';
 import './CustomInputField.css'
 
 
-const CustomInputField = ({
+const 	CustomInputField = ({
 	htmlFor,
 	id,
 	labelForm,
@@ -26,13 +26,7 @@ const CustomInputField = ({
 	return(
 	<div>
 		<div //className='grid grid-cols-2 gap-2' 
-			style={{
-				//border: '1px solid red',
-				//display: 'grid',
-				alignItems:'center',
-				//justifyContent: 'center',
-				margin:'10px 0 5px 10px',
-			}}
+			style={props.estiloCampo?props.estiloCampo:{margin: "5px 0 5px 0px"}}
 			>
 				<Label 
 					labelForm={indexadoForm ? `${indexadoForm} ${labelText}` : labelText} 

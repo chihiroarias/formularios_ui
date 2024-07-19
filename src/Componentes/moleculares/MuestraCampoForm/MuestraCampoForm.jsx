@@ -5,22 +5,18 @@ import CustomTextArea from "../CustomTextArea/CustomTextArea";
 import SeccionField from "../../atomicos/SectionField/SectionField";
 import MuestraSelectDelSistema from "../selects/MuestraSelectDelSistema";
 import MuestraSelectPrecargado from "../selects/MuestraSelectPrecargado";
+import {styleCampo} from "../../../Utils/styleCampo"
 
 const MuestraCampoForm = (props) => {
   return (
+   
     <div
       className="form-group"
-      style={{
-       // display: "flex",
-       // alignItems: "center",
-       // justifyContent: "flex-end",
-       // margin: "5px 0 5px 10px",
-      }}
      >
       {props.type === "textarea" ? (
         <div>
           <CustomTextArea
-            style={{ marginInline: "10px" }}
+            estiloCampo={styleCampo}
             {...props}
           />
         </div>
@@ -33,9 +29,9 @@ const MuestraCampoForm = (props) => {
         && props.type !== "select" 
         && props.type !== "sExistentes"
         && props.type !== "sPrecargado"? (
-        <div>
-          <CustomInputField           
-            style={{ marginInline: "10px" }}
+        <div >
+          <CustomInputField    
+           estiloCampo={styleCampo}       
             {...props}
           />
         </div>
@@ -56,6 +52,7 @@ const MuestraCampoForm = (props) => {
       {(props.type === "select" || props.type==="sExistentes") && props.selectName ? (
         <div>
           <MuestraSelectDelSistema 
+            estiloCampo={styleCampo}  
             selectId={props.selectId} 
             {...props}
           />
@@ -67,6 +64,7 @@ const MuestraCampoForm = (props) => {
       {props.type==="sPrecargado" && props.selectEndpoint ? (
         <div>
           <MuestraSelectPrecargado
+            estiloCampo={styleCampo}
             selectEndpoint={props.selectEndpoint} 
             {...props}
           />

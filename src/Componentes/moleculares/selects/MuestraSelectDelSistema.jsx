@@ -17,13 +17,7 @@ const MuestraSelectDelSistema = ({ selectId, ...props }) => {
         (response) => {
           setSelectConfig(
           <div 
-            style={{
-              //border: '1px solid red',  
-              display: 'flex',
-              alignItems:'center',
-              justifyContent: 'space-between',
-              margin:'5px 0 5px 10px',
-            }}
+            style={props.estiloCampo?props.estiloCampo:{}}
             >            
             <Label labelForm={props.indexadoForm ? `${props.indexadoForm} ${labelText}` : labelText} htmlFor={props.htmlFor ?? props.id}/>
             <Select

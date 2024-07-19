@@ -62,27 +62,29 @@ export default function CreateDato({ addField, indice, setIndice }) {
     setErrorIdCampo("");
 
     // buscar errores
-    if (!fieldData.indexadoForm) {
-      setErrorIndexado("El índice no puede estar vacío");
-      esValido = false;
-    }
-    if (!fieldData.labelForm) {
-      setErrorNombreCampo("Nombre Campo no puede estar vacío");
-      esValido = false;
-    }
+
     if (!fieldData.type) {
       setErrorTipoDato("Debe elegir un tipo de dato");
       esValido = false;
-    }
-    if (!fieldData.id) {
-      setErrorIdCampo("Debe ingresar un identificador para el campo");
-      esValido = false;
-    }
-    if (!fieldData.agrupacionRadio && fieldData.type === "radio") {
-      setErrorAgruparRadio(
-        "Debe establecer una agrupación para el tipo de input radio"
-      );
-      esValido = false;
+    }else{
+      if (!fieldData.indexadoForm) {
+        setErrorIndexado("El índice no puede estar vacío");
+        esValido = false;
+      }
+      if (!fieldData.labelForm) {
+        setErrorNombreCampo("Nombre Campo no puede estar vacío");
+        esValido = false;
+      }
+      if (!fieldData.id) {
+        setErrorIdCampo("Debe ingresar un identificador para el campo");
+        esValido = false;
+      }
+      if (!fieldData.agrupacionRadio && fieldData.type === "radio") {
+        setErrorAgruparRadio(
+          "Debe establecer una agrupación para el tipo de input radio"
+        );
+        esValido = false;
+      }
     }
     return esValido;
   }
@@ -120,9 +122,9 @@ export default function CreateDato({ addField, indice, setIndice }) {
         style={{
           //border: '1px solid red',
          // display: "flex",
-          alignItems: "center",
+        //alignItems: "center",
         //  justifyContent: "space-between",
-          margin: "10px 0 5px 10px",
+          margin: "5px 0 5px 0px",
         }}
        >
         <Label labelForm={"Tipo de Campo *"} htmlFor={"dato"} />
@@ -292,11 +294,11 @@ export default function CreateDato({ addField, indice, setIndice }) {
             />
           </div>
         )}
-      {fieldData.type === "select" && (
+      {/* {fieldData.type === "select" && (
         <div>
           <ConfigureSelect />
         </div>
-      )}
+      )} */}
 
       <div>
         {fieldData.type !== "" && fieldData.type !== "section" && (
