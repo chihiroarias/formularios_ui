@@ -15,13 +15,7 @@ const MuestraSelectPrecargado = ({ selectEndpoint, ...props }) => {
 
     return (
     <div       
-        style={{
-            //border: '1px solid red',
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "flex-end",
-            margin: "5px 0 5px 10px",
-        }}>
+    style={props.estiloCampo?props.estiloCampo:{margin: "5px 0 5px 0px"}}>
         <Label labelForm={props.indexadoForm ? `${props.indexadoForm} ${labelText}` : labelText} htmlFor={props.htmlFor ?? props.id}/>
         <Select
             id={props.id}

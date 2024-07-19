@@ -3,7 +3,7 @@ import CustomInputField from '../CustomInputField/CustomInputField';
 
 
 
-const FormTitle = ({ title, setTitle, required }) => {
+const FormTitle = ({ title, setTitle, required, ...props}) => {
 	return (
 	  <>
 		<CustomInputField
@@ -14,7 +14,10 @@ const FormTitle = ({ title, setTitle, required }) => {
 			type={"text"} 
 			value={title}
 			required={required} 
-			onChange={(e) => setTitle(e.target.value)}/>
+			onChange={(e) => setTitle(e.target.value)}
+			error={props.error?props.error:""}
+			/>
+			
 	  </>
 	);
   };

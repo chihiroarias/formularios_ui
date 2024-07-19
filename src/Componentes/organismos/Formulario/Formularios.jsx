@@ -66,17 +66,12 @@ export default function Formularios() {
   return (
     <div className="seccion laboratorio ">
       <MenuNavegacion submenuSeleccionado="formularios" />
-      <br />
-
-      <br />
-      <br />
-      <br />
-      <div className="contenido ">
+      <div className="contenido">
         {loader && <Loader>Cargando formulario</Loader>}
         {!loader && formularios && (
           <>
             <div className="tarjetasLaboratoriosContainer flexContainer">
-              <div className="tarjeta listadoLaboratorios">
+              <div className="tarjeta listadoLaboratorios  mt-24 px-10">
                 <h1>Listado de formularios</h1>
                 {formularios.map((form) => {
                   return (
@@ -106,10 +101,9 @@ export default function Formularios() {
               )}
               {formulario && (
                 <div>
-                  <div className="tarjeta laboratorioSeleccionado">
-                    <h1>Formulario: {formulario.formulario.titulo}</h1>
+                  <div className="tarjeta laboratorioSeleccionado  mt-24 px-10">
+                    <h1 className="pt-2">{formulario.formulario.codigo} - {formulario.formulario.titulo}</h1>
                     <p>Descripción: {formulario.formulario.descripcion}</p>
-                    <p>Código: {formulario.formulario.codigo}</p>
                     {formulario.campos && formulario.campos.length > 0 ? (
                       formulario.campos.map((campo) => (
                         <MuestraCampoForm

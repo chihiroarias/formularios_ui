@@ -18,24 +18,55 @@ function Formulario() {
   const [fields, setFields] = useState([]);
   const [indice, setIndice] = useState(1);
 
+  const [errorTitle, setErrorTitle] = useState("");
+  const [errorCodigo, setErrorCodigo] = useState("");
+  const [errorField, setErrorField] = useState("");
+
+  function validarForm() {
+    let esValido = true;
+
+    // limpiar errores
+    setErrorTitle("");
+    setErrorCodigo("");
+    setErrorField("");
+
+    // buscar errores
+
+    if (!title.trim()) {
+      setErrorTitle("Debe asignar un título");
+      esValido = false;
+    }
+    if (!codigo.trim()) {
+      setErrorCodigo("Debe asignar un código");
+      esValido = false;
+    }
+    if (fields.length === 0) {
+      setErrorField("Debe agregar campos al formulario");
+      esValido = false;
+    }
+    return esValido;
+  }
+
   const addField = (field) => {
     console.log("Adding field:", field);
     setFields([...fields, { ...field, indice }]);
   };
 
   function generateForm() {
-    accessAPI(
-      "POST",
-      "admin/form/form",
-      { titulo: title, descripcion: description, codigo: codigo },
-      (response) => {
-        console.log(response);
-        agregarCampos(response.id);
-      },
-      (response) => {
-        console.log(response);
-      }
-    );
+    if (validarForm()) {
+      accessAPI(
+        "POST",
+        "admin/form/form",
+        { titulo: title, descripcion: description, codigo: codigo },
+        (response) => {
+          console.log(response);
+          agregarCampos(response.id);
+        },
+        (response) => {
+          console.log(response);
+        }
+      );
+    }
   }
 
   function agregarCampos(id) {
@@ -77,8 +108,14 @@ function Formulario() {
               type={"text"}
               required={true}
               onChange={(e) => setCodigo(e.target.value)}
+              error={errorCodigo ? errorCodigo : ""}
             />
-            <FormTitle title={title} setTitle={setTitle} required={true} />
+            <FormTitle
+              title={title}
+              setTitle={setTitle}
+              required={true}
+              error={errorTitle}
+            />
             <FormDescription
               description={description}
               setDescription={setDescription}
@@ -89,6 +126,21 @@ function Formulario() {
               indice={indice}
               setIndice={setIndice}
             />
+            <div>
+              {errorField && (
+                <div className="flex justify-end text-red-500 text-xs"
+                  // style={{
+                  //   //border: '1px solid red',
+                  //   color: "red",
+                  //   display: "flex",
+                  //   justifyContent: "end",
+                  //   fontSize: "0.75em",
+                  // }}
+                >
+                  {errorField }
+                </div>
+              )}
+            </div>
           </div>
           {/* Renderizo los campos */}
           <div className="ml-12">
@@ -116,7 +168,6 @@ function Formulario() {
             ))}
             <Button onClick={generateForm} text={"Generar Formulario"} />
           </div>
-          
         </div>
       </div>
     </div>
