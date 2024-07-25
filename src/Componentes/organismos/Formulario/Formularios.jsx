@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { accessAPI } from "../../../Utils/utils";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import MenuNavegacion from "../menuNavegacion/menuNavegacion.js";
 import Loader from "../../../elementos/loader/Loader";
 import "./formularios.css";
@@ -14,6 +14,7 @@ export default function Formularios() {
   const [formulario, setFormulario] = useState(null);
 
   const { formularioId } = useParams();
+  const navigate = useNavigate();
 
   // Trae todos los formularios
   useEffect(() => {
@@ -102,7 +103,19 @@ export default function Formularios() {
               {formulario && (
                 <div>
                   <div className="tarjeta laboratorioSeleccionado  mt-24 px-10">
-                    <h1 className="pt-2">{formulario.formulario.codigo} - {formulario.formulario.titulo}</h1>
+                    <h1 className="pt-2">
+                      {formulario.formulario.codigo} -{" "}
+                      {formulario.formulario.titulo}
+                      {" - "}{" "}
+                      <button
+                        className="verde"
+                        onClick={() =>
+                          navigate(`/formulario/form/edit/${formulario.id}`)
+                        }
+                      >
+                        EDITAR
+                      </button>
+                    </h1>
                     <p>Descripción: {formulario.formulario.descripcion}</p>
                     {formulario.campos && formulario.campos.length > 0 ? (
                       formulario.campos.map((campo) => (
@@ -137,79 +150,3 @@ export default function Formularios() {
     </div>
   );
 }
-
-/**
- 
-  return (
-    <div>
-      <MenuNavegacion submenuSeleccionado="formularios" />
-      <div>
-        {loader && <Loader>Cargando formulario</Loader>}
-        {!loader && formularios && (
-          <>
-            <div className="tarjetasLaboratoriosContainer flexContainer">
-              <div className="tarjeta listadoLaboratorios">
-                <h1>Listado de formularios</h1>
-                {formularios.map((form) => {
-                  return (
-                    <div
-                      className={
-                        formularioSeleccionado === form.value
-                          ? "  seleccionado"
-                          : "laboratorio"
-                      }
-                      key={form.value}
-                    >
-                      <div
-                        onClick={() => {
-                          setFormularioSeleccionado(form.value);
-                        }}
-                      >
-                        {form.codigo}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-              {!formulario && loaderFormulario && (
-                <Loader>Cargando detalles del formulario</Loader>
-              )}
-              {formulario && (
-                <div>
-                  <div className="tarjeta laboratorioSeleccionado">
-                    <h1>Formulario: {formulario.codigo}</h1>
-                    <p>Descripción: {formulario.descripcion}</p>
-                    <p>Código: {formulario.codigo}</p>
-                    {formulario.campos && formulario.campos.length > 0 ? (
-                      formulario.campos.map((campo) => (
-                        <MuestraCampoForm
-                          key={campo.id}
-                          formversionid={campo.formversionid}
-                          labelForm={campo.labelForm}
-                          htmlFor={campo.htmlFor}
-                          placeholder={campo.placeholder}
-                          agrupacionRadio={campo.agrupacionRadio}
-                          regex={campo.regex}
-                          info={campo.info}
-                          indexadoForm={campo.indexadoForm}
-                          endpoint={campo.endpoint}
-                          condicional={campo.condicional}
-                          required={campo.required}
-                          selectPrecargadoId={campo.selectPrecargadoId}
-                          id={campo.id}
-                          type={campo.type}
-                        />
-                      ))
-                    ) : (
-                      <p>No hay campos disponibles para este formulario.</p>
-                    )}
-                  </div>
-                </div>
-              )}
-            </div>
-          </>
-        )}
-      </div>
-    </div>
-  );
- */

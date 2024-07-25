@@ -1,0 +1,54 @@
+.campoEditableContainer {
+  justify-content: flex-start;
+  min-height: 50px;
+}
+
+.campoEditableContainer span {
+  align-self: center;
+}
+
+.campoEditableContainer a {
+  align-self: center;
+}
+
+.campoEditableContainer a img {
+  vertical-align: middle;
+}
+
+.campoEditableContainer .campoEditable {
+  flex-grow: 1;
+}
+
+.campoEditableContainer .campoNombre {
+  margin-right: 15px;
+  color: #999999;
+  cursor: pointer;
+  vertical-align: super;
+}
+
+.campoEditableContainer img {
+  display: inline;
+  height: 15px;
+  margin: 0px 10px;
+  cursor: pointer;
+}
+
+.campoEditableContainer .sinDato {
+  color: #999999;
+  cursor: pointer;
+}
+
+.campoEditableContainer .campoEditableLoader {
+  animation: rotation 2s infinite linear;
+  width: 30px;
+  height: auto;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
