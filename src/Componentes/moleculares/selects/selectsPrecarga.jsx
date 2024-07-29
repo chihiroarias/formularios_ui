@@ -38,22 +38,14 @@ const SelectsPrecargado = ({onCreate,errorEndpoint }) => {
         <div>
             <CustomInputField
             id={"endpoint"}
-            labelForm={"Endpoint"}
+            labelForm={"RESTful Endpoint"}
             name={"endpoint"}
             htmlFor={"endpoint"}
             type={"text"}
             value={endpoint}
             onChange={(e) => setEndpoint(e.target.value)}
             error={errorEndpoint ? errorEndpoint : ""}
-            />
-        </div>
-        <div      style={{
-          //border: '1px solid red',
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          margin: "5px 0 5px 10px",
-        }}>            
+            />      
             <Label labelForm={'Previsualización'}/>
             <Select
               endpoint={endpoint}

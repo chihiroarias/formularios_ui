@@ -2,15 +2,17 @@ import React, { useState } from "react";
 import Label from "../../atomicos/Label/Label.jsx";
 import Button from "../../atomicos/Button/Button.jsx";
 import CustomInputField from "../CustomInputField/CustomInputField.jsx";
-import Select from "../../atomicos/Select/Select.jsx";
+//import Select from "../../atomicos/Select/Select.jsx";
 import SelectsExistentes from "../selects/selectsDelSistema.jsx";
 import { selectDato } from "../../../Utils/selectDatoUtils.js";
-
-import ConfigureSelect from "../../moleculares/selects/configureSelect.jsx";
+import SelectOptionGroup from "../../atomicos/Select/SelectOptionGroup.jsx";
+//import ConfigureSelect from "../../moleculares/selects/configureSelect.jsx";
 import CreateSelect from "../selects/createSelect.jsx";
 import SelectsPrecargado from "../selects/selectsPrecarga.jsx";
 
 export default function CreateDato({ addField, indice, setIndice }) {
+
+  const [ordenCampo,setOrdenCampo]= useState(0);
   const [fieldData, setFieldData] = useState({
     htmlFor: "",
     id: "",
@@ -27,6 +29,7 @@ export default function CreateDato({ addField, indice, setIndice }) {
     selectName: "",
     selectId: "",
     selectEndpoint: "",
+    ordenCampo:0
   });
 
   // Sección ERRORES
@@ -64,7 +67,7 @@ export default function CreateDato({ addField, indice, setIndice }) {
     // buscar errores
 
     if (!fieldData.type) {
-      setErrorTipoDato("Debe elegir un tipo de dato");
+      setErrorTipoDato("Debe elegir un tipo de campo");
       esValido = false;
     }else{
       if (!fieldData.indexadoForm) {
@@ -91,7 +94,10 @@ export default function CreateDato({ addField, indice, setIndice }) {
 
   function crearCampoString() {
     if (validar()) {
-      addField({ ...fieldData, indice });
+     
+      setOrdenCampo(ordenCampo + 1);
+     
+      addField({ ...fieldData, indice, ordenCampo:ordenCampo });
 
       setIndice(indice + 1);
 
@@ -112,30 +118,23 @@ export default function CreateDato({ addField, indice, setIndice }) {
         selectName: "",
         selectId: "",
         selectEndpoint: "",
+        ordenCampo:ordenCampo,
       });
     }
   }
 
   return (
     <>
-      <div
-        style={{
-          //border: '1px solid red',
-         // display: "flex",
-        //alignItems: "center",
-        //  justifyContent: "space-between",
-          margin: "5px 0 5px 0px",
-        }}
-       >
+      <div className="mt-5">
+        
         <Label labelForm={"Tipo de Campo *"} htmlFor={"dato"} />
-        <Select
+        <SelectOptionGroup
           id="dato"
           value={fieldData.type}
           onChange={(e) => setFieldData({ ...fieldData, type: e.target.value })}
           options={selectDato}
-          //endpoint={"admin/form/tiposcampos"}
           error={errorTipoDato ? errorTipoDato : ""}
-        />
+          />
       </div>
 
       {fieldData.type === "radio" && (
@@ -160,11 +159,11 @@ export default function CreateDato({ addField, indice, setIndice }) {
         <>
           <div>
             <CustomInputField
-              id={"indice"}
-              labelForm={"Indice"}
-              name={"indice"}
-              placeholder={"Asigne índice al campo"}
-              htmlFor={"indice"}
+              id={"indexado"}
+              labelForm={"Indexado"}
+              name={"indexado"}
+              placeholder={"Asigne indexado al campo"}
+              htmlFor={"indexado"}
               type={"text"}
               value={fieldData.indexadoForm}
               required={true}
@@ -294,12 +293,6 @@ export default function CreateDato({ addField, indice, setIndice }) {
             />
           </div>
         )}
-      {/* {fieldData.type === "select" && (
-        <div>
-          <ConfigureSelect />
-        </div>
-      )} */}
-
       <div>
         {fieldData.type !== "" && fieldData.type !== "section" && (
           <div

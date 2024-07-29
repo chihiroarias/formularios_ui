@@ -7,7 +7,7 @@ const Label = ({
 	...props }) => {
 	return (
 		<label
-			className='prettyInputEtiqueta'
+			className='prettyInputEtiqueta pl-2'
 			style={{marginRight:'10px'}}
 			htmlFor={htmlFor}
 			{...props}
