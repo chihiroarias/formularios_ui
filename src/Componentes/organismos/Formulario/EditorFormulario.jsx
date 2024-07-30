@@ -7,6 +7,7 @@ import "./formularios.css";
 import MuestraCampoForm from "../../moleculares/MuestraCampoForm/MuestraCampoForm";
 import CampoEditable from "../../../elementos/campoEditable/CampoEditable.js";
 import { MdDelete } from "react-icons/md";
+import CamposEditables from "./CamposEditables.jsx";
 
 export default function EditorFormulario() {
   const [loader, setLoader] = useState(true);
@@ -70,9 +71,14 @@ export default function EditorFormulario() {
     <div className="seccion laboratorio">
       <MenuNavegacion submenuSeleccionado="formularios" />
       <div className="contenido">
-        {loader && <Loader>Cargando formulario</Loader>}
-        {!loader && formulario && (
-          <>
+        <CamposEditables formularioId={formularioId} />
+      </div>
+    </div>
+  );
+}
+
+/*
+  <>
             <div className="tarjetasLaboratoriosContainer flexContainer">
               {!formulario && loaderFormulario && (
                 <Loader>Cargando detalles del formulario</Loader>
@@ -113,8 +119,4 @@ export default function EditorFormulario() {
               )}
             </div>
           </>
-        )}
-      </div>
-    </div>
-  );
-}
+*/
