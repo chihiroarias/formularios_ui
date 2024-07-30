@@ -4,6 +4,7 @@ import FormDescription from "../../moleculares/FormDescription/FormDescription.j
 //import TipoCampo from "../../moleculares/TipoCampo/TipoCampo.jsx";
 import MuestraCampoForm from "../../moleculares/MuestraCampoForm/MuestraCampoForm.jsx";
 import { MdDelete } from "react-icons/md";
+import Swal from 'sweetalert2';
 
 import Button from "../../atomicos/Button/Button.jsx";
 import CreateDato from "../../moleculares/CreateDato/CreateDato.jsx";
@@ -86,8 +87,29 @@ function Formulario() {
     });
   }
 
+  // const deleteField = (indice) => {
+  //   setFields(fields.filter((field) => field.indice !== indice));
+  // };
   const deleteField = (indice) => {
-    setFields(fields.filter((field) => field.indice !== indice));
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: "¡No podrás revertir esto!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#56638a',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminarlo',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setFields(fields.filter((field) => field.indice !== indice));
+        Swal.fire(
+          '¡Eliminado!',
+          'El campo ha sido eliminado.',
+          'success'
+        )
+      }
+    })
   };
 
   return (
@@ -103,24 +125,28 @@ function Formulario() {
         <div className="grid grid-cols-2 gap-12">
           <div className="mr-12">
             <h1 className="mb-5">Generador de Formularios</h1>
-            <CustomInputField
-              labelForm={"Código de formulario"}
-              type={"text"}
-              required={true}
-              onChange={(e) => setCodigo(e.target.value)}
-              error={errorCodigo ? errorCodigo : ""}
-            />
-            <FormTitle
-              title={title}
-              setTitle={setTitle}
-              required={true}
-              error={errorTitle}
-            />
-            <FormDescription
-              description={description}
-              setDescription={setDescription}
-              required={false}
-            />
+            <div className="mb-12 w-full">
+              <h3 className="align-center mb-3 text-center"> Información del formulario</h3>
+              <CustomInputField
+                labelForm={"Código de formulario"}
+                type={"text"}
+                required={true}
+                onChange={(e) => setCodigo(e.target.value)}
+                error={errorCodigo ? errorCodigo : ""}
+              />
+              <FormTitle
+                title={title}
+                setTitle={setTitle}
+                required={true}
+                error={errorTitle}
+              />
+              <FormDescription
+                description={description}
+                setDescription={setDescription}
+                required={false}
+              />
+            </div>
+            <h2 className="align-center mb-3 bg text-center">Creación de campos</h2>
             <CreateDato
               addField={addField}
               indice={indice}

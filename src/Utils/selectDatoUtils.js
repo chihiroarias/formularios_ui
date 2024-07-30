@@ -1,4 +1,4 @@
-export const selectDato = [
+/*export const selectDato = [
   { name: "  Elija tipo  ", value: "" },
   { name: "Archivo", value: "file" },
   { name: "Área de texto", value: "textarea" },
@@ -16,7 +16,7 @@ export const selectDato = [
   { name: "Select precargado", value: "sPrecargado" },
   { name: "URL", value: "url" },
 ];
-/*
+
 id|nombreTipo            |
 --+----------------------+
  0|Elija un tipo         |
@@ -36,3 +36,41 @@ id|nombreTipo            |
 15|Selects precargado    |
 10|URL                   |
 */
+export const selectDato = [
+  {
+    
+    options: [
+      { name: "Elija tipo", value: "" },
+    ],
+  },
+  {
+    label: "Campos destacados",
+    options: [
+      { name: "Sección", value: "section" },
+      { name: "Texto", value: "text" },
+      { name: "Área de texto", value: "textarea" },
+      { name: "Fecha", value: "date" },
+      { name: "Archivo", value: "file" },
+    ],
+  },
+  {
+    label: "Campos de selección",
+    options: [
+      { name: "Checkbox", value: "checkbox" },
+      { name: "Radio", value: "radio" },
+      { name: "Select", value: "select" },
+      { name: "Select anidado", value: "sAnidado" },
+      { name: "Selects existentes", value: "sExistentes" },
+      { name: "Select precargado", value: "sPrecargado" },
+    ],
+  },
+  {
+    label: "Otros campos",
+    options: [
+      { name: "Email", value: "email" },
+      { name: "Número", value: "number" },
+      { name: "Telefono", value: "tel" },
+      { name: "URL", value: "url" },
+    ],
+  },
+];

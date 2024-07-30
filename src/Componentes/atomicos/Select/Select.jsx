@@ -41,19 +41,10 @@ const Select = ({
     }
   }, [endpointParams]);
 
-
   return (
     <>
       <div>
-        <div
-          style={{
-            //border: '1px solid red',
-            // display: "flex",
-            // alignItems: "center",
-            // justifyContent: "space-between",
-           // margin: "5px 0 5px 10px",
-          }}
-        >
+        <div>
           <select
             className=" prettyInput centrado"
             name={selectName}
@@ -67,9 +58,7 @@ const Select = ({
             {optionsEndpoint
               ? optionsEndpoint.map((option, index) => (
                   <option key={index} value={option.value}>
-
                     {option.name || option.etiqueta}
-
                   </option>
                 ))
               : options.map((option, index) => (

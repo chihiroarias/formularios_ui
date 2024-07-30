@@ -1,4 +1,4 @@
-import React, { useState,  useEffect } from "react";
+import React, { useState, useEffect, forwardRef, useImperativeHandle } from "react";
 import { accessAPI } from "../../../Utils/utils";
 import InputField from "../../atomicos/InputField/InputField";
 import Label from "../../atomicos/Label/Label";
@@ -6,7 +6,7 @@ import { MdDelete } from "react-icons/md";
 import CustomInputField from "../CustomInputField/CustomInputField"
 import Button from "../../atomicos/Button/Button"
 
-const CreateSelect = ({onCreate}) => {
+const CreateSelect = ({onCreate}, ref) => {
   const [options, setOptions] = useState([{ etiqueta: "", value: "" }]);
   const [selectName, setSelectName] = useState("");
   const [payload, setPayload] = useState(null);
@@ -32,22 +32,36 @@ const CreateSelect = ({onCreate}) => {
 
   const createSelectPrecargado = () => {
     if (!selectName.trim()) {
-      alert("El nombre del select no puede estar vacío.");
+      alert("Debe asignarle un nombre al select");
       return;
     }
     const hasEmptyLabel = options.some(option => option.etiqueta.trim() === "");
     if (hasEmptyLabel) {
-      alert("El nombre de las opciones no puede estar vacío.");
+      alert("El input opción no puede estar vacío");
       return;
     }
-    const stirngtopost = options
-      .map((optn) => `${optn.value} - ${optn.name || optn.etiqueta}`)
+    const optionsWithDefaultValues = options.map((option) => ({
+      ...option,
+      value: option.value.trim() === "" ? option.etiqueta : option.value,
+    }));
+    setOptions(optionsWithDefaultValues); 
+    // const stirngtopost = optionsWithDefaultValues
+    //   .map((optn) => `${optn.value} - ${optn.name || optn.etiqueta}`)
+    //   .join(" ; ");
+    //   setPayload({
+    //     precargaSelects: stirngtopost,
+    //     nombre: selectName,
+    //   });
+    const stringToPost = optionsWithDefaultValues
+      .map((option) => `${option.value} - ${option.etiqueta}`)
       .join(" ; ");
-      setPayload({
-        precargaSelects: stirngtopost,
-        nombre: selectName,
-      });
+
+    setPayload({
+      precargaSelects: stringToPost,
+      nombre: selectName,
+    });
   };
+
 
   useEffect(() => {
     if (payload) {
@@ -61,8 +75,11 @@ const CreateSelect = ({onCreate}) => {
           if (response && response.selectPrecargado && response.selectPrecargado.id) {
             onCreate(selectName, response.selectPrecargado.id);
             alert("El select fue agregado exitosamente");
+            setOptions([{ etiqueta: "", value: "" }]);
+            setSelectName("");
+            setPayload(null);
           } else {
-            console.error("Error: response.selectPrecargado.id is missing");
+            console.error("Error:"+ response.selectPrecargado.id + "is missing");
           }
         },
         (error) => {
