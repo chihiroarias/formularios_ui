@@ -7,7 +7,7 @@ import "./formularios.css";
 import MuestraCampoForm from "../../moleculares/MuestraCampoForm/MuestraCampoForm";
 import CampoEditable from "../../../elementos/campoEditable/CampoEditable.js";
 import { MdDelete } from "react-icons/md";
-import CamposEditables from "./CamposEditables.jsx";
+import CamposEditables from "./EditFieldData.jsx";
 
 export default function EditorFormulario() {
   const [loader, setLoader] = useState(true);

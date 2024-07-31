@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { accessAPI } from "../../../Utils/utils";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import MenuNavegacion from "../menuNavegacion/menuNavegacion.js";
 import Loader from "../../../elementos/loader/Loader";
 import "./formularios.css";
 import MuestraCampoForm from "../../moleculares/MuestraCampoForm/MuestraCampoForm";
+import EditFieldData from "./EditFieldData";
 
 export default function Formularios() {
   const [loader, setLoader] = useState(true);
@@ -12,18 +13,16 @@ export default function Formularios() {
   const [formularioSeleccionado, setFormularioSeleccionado] = useState();
   const [formularios, setFormularios] = useState([]);
   const [formulario, setFormulario] = useState(null);
+  const [campoEnEdicion, setCampoEnEdicion] = useState(null);
 
   const { formularioId } = useParams();
-  const navigate = useNavigate();
 
-  // Trae todos los formularios
   useEffect(() => {
     accessAPI(
       "GET",
       "admin/form/formularios/listadoformulario",
       null,
       (response) => {
-        console.log(response);
         setFormularios(response);
         setLoader(false);
       },
@@ -34,17 +33,15 @@ export default function Formularios() {
     setFormularioSeleccionado(formularioId);
   }, [formularioId]);
 
-  //Setea el loader dependiendo de si llegaron los datos
   useEffect(() => {
     if (formularios) {
       setLoader(false);
     }
   }, [formularios]);
 
-  // Cuando se selecciona un formulario en específico se cargan sus datos
   useEffect(() => {
     if (formularioSeleccionado) {
-      setFormulario();
+      setFormulario(null);
       setLoaderFormulario(true);
       accessAPI(
         "GET",
@@ -58,11 +55,21 @@ export default function Formularios() {
         (response) => {
           console.log(response);
           setLoaderFormulario(false);
-          setFormularioSeleccionado();
+          setFormularioSeleccionado(null);
         }
       );
     }
   }, [formularioSeleccionado]);
+
+  const updateField = (updatedField) => {
+    setFormulario((prevForm) => {
+      const updatedFields = prevForm.campos.map((campo) =>
+        campo.id === updatedField.id ? updatedField : campo
+      );
+      return { ...prevForm, campos: updatedFields };
+    });
+    setCampoEnEdicion(null);
+  };
 
   return (
     <div className="seccion laboratorio ">
@@ -72,71 +79,71 @@ export default function Formularios() {
         {!loader && formularios && (
           <>
             <div className="tarjetasLaboratoriosContainer flexContainer">
-              <div className="tarjeta listadoLaboratorios  mt-24 px-10">
+              <div className="tarjeta listadoLaboratorios mt-24 px-10">
                 <h1>Listado de formularios</h1>
-                {formularios.map((form) => {
-                  return (
+                {formularios.map((form) => (
+                  <div
+                    className={
+                      formularioSeleccionado === form.formid
+                        ? "laboratorio seleccionado"
+                        : "laboratorio"
+                    }
+                    key={form.formid}
+                  >
                     <div
-                      className={
-                        formularioSeleccionado === form.formid
-                          ? "laboratorio seleccionado"
-                          : "laboratorio"
-                      }
-                      key={form.formid}
+                      onClick={() => {
+                        setFormularioSeleccionado(form.formid);
+                      }}
                     >
-                      <div
-                        onClick={() => {
-                          setFormularioSeleccionado(form.formid);
-                        }}
-                      >
-                        {form.formulario.codigo +
-                          " - " +
-                          form.formulario.titulo}
-                      </div>
+                      {form.formulario.codigo + " - " + form.formulario.titulo}
                     </div>
-                  );
-                })}
+                  </div>
+                ))}
               </div>
               {!formulario && loaderFormulario && (
                 <Loader>Cargando detalles del formulario</Loader>
               )}
               {formulario && (
                 <div>
-                  <div className="tarjeta laboratorioSeleccionado  mt-24 px-10">
+                  <div className="tarjeta laboratorioSeleccionado mt-24 px-10">
                     <h1 className="pt-2">
                       {formulario.formulario.codigo} -{" "}
                       {formulario.formulario.titulo}
                       {" - "}{" "}
-                      <button
-                        className="verde"
-                        onClick={() =>
-                          navigate(`/formulario/form/edit/${formulario.id}`)
-                        }
-                      >
-                        EDITAR
-                      </button>
                     </h1>
                     <p>Descripción: {formulario.formulario.descripcion}</p>
                     {formulario.campos && formulario.campos.length > 0 ? (
-                      formulario.campos.map((campo) => (
-                        <MuestraCampoForm
-                          key={campo.id}
-                          formversionid={campo.formversionid}
-                          labelForm={campo.labelForm}
-                          htmlFor={campo.htmlFor}
-                          placeholder={campo.placeholder}
-                          agrupacionRadio={campo.agrupacionRadio}
-                          regex={campo.regex}
-                          info={campo.info}
-                          indexadoForm={campo.indexadoForm}
-                          endpoint={campo.endpoint}
-                          condicional={campo.condicional}
-                          required={campo.required}
-                          selectPrecargadoId={campo.selectPrecargadoId}
-                          id={campo.id}
-                          type={campo.type}
-                        />
-                      ))
+                      formulario.campos.map((campo) =>
+                        campoEnEdicion && campoEnEdicion.id === campo.id ? (
+                          <EditFieldData
+                            key={campo.id}
+                            fieldData={campoEnEdicion}
+                            updateField={updateField}
+                          />
+                        ) : (
+                          <div key={campo.id}>
+                            <MuestraCampoForm
+                              formversionid={campo.formversionid}
+                              labelForm={campo.labelForm}
+                              htmlFor={campo.htmlFor}
+                              placeholder={campo.placeholder}
+                              agrupacionRadio={campo.agrupacionRadio}
+                              regex={campo.regex}
+                              info={campo.info}
+                              indexadoForm={campo.indexadoForm}
+                              endpoint={campo.endpoint}
+                              condicional={campo.condicional}
+                              required={campo.required}
+                              selectPrecargadoId={campo.selectPrecargadoId}
+                              id={campo.id}
+                              type={campo.type}
+                            />
+                            <button onClick={() => setCampoEnEdicion(campo)}>
+                              Editar
+                            </button>
+                          </div>
+                        )
+                      )
                     ) : (
                       <p>No hay campos disponibles para este formulario.</p>
                     )}
