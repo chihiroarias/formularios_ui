@@ -53,46 +53,16 @@ export default function EditFieldData({ fieldData, updateField }) {
     return esValido;
   }
 
-  function actualizarCampo() {
-    if (validar()) {
-      updateField(localData);
-    }
-    console.log(localData);
-    accessAPI(
-      "GET",
-      `admin/form/formversion/${localData.campoid}`,
-      localData,
-      (response) => {
-        console.log(response);
-      },
-      (response) => {
-        console.log(response);
-      }
-    );
-  }
-
   return (
     <>
-      <div className="mt-5">
-        <Label labelForm={"Tipo de Campo *"} htmlFor={"dato"} />
-        <CampoEditable
-          etiqueta="Tipo de Campo"
-          campo="type"
-          valor={localData.type}
-          entidadid={localData.id}
-          endpoint="admin/form/formversion"
-          dropdownopciones={selectDato}
-        />
-      </div>
-
       {localData.type === "radio" && (
         <div>
           <CampoEditable
             etiqueta="Agrupación Radio"
             campo="agrupacionRadio"
             valor={localData.agrupacionRadio}
-            entidadid={localData.id}
-            endpoint="admin/form/formversion"
+            entidadid={localData.campoid}
+            endpoint="admin/form"
           />
         </div>
       )}
@@ -104,8 +74,8 @@ export default function EditFieldData({ fieldData, updateField }) {
               etiqueta="Indexado"
               campo="indexadoForm"
               valor={localData.indexadoForm}
-              entidadid={localData.id}
-              endpoint="admin/form/formversion"
+              entidadid={localData.campoid}
+              endpoint="admin/form"
             />
           </div>
           <div>
@@ -113,8 +83,8 @@ export default function EditFieldData({ fieldData, updateField }) {
               etiqueta="Identificador Campo"
               campo="id"
               valor={localData.id}
-              entidadid={localData.id}
-              endpoint="admin/form/formversion"
+              entidadid={localData.campoid}
+              endpoint="admin/form"
             />
           </div>
           <div>
@@ -122,8 +92,8 @@ export default function EditFieldData({ fieldData, updateField }) {
               etiqueta="Nombre Campo"
               campo="labelForm"
               valor={localData.labelForm}
-              entidadid={localData.id}
-              endpoint="admin/form/formversion"
+              entidadid={localData.campoid}
+              endpoint="admin/form"
             />
           </div>
         </>
@@ -144,8 +114,8 @@ export default function EditFieldData({ fieldData, updateField }) {
               etiqueta="Placeholder"
               campo="placeholder"
               valor={localData.placeholder}
-              entidadid={localData.id}
-              endpoint="admin/form/formversion"
+              entidadid={localData.campoid}
+              endpoint="admin/form"
             />
           </div>
         )}
@@ -156,8 +126,8 @@ export default function EditFieldData({ fieldData, updateField }) {
             etiqueta="Info"
             campo="info"
             valor={localData.info}
-            entidadid={localData.id}
-            endpoint="admin/form/formversion"
+            entidadid={localData.campoid}
+            endpoint="admin/form"
           />
         </div>
       )}
@@ -197,8 +167,8 @@ export default function EditFieldData({ fieldData, updateField }) {
               etiqueta="Regex"
               campo="regex"
               valor={localData.regex}
-              entidadid={localData.id}
-              endpoint="admin/form/formversion"
+              entidadid={localData.campoid}
+              endpoint="admin/form"
             />
           </div>
         )}
@@ -216,18 +186,12 @@ export default function EditFieldData({ fieldData, updateField }) {
               etiqueta="Obligatorio"
               campo="required"
               valor={localData.required}
-              entidadid={localData.id}
-              endpoint="admin/form/formversion"
+              entidadid={localData.campoid}
+              endpoint="admin/form"
               esBooleano={true}
             />
           </div>
         )}
-
-        <Button
-          type="submit"
-          onClick={actualizarCampo}
-          text="Actualizar Campo"
-        />
       </div>
       <br />
     </>
