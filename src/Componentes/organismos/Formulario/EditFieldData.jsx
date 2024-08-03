@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Label from "../../atomicos/Label/Label.jsx";
 import Button from "../../atomicos/Button/Button.jsx";
-import CustomInputField from "../../moleculares/CustomInputField/CustomInputField.jsx";
-import SelectOptionGroup from "../../atomicos/Select/SelectOptionGroup.jsx";
-import CreateSelect from "../../moleculares/selects/createSelect.jsx";
-import SelectsExistentes from "../../moleculares/selects/selectsDelSistema.jsx";
-import SelectsPrecargado from "../../moleculares/selects/selectsPrecarga.jsx";
+import CampoEditable from "../../../elementos/campoEditable/CampoEditable.js";
 import { selectDato } from "../../../Utils/selectDatoUtils.js";
 import { accessAPI } from "../../../Utils/utils.js";
 
@@ -21,21 +17,6 @@ export default function EditFieldData({ fieldData, updateField }) {
   useEffect(() => {
     setLocalData(fieldData || {});
   }, [fieldData]);
-
-  const handleSelectCreate = (selectName, selectId) => {
-    setLocalData((prevData) => ({
-      ...prevData,
-      selectName,
-      selectId,
-    }));
-  };
-
-  const handleSelectPrecarga = (selectEndpoint) => {
-    setLocalData((prevData) => ({
-      ...prevData,
-      selectEndpoint,
-    }));
-  };
 
   function validar() {
     let esValido = true;
@@ -76,9 +57,10 @@ export default function EditFieldData({ fieldData, updateField }) {
     if (validar()) {
       updateField(localData);
     }
+    console.log(localData);
     accessAPI(
       "GET",
-      `admin/form/formversion/${""}`,
+      `admin/form/formversion/${localData.campoid}`,
       localData,
       (response) => {
         console.log(response);
@@ -93,29 +75,24 @@ export default function EditFieldData({ fieldData, updateField }) {
     <>
       <div className="mt-5">
         <Label labelForm={"Tipo de Campo *"} htmlFor={"dato"} />
-        <SelectOptionGroup
-          id="dato"
-          value={localData.type || ""}
-          onChange={(e) => setLocalData({ ...localData, type: e.target.value })}
-          options={selectDato}
-          error={errorTipoDato ? errorTipoDato : ""}
+        <CampoEditable
+          etiqueta="Tipo de Campo"
+          campo="type"
+          valor={localData.type}
+          entidadid={localData.id}
+          endpoint="admin/form/formversion"
+          dropdownopciones={selectDato}
         />
       </div>
 
       {localData.type === "radio" && (
         <div>
-          <CustomInputField
-            id={"agrupacionRadio"}
-            labelForm={"Agrupación Radio"}
-            name={"agrupacionRadio"}
-            htmlFor={"agrupacionRadio"}
-            type={"text"}
-            required={true}
-            value={localData.agrupacionRadio || ""}
-            onChange={(e) =>
-              setLocalData({ ...localData, agrupacionRadio: e.target.value })
-            }
-            error={errorAgruparRadio ? errorAgruparRadio : ""}
+          <CampoEditable
+            etiqueta="Agrupación Radio"
+            campo="agrupacionRadio"
+            valor={localData.agrupacionRadio}
+            entidadid={localData.id}
+            endpoint="admin/form/formversion"
           />
         </div>
       )}
@@ -123,55 +100,30 @@ export default function EditFieldData({ fieldData, updateField }) {
       {localData.type && (
         <>
           <div>
-            <CustomInputField
-              id={"indexado"}
-              labelForm={"Indexado"}
-              name={"indexado"}
-              placeholder={"Asigne indexado al campo"}
-              htmlFor={"indexado"}
-              type={"text"}
-              value={localData.indexadoForm || ""}
-              required={true}
-              onChange={(e) =>
-                setLocalData({ ...localData, indexadoForm: e.target.value })
-              }
-              error={errorIndexado ? errorIndexado : ""}
+            <CampoEditable
+              etiqueta="Indexado"
+              campo="indexadoForm"
+              valor={localData.indexadoForm}
+              entidadid={localData.id}
+              endpoint="admin/form/formversion"
             />
           </div>
           <div>
-            <CustomInputField
-              id={"idCampo"}
-              labelForm={"Identificador Campo"}
-              name={"idCampo"}
-              htmlFor={"idCampo"}
-              placeholder={"Asigne un id al campo"}
-              type={"text"}
-              required={true}
-              value={localData.id || ""}
-              onChange={(e) =>
-                setLocalData({
-                  ...localData,
-                  id: e.target.value,
-                  htmlFor: e.target.value,
-                })
-              }
-              error={errorIdCampo ? errorIdCampo : ""}
+            <CampoEditable
+              etiqueta="Identificador Campo"
+              campo="id"
+              valor={localData.id}
+              entidadid={localData.id}
+              endpoint="admin/form/formversion"
             />
           </div>
           <div>
-            <CustomInputField
-              id={"fieldName"}
-              labelForm={"Nombre Campo"}
-              name={"fieldName"}
-              htmlFor={"fieldName"}
-              required={true}
-              placeholder={"Texto del campo"}
-              type={"text"}
-              value={localData.labelForm || ""}
-              onChange={(e) =>
-                setLocalData({ ...localData, labelForm: e.target.value })
-              }
-              error={errorNombreCampo ? errorNombreCampo : ""}
+            <CampoEditable
+              etiqueta="Nombre Campo"
+              campo="labelForm"
+              valor={localData.labelForm}
+              entidadid={localData.id}
+              endpoint="admin/form/formversion"
             />
           </div>
         </>
@@ -188,51 +140,43 @@ export default function EditFieldData({ fieldData, updateField }) {
           "section",
         ].includes(localData.type) && (
           <div>
-            <CustomInputField
-              id={"placeholder"}
-              labelForm={"Placeholder"}
-              name={"placeholder"}
-              htmlFor={"placeholder"}
-              type={"text"}
-              value={localData.placeholder || ""}
-              onChange={(e) =>
-                setLocalData({ ...localData, placeholder: e.target.value })
-              }
+            <CampoEditable
+              etiqueta="Placeholder"
+              campo="placeholder"
+              valor={localData.placeholder}
+              entidadid={localData.id}
+              endpoint="admin/form/formversion"
             />
           </div>
         )}
 
       {localData.type && (
         <div>
-          <CustomInputField
-            id={"info"}
-            labelForm={"Info"}
-            name={"info"}
-            htmlFor={"info"}
-            type={"text"}
-            value={localData.info || ""}
-            onChange={(e) =>
-              setLocalData({ ...localData, info: e.target.value })
-            }
+          <CampoEditable
+            etiqueta="Info"
+            campo="info"
+            valor={localData.info}
+            entidadid={localData.id}
+            endpoint="admin/form/formversion"
           />
         </div>
       )}
 
       {localData.type === "select" && (
         <div>
-          <CreateSelect onCreate={handleSelectCreate} />
+          {/* Aquí necesitarás manejar la lógica específica para selects */}
         </div>
       )}
 
       {localData.type === "sExistentes" && (
         <div>
-          <SelectsExistentes onCreate={handleSelectCreate} />
+          {/* Aquí necesitarás manejar la lógica específica para selects existentes */}
         </div>
       )}
 
       {localData.type === "sPrecargado" && (
         <div>
-          <SelectsPrecargado onCreate={handleSelectPrecarga} />
+          {/* Aquí necesitarás manejar la lógica específica para selects precargados */}
         </div>
       )}
 
@@ -249,19 +193,16 @@ export default function EditFieldData({ fieldData, updateField }) {
           "section",
         ].includes(localData.type) && (
           <div>
-            <CustomInputField
-              id={"regex"}
-              labelForm={"Regex"}
-              name={"regex"}
-              htmlFor={"regex"}
-              type={"text"}
-              value={localData.regex || ""}
-              onChange={(e) =>
-                setLocalData({ ...localData, regex: e.target.value })
-              }
+            <CampoEditable
+              etiqueta="Regex"
+              campo="regex"
+              valor={localData.regex}
+              entidadid={localData.id}
+              endpoint="admin/form/formversion"
             />
           </div>
         )}
+
       <div>
         {localData.type && localData.type !== "section" && (
           <div
@@ -271,16 +212,13 @@ export default function EditFieldData({ fieldData, updateField }) {
               justifyContent: "start",
             }}
           >
-            <CustomInputField
-              id={"campoObligatorio"}
-              labelForm={"Obligatorio"}
-              name={"campoObligatorio"}
-              htmlFor={"campoObligatorio"}
-              type={"checkbox"}
-              checked={localData.required || false}
-              onChange={(e) =>
-                setLocalData({ ...localData, required: e.target.checked })
-              }
+            <CampoEditable
+              etiqueta="Obligatorio"
+              campo="required"
+              valor={localData.required}
+              entidadid={localData.id}
+              endpoint="admin/form/formversion"
+              esBooleano={true}
             />
           </div>
         )}
