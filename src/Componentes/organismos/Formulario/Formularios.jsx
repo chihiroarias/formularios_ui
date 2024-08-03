@@ -135,7 +135,7 @@ export default function Formularios() {
                               condicional={campo.condicional}
                               required={campo.required}
                               selectPrecargadoId={campo.selectPrecargadoId}
-                              id={campo.id}
+                              id={campo.id.toString()}
                               type={campo.type}
                             />
                             <button onClick={() => setCampoEnEdicion(campo)}>
