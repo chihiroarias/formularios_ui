@@ -188,7 +188,7 @@ export default function EditFieldData({ fieldData, updateField }) {
               valor={localData.required}
               entidadid={localData.campoid}
               endpoint="admin/form"
-              esBooleano={true}
+              booleano={true}
             />
           </div>
         )}

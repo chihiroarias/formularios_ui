@@ -1,19 +1,3 @@
-// Configuración de campo con dropdown:
-/*
-<CampoEditable
-  etiqueta="Tipo de certificado"
-  campo="certificadotipoid"
-  valor={datosNormaSeleccionada.certificadotipoid}
-  entidadid={datosNormaSeleccionada.id}
-  endpoint="admin/norma"
-  dropdownurl="admin/config/certificadotipo/dropdown"
-  dropdownopciones={[{value:'1', etiqueta:'opcion 1'}]}
-  recursoUri="hola"
-  noEditable="Mensaje de no editable"
-  booleano={boolean}
- />
-*/
-
 import { useState, useEffect, useRef } from "react";
 import "./campoEditable.css";
 import cancelarIcono from "../Images/cancelarIcono.png";
@@ -176,7 +160,7 @@ export default function CampoEditable(props) {
               </span>
             )}
 
-            {valor && booleano && <span>Si</span>}
+            {valor && booleano && <span>Sí</span>}
             {!valor && booleano && <span>No</span>}
           </>
         )}
@@ -236,7 +220,11 @@ export default function CampoEditable(props) {
               />
             )}
             {!props.noEditable && props.campo && !props.esFecha && booleano && (
-              <input type="checkbox" defaultChecked={valor} ref={campoRef} />
+              <input
+                type="checkbox"
+                defaultChecked={valor === "Sí"}
+                ref={campoRef}
+              />
             )}
             {(!props.campo || props.noEditable) && (
               <span className="campoNombre">

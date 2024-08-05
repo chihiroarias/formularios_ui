@@ -1,16 +1,20 @@
-import React, { useState, useEffect, forwardRef, useImperativeHandle } from "react";
+import React, {
+  useState,
+  useEffect,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 import { accessAPI } from "../../../Utils/utils";
 import InputField from "../../atomicos/InputField/InputField";
 import Label from "../../atomicos/Label/Label";
 import { MdDelete } from "react-icons/md";
-import CustomInputField from "../CustomInputField/CustomInputField"
-import Button from "../../atomicos/Button/Button"
+import CustomInputField from "../CustomInputField/CustomInputField";
+import Button from "../../atomicos/Button/Button";
 
-const CreateSelect = ({onCreate}, ref) => {
+const CreateSelect = ({ onCreate }, ref) => {
   const [options, setOptions] = useState([{ etiqueta: "", value: "" }]);
   const [selectName, setSelectName] = useState("");
   const [payload, setPayload] = useState(null);
-
 
   const handleOptionChange = (index, event) => {
     const newOptions = [...options];
@@ -23,19 +27,20 @@ const CreateSelect = ({onCreate}, ref) => {
   };
 
   const addOption = () => {
-    const hasEmptyLabel = options.some(option => option.etiqueta === "" );
+    const hasEmptyLabel = options.some((option) => option.etiqueta === "");
     if (!hasEmptyLabel) {
       setOptions([...options, { etiqueta: "", value: "" }]);
     }
   };
-
 
   const createSelectPrecargado = () => {
     if (!selectName.trim()) {
       alert("Debe asignarle un nombre al select");
       return;
     }
-    const hasEmptyLabel = options.some(option => option.etiqueta.trim() === "");
+    const hasEmptyLabel = options.some(
+      (option) => option.etiqueta.trim() === ""
+    );
     if (hasEmptyLabel) {
       alert("El input opción no puede estar vacío");
       return;
@@ -44,7 +49,7 @@ const CreateSelect = ({onCreate}, ref) => {
       ...option,
       value: option.value.trim() === "" ? option.etiqueta : option.value,
     }));
-    setOptions(optionsWithDefaultValues); 
+    setOptions(optionsWithDefaultValues);
     // const stirngtopost = optionsWithDefaultValues
     //   .map((optn) => `${optn.value} - ${optn.name || optn.etiqueta}`)
     //   .join(" ; ");
@@ -62,7 +67,6 @@ const CreateSelect = ({onCreate}, ref) => {
     });
   };
 
-
   useEffect(() => {
     if (payload) {
       accessAPI(
@@ -70,16 +74,20 @@ const CreateSelect = ({onCreate}, ref) => {
         "admin/form/selectprecargado",
         payload,
         (response) => {
-          console.log(response);
-          console.log(options);
-          if (response && response.selectPrecargado && response.selectPrecargado.id) {
+          if (
+            response &&
+            response.selectPrecargado &&
+            response.selectPrecargado.id
+          ) {
             onCreate(selectName, response.selectPrecargado.id);
             alert("El select fue agregado exitosamente");
             setOptions([{ etiqueta: "", value: "" }]);
             setSelectName("");
             setPayload(null);
           } else {
-            console.error("Error:"+ response.selectPrecargado.id + "is missing");
+            console.error(
+              "Error:" + response.selectPrecargado.id + "is missing"
+            );
           }
         },
         (error) => {
@@ -88,64 +96,65 @@ const CreateSelect = ({onCreate}, ref) => {
       );
     }
   }, [payload]);
-  
-  
+
   return (
     <div>
+      <div>
         <div>
-          <div> 
-            <CustomInputField
-              id={"nombredelselect"}
-              labelForm={'Nombre Select'}
-              className="prettyInput"
-              name={"nombredelselect"}
-              htmlFor={"nombredelselect"}
-              placeholder="Nombre del Select"
-              type={"text"}
-              required={true}
-              value={selectName}
-              onChange={(e) => setSelectName(e.target.value)
-              }
-            />         
-          </div>
-          <Label labelForm={'Opciones'}/>
-          {options.map((option, index) => (            
-              <div  key={index}
-                    className='customInput' 
-                    style={{
-                      //border: '1px solid red',
-                      display: 'flex',
-                      alignItems:'center',
-                      justifyContent: 'space-between',
-                      margin:'5px 0 5px 10px',
-                      gap: "30px",
-                    }}              
-                >
-                <InputField
-                  className="prettyInput"
-                  type="text"
-                  name="etiqueta"
-                  placeholder={`Opción ${index + 1}`}
-                  value={option.etiqueta}
-                  onChange={(e) => handleOptionChange(index, e)}
-                />
-                <InputField
-                  className="prettyInput"
-                  type="text"
-                  name="value"
-                  placeholder={`Valor ${index + 1} (opcional)`}
-                  value={option.value}
-                  onChange={(e) => handleOptionChange(index, e)}
-                />
-                <MdDelete className={'delete-icon'} onClick={() => deleteOption(index)} />
-              </div>
-          ))}
-          <Button onClick={addOption} text="Añadir opción"/>
+          <CustomInputField
+            id={"nombredelselect"}
+            labelForm={"Nombre Select"}
+            className="prettyInput"
+            name={"nombredelselect"}
+            htmlFor={"nombredelselect"}
+            placeholder="Nombre del Select"
+            type={"text"}
+            required={true}
+            value={selectName}
+            onChange={(e) => setSelectName(e.target.value)}
+          />
         </div>
-
-        <Button onClick={createSelectPrecargado} text="Crear Select"/>
-
+        <Label labelForm={"Opciones"} />
+        {options.map((option, index) => (
+          <div
+            key={index}
+            className="customInput"
+            style={{
+              //border: '1px solid red',
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              margin: "5px 0 5px 10px",
+              gap: "30px",
+            }}
+          >
+            <InputField
+              className="prettyInput"
+              type="text"
+              name="etiqueta"
+              placeholder={`Opción ${index + 1}`}
+              value={option.etiqueta}
+              onChange={(e) => handleOptionChange(index, e)}
+            />
+            <InputField
+              className="prettyInput"
+              type="text"
+              name="value"
+              placeholder={`Valor ${index + 1} (opcional)`}
+              value={option.value}
+              onChange={(e) => handleOptionChange(index, e)}
+            />
+            <MdDelete
+              className={"delete-icon"}
+              onClick={() => deleteOption(index)}
+            />
+          </div>
+        ))}
+        <Button onClick={addOption} text="Añadir opción" />
       </div>
+
+      <Button onClick={createSelectPrecargado} text="Crear Select" />
+    </div>
   );
 };
 
