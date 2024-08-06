@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import FormTitle from "../../moleculares/FormTitle/FormTitle.jsx";
 import FormDescription from "../../moleculares/FormDescription/FormDescription.jsx";
 //import TipoCampo from "../../moleculares/TipoCampo/TipoCampo.jsx";
 import MuestraCampoForm from "../../moleculares/MuestraCampoForm/MuestraCampoForm.jsx";
 import { MdDelete } from "react-icons/md";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
+
 
 import Button from "../../atomicos/Button/Button.jsx";
 import CreateDato from "../../moleculares/CreateDato/CreateDato.jsx";
@@ -18,6 +19,7 @@ function Formulario() {
   const [description, setDescription] = useState("");
   const [fields, setFields] = useState([]);
   const [indice, setIndice] = useState(1);
+ 
 
   const [errorTitle, setErrorTitle] = useState("");
   const [errorCodigo, setErrorCodigo] = useState("");
@@ -48,9 +50,14 @@ function Formulario() {
     return esValido;
   }
 
-  const addField = (field) => {
+  function addField (field) {
     console.log("Adding field:", field);
+    if(field.type === "select" && field.selectId) {
     setFields([...fields, { ...field, indice }]);
+    }
+    if (field.type !=="select") {
+      setFields([...fields, { ...field, indice }]);
+    }
   };
 
   function generateForm() {
@@ -67,6 +74,10 @@ function Formulario() {
           console.log(response);
         }
       );
+      setFields([]);
+      setDescription("");
+      setCodigo("");
+      setTitle("");
     }
   }
 
@@ -87,30 +98,25 @@ function Formulario() {
     });
   }
 
-  // const deleteField = (indice) => {
-  //   setFields(fields.filter((field) => field.indice !== indice));
-  // };
+
   const deleteField = (indice) => {
     Swal.fire({
-      title: '¿Estás seguro?',
+      title: "¿Estás seguro?",
       text: "¡No podrás revertir esto!",
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#56638a',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Sí, eliminarlo',
-      cancelButtonText: 'Cancelar'
+      confirmButtonColor: "#56638a",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, eliminarlo",
+      cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
         setFields(fields.filter((field) => field.indice !== indice));
-        Swal.fire(
-          '¡Eliminado!',
-          'El campo ha sido eliminado.',
-          'success'
-        )
+        Swal.fire("¡Eliminado!", "El campo ha sido eliminado.", "success");
       }
-    })
+    });
   };
+
 
   return (
     <div
@@ -126,7 +132,10 @@ function Formulario() {
           <div className="mr-12">
             <h1 className="mb-5">Generador de Formularios</h1>
             <div className="mb-12 w-full">
-              <h3 className="align-center mb-3 text-center"> Información del formulario</h3>
+              <h3 className="align-center mb-3 text-center">
+                {" "}
+                Información del formulario
+              </h3>
               <CustomInputField
                 labelForm={"Código de formulario"}
                 type={"text"}
@@ -146,7 +155,9 @@ function Formulario() {
                 required={false}
               />
             </div>
-            <h2 className="align-center mb-3 bg text-center">Creación de campos</h2>
+            <h2 className="align-center mb-3 bg text-center">
+              Creación de campos
+            </h2>
             <CreateDato
               addField={addField}
               indice={indice}
@@ -154,7 +165,8 @@ function Formulario() {
             />
             <div>
               {errorField && (
-                <div className="flex justify-end text-red-500 text-xs"
+                <div
+                  className="flex justify-end text-red-500 text-xs"
                   // style={{
                   //   //border: '1px solid red',
                   //   color: "red",
@@ -163,7 +175,7 @@ function Formulario() {
                   //   fontSize: "0.75em",
                   // }}
                 >
-                  {errorField }
+                  {errorField}
                 </div>
               )}
             </div>
@@ -175,10 +187,10 @@ function Formulario() {
               <strong>{codigo ? `${codigo} - ${title}` : title}</strong>
             </h2>
             <p>{description}</p>
-            {fields.map((field, index) => (
+            {fields.map((field) => (
               <div
                 className="grid grid-cols-2 gap-3"
-                key={index}
+                key={field.indice-field.ordenCampo} // Usar una key única y estable
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
