@@ -11,9 +11,7 @@ import { MdDelete } from "react-icons/md";
 import CustomInputField from "../CustomInputField/CustomInputField";
 import Button from "../../atomicos/Button/Button";
 
-
 const CreateSelect = forwardRef(({ onCreate }, ref) => {
-
   const [options, setOptions] = useState([{ etiqueta: "", value: "" }]);
   const [selectName, setSelectName] = useState("");
   const [payload, setPayload] = useState(null);
@@ -59,7 +57,6 @@ const CreateSelect = forwardRef(({ onCreate }, ref) => {
     return valido;
   }
 
-
   async function createSelectPrecargado() {
     try {
       if (await createSelectValidations()) {
@@ -67,7 +64,6 @@ const CreateSelect = forwardRef(({ onCreate }, ref) => {
           ...option,
           value: option.value.trim() === "" ? option.etiqueta : option.value,
         }));
-
 
         const stringToPost = optionsWithDefaultValues
           .map((option) => `${option.value} - ${option.etiqueta}`)
@@ -82,9 +78,8 @@ const CreateSelect = forwardRef(({ onCreate }, ref) => {
       console.error(error);
     }
   }
-  
-  useEffect( () => {
 
+  useEffect(() => {
     if (payload) {
       console.log("ENTRE AL IF");
       accessAPI(
@@ -92,7 +87,7 @@ const CreateSelect = forwardRef(({ onCreate }, ref) => {
         "admin/form/selectprecargado",
         payload,
 
-       async  (response) => {
+        async (response) => {
           console.log(response);
           console.log(options);
 
@@ -101,14 +96,7 @@ const CreateSelect = forwardRef(({ onCreate }, ref) => {
             response.selectPrecargado &&
             response.selectPrecargado.id
           ) {
-
-           await onCreate(selectName, response.selectPrecargado.id);
-            //alert("El select fue agregado exitosamente");
-            // setOptions([{ etiqueta: "", value: "" }]);
-            // setSelectName("");
-            // setPayload(null);
-
-
+            await onCreate(selectName, response.selectPrecargado.id);
           } else {
             console.error(
               "Error:" + response.selectPrecargado.id + "is missing"
@@ -121,7 +109,7 @@ const CreateSelect = forwardRef(({ onCreate }, ref) => {
       );
       console.log("ENTRE AL IF");
     }
-  }, [payload]);
+  }, [payload, selectName, onCreate, options]);
 
   return (
     <div>
@@ -165,7 +153,6 @@ const CreateSelect = forwardRef(({ onCreate }, ref) => {
             <InputField
               className="prettyInput"
               type="text"
-
               name="value"
               placeholder={`Valor ${index + 1} (opcional)`}
               value={option.value}
@@ -179,8 +166,6 @@ const CreateSelect = forwardRef(({ onCreate }, ref) => {
         ))}
         <Button onClick={addOption} text="Añadir opción" />
       </div>
-
-
 
       {/* <Button onClick={createSelectPrecargado} text="Crear Select"/>  */}
     </div>
