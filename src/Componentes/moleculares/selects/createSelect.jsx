@@ -154,7 +154,8 @@ const CreateSelect = forwardRef(({ onCreate }, ref) => {
               className="prettyInput"
               type="text"
               name="value"
-              placeholder={`Valor ${index + 1} (opcional)`}
+              placeholder={`Valor ${index+1} (opcional)`}
+
               value={option.value}
               onChange={(e) => handleOptionChange(index, e)}
             />

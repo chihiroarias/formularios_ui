@@ -5,74 +5,46 @@ import CustomTextArea from "../CustomTextArea/CustomTextArea";
 import SeccionField from "../../atomicos/SectionField/SectionField";
 import MuestraSelectDelSistema from "../selects/MuestraSelectDelSistema";
 import MuestraSelectPrecargado from "../selects/MuestraSelectPrecargado";
-import {styleCampo} from "../../../Utils/styleCampo"
+import { styleCampo } from "../../../Utils/styleCampo";
 
 const MuestraCampoForm = (props) => {
   return (
-   
-    <div
-      className="form-group"
-     >
-      {props.type === "textarea" ? (
-        <div>
-          <CustomTextArea
+    <div className="form-group">
+      {props.type === "textarea" && (
+        <CustomTextArea estiloCampo={styleCampo} {...props} />
+      )}
+
+      {props.type !== "textarea" &&
+        props.type !== "section" &&
+        props.type !== "select" &&
+        props.type !== "sExistentes" &&
+        props.type !== "sPrecargado" && (
+          <CustomInputField estiloCampo={styleCampo} {...props} />
+        )}
+
+      {props.type === "section" && (
+        <SeccionField
+          content={props.indexadoForm + " " + props.labelForm}
+          {...props}
+        />
+      )}
+
+      {(props.type === "select" || props.type === "sExistentes") &&
+        props.selectName && (
+          <MuestraSelectDelSistema
             estiloCampo={styleCampo}
+            selectId={props.selectId}
             {...props}
           />
-        </div>
-      ) : (
-        ""
-      )}
+        )}
 
-      {props.type !== "textarea" 
-        && props.type !== "section"
-        && props.type !== "select" 
-        && props.type !== "sExistentes"
-        && props.type !== "sPrecargado"? (
-        <div >
-          <CustomInputField    
-           estiloCampo={styleCampo}       
-            {...props}
-          />
-        </div>
-      ) : (
-        ""
+      {props.type === "sPrecargado" && props.selectEndpoint && (
+        <MuestraSelectPrecargado
+          estiloCampo={styleCampo}
+          selectEndpoint={props.selectEndpoint}
+          {...props}
+        />
       )}
-      {props.type === "section" ? (
-        <div>
-          <SeccionField
-            content={props.indexadoForm + " " + props.labelForm}
-            {...props}
-          />
-        </div>
-      ) : (
-        ""
-      )}
-
-      {(props.type === "select" || props.type==="sExistentes") && props.selectName ? (
-        <div>
-          <MuestraSelectDelSistema 
-            estiloCampo={styleCampo}  
-            selectId={props.selectId} 
-            {...props}
-          />
-        </div>
-      ) : (
-        ""
-      )}
-
-      {props.type==="sPrecargado" && props.selectEndpoint ? (
-        <div>
-          <MuestraSelectPrecargado
-            estiloCampo={styleCampo}
-            selectEndpoint={props.selectEndpoint} 
-            {...props}
-          />
-        </div>
-      ) : (
-        ""
-      )}
-
     </div>
   );
 };
@@ -91,6 +63,9 @@ MuestraCampoForm.propTypes = {
   indexadoForm: PropTypes.string,
   selectedType: PropTypes.string,
   content: PropTypes.string,
+  selectName: PropTypes.string,
+  selectId: PropTypes.string,
+  selectEndpoint: PropTypes.string,
 };
 
 MuestraCampoForm.defaultProps = {

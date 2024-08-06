@@ -4,11 +4,9 @@ import CampoEditable from "../../../elementos/campoEditable/CampoEditable.js";
 export default function EditFieldData({ fieldData, updateField }) {
   const [localData, setLocalData] = useState(fieldData || {});
 
-
   useEffect(() => {
     setLocalData(fieldData || {});
   }, [fieldData]);
-
 
   return (
     <>
