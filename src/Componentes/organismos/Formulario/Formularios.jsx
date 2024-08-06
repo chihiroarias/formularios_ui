@@ -72,8 +72,12 @@ export default function Formularios() {
     setCampoEnEdicion(null);
   };
 
+  const cancelEdit = () => {
+    setCampoEnEdicion(null);
+  };
+
   return (
-    <div className="seccion laboratorio ">
+    <div className="seccion laboratorio">
       <MenuNavegacion submenuSeleccionado="formularios" />
       <div className="contenido">
         {loader && <Loader>Cargando formulario</Loader>}
@@ -116,17 +120,17 @@ export default function Formularios() {
                     {formulario.campos && formulario.campos.length > 0 ? (
                       formulario.campos.map((campo) =>
                         campoEnEdicion && campoEnEdicion.id === campo.id ? (
-                          <div>
+                          <div key={campo.id}>
                             <EditFieldData
-                              key={campo.id}
                               fieldData={campoEnEdicion}
                               updateField={updateField}
+                              cancelEdit={cancelEdit}
                             />
                             <br />
                           </div>
                         ) : (
                           <div key={campo.id}>
-                            <div className=" flex items-center grid grid-cols-2 gap-3 ">
+                            <div className="flex items-center grid grid-cols-2 gap-3">
                               <MuestraCampoForm
                                 formversionid={campo.formversionid}
                                 labelForm={campo.labelForm}
@@ -144,13 +148,10 @@ export default function Formularios() {
                                 type={campo.type}
                               />
                               <MdEdit
-                                className={"edit-icon ml-5 "}
+                                className={"edit-icon ml-5"}
                                 onClick={() => setCampoEnEdicion(campo)}
                               />
                             </div>
-                            {/* <button onClick={() => setCampoEnEdicion(campo)}>
-                              Editar
-                            </button> */}
                           </div>
                         )
                       )
