@@ -33,7 +33,7 @@ const MuestraCampoForm = (props) => {
         props.selectName && (
           <MuestraSelectDelSistema
             estiloCampo={styleCampo}
-            selectId={props.selectId}
+            selectPrecargadoId={props.selectPrecargadoId}
             {...props}
           />
         )}
@@ -64,7 +64,7 @@ MuestraCampoForm.propTypes = {
   selectedType: PropTypes.string,
   content: PropTypes.string,
   selectName: PropTypes.string,
-  selectId: PropTypes.string,
+  selectPrecargadoId: PropTypes.string,
   selectEndpoint: PropTypes.string,
 };
 
