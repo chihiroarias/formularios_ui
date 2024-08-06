@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import FormTitle from "../../moleculares/FormTitle/FormTitle.jsx";
 import FormDescription from "../../moleculares/FormDescription/FormDescription.jsx";
 import MuestraCampoForm from "../../moleculares/MuestraCampoForm/MuestraCampoForm.jsx";
+
 import { MdDelete, MdEdit } from "react-icons/md";
 import Swal from "sweetalert2";
+
 import Button from "../../atomicos/Button/Button.jsx";
 import CreateDato from "../../moleculares/CreateDato/CreateDato.jsx";
 import EditFormData from "./EditFormData.jsx"; // Asegúrate de importar el componente EditFormData
@@ -17,7 +19,9 @@ function Formulario() {
   const [description, setDescription] = useState("");
   const [fields, setFields] = useState([]);
   const [indice, setIndice] = useState(1);
+
   const [selectedField, setSelectedField] = useState(null);
+
 
   const [errorTitle, setErrorTitle] = useState("");
   const [errorCodigo, setErrorCodigo] = useState("");
@@ -48,9 +52,22 @@ function Formulario() {
     return esValido;
   }
 
+  function addField (field) {
+    console.log("Adding field:", field);
+    if(field.type === "select" && field.selectId) {
+    setFields([...fields, { ...field, indice }]);
+    }
+    if (field.type !=="select") {
+      setFields([...fields, { ...field, indice }]);
+    }
+
+  /*
   const addField = (field) => {
     setFields([...fields, { ...field, indice }]);
     setIndice(indice + 1);
+  
+  */
+
   };
 
   function generateForm() {
@@ -66,6 +83,10 @@ function Formulario() {
           console.log(response);
         }
       );
+      setFields([]);
+      setDescription("");
+      setCodigo("");
+      setTitle("");
     }
   }
 
@@ -85,6 +106,7 @@ function Formulario() {
     });
   }
 
+
   const deleteField = (indice) => {
     Swal.fire({
       title: "¿Estás seguro?",
@@ -101,6 +123,7 @@ function Formulario() {
         Swal.fire("¡Eliminado!", "El campo ha sido eliminado.", "success");
       }
     });
+
   };
 
   const editField = (field) => {
@@ -114,7 +137,9 @@ function Formulario() {
       )
     );
     setSelectedField(null);
+
   };
+
 
   return (
     <div
@@ -130,6 +155,7 @@ function Formulario() {
             <h1 className="mb-5">Generador de Formularios</h1>
             <div className="mb-12 w-full">
               <h3 className="align-center mb-3 text-center">
+
                 Información del formulario
               </h3>
               <CustomInputField
@@ -161,7 +187,9 @@ function Formulario() {
             />
             <div>
               {errorField && (
+
                 <div className="flex justify-end text-red-500 text-xs">
+
                   {errorField}
                 </div>
               )}
@@ -173,10 +201,10 @@ function Formulario() {
               <strong>{codigo ? `${codigo} - ${title}` : title}</strong>
             </h2>
             <p>{description}</p>
-            {fields.map((field, index) => (
+            {fields.map((field) => (
               <div
                 className="grid grid-cols-2 gap-3"
-                key={index}
+                key={field.indice-field.ordenCampo} // Usar una key única y estable
                 style={{
                   display: "flex",
                   justifyContent: "space-between",

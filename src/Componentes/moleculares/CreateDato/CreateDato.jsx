@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Label from "../../atomicos/Label/Label.jsx";
 import Button from "../../atomicos/Button/Button.jsx";
 import CustomInputField from "../CustomInputField/CustomInputField.jsx";
@@ -31,6 +31,8 @@ export default function CreateDato({ addField, indice, setIndice }) {
     ordenCampo: 0,
   });
 
+
+
   // Sección ERRORES
   const [errorNombreCampo, setErrorNombreCampo] = useState("");
   const [errorIndexado, setErrorIndexado] = useState("");
@@ -38,7 +40,12 @@ export default function CreateDato({ addField, indice, setIndice }) {
   const [errorAgruparRadio, setErrorAgruparRadio] = useState("");
   const [errorIdCampo, setErrorIdCampo] = useState("");
 
-  const handleSelectCreate = (labelForm, selectPrecargadoId) => {
+
+  const createSelectRef = useRef(null);
+
+  function handleSelectCreate (selectName, selectId)  {
+    console.log("Entre al HandleSelectCreat con name:"+selectName+" y "+selectId)
+
     setFieldData((fieldData) => ({
       ...fieldData,
       labelForm: labelForm,
@@ -46,7 +53,9 @@ export default function CreateDato({ addField, indice, setIndice }) {
     }));
   };
 
-  const handleSelectPrecarga = (endpoint) => {
+
+  function handleSelectPrecarga (selectEndpoint) {
+
     setFieldData((fieldData) => ({
       ...fieldData,
       endpoint: endpoint,
@@ -91,8 +100,13 @@ export default function CreateDato({ addField, indice, setIndice }) {
     return esValido;
   }
 
-  function crearCampoString() {
-    if (validar()) {
+  async function crearCampoString() {
+    if (validar) {
+      if (fieldData.type === "select") {        
+        await createSelectRef.current.triggerCreateSelect();
+        console.log("ENTRE AL CREAR CAMPO Y VALIDO")
+      }
+
       setOrdenCampo(ordenCampo + 1);
 
       addField({ ...fieldData, indice, ordenCampo: ordenCampo });
@@ -250,7 +264,7 @@ export default function CreateDato({ addField, indice, setIndice }) {
 
       {fieldData.type === "select" && (
         <div>
-          <CreateSelect onCreate={handleSelectCreate} />
+          <CreateSelect ref={createSelectRef} onCreate={handleSelectCreate} />
         </div>
       )}
 
@@ -314,7 +328,8 @@ export default function CreateDato({ addField, indice, setIndice }) {
           </div>
         )}
 
-        <Button type="submit" onClick={crearCampoString} text="Crear Campo" />
+          {/* {fieldData.type === "select"?"":<Button type="submit" onClick={crearCampoString} text="Crear Campo" />} */}
+          <Button type="submit" onClick={crearCampoString} text="Crear Campo" />
       </div>
       <br />
     </>

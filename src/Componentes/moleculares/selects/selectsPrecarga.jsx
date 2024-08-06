@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState,  useEffect } from "react";
 import Select from "../../atomicos/Select/Select";
 import { accessAPI } from "../../../Utils/utils";
 import CustomInputField from "../CustomInputField/CustomInputField"
@@ -43,6 +43,7 @@ const SelectsPrecargado = ({onCreate,errorEndpoint }) => {
             htmlFor={"endpoint"}
             type={"text"}
             value={endpoint}
+            required={true}
             onChange={(e) => setEndpoint(e.target.value)}
             error={errorEndpoint ? errorEndpoint : ""}
             />      

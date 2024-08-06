@@ -11,7 +11,9 @@ import { MdDelete } from "react-icons/md";
 import CustomInputField from "../CustomInputField/CustomInputField";
 import Button from "../../atomicos/Button/Button";
 
-const CreateSelect = ({ onCreate }, ref) => {
+
+const CreateSelect = forwardRef(({ onCreate }, ref) => {
+
   const [options, setOptions] = useState([{ etiqueta: "", value: "" }]);
   const [selectName, setSelectName] = useState("");
   const [payload, setPayload] = useState(null);
@@ -33,57 +35,80 @@ const CreateSelect = ({ onCreate }, ref) => {
     }
   };
 
-  const createSelectPrecargado = () => {
+  useImperativeHandle(ref, () => ({
+    triggerCreateSelect: async () => {
+      await createSelectPrecargado();
+    },
+  }));
+
+  async function createSelectValidations() {
+    let valido = false;
+
     if (!selectName.trim()) {
       alert("Debe asignarle un nombre al select");
-      return;
+      return valido;
     }
     const hasEmptyLabel = options.some(
       (option) => option.etiqueta.trim() === ""
     );
     if (hasEmptyLabel) {
       alert("El input opción no puede estar vacío");
-      return;
+      return valido;
     }
-    const optionsWithDefaultValues = options.map((option) => ({
-      ...option,
-      value: option.value.trim() === "" ? option.etiqueta : option.value,
-    }));
-    setOptions(optionsWithDefaultValues);
-    // const stirngtopost = optionsWithDefaultValues
-    //   .map((optn) => `${optn.value} - ${optn.name || optn.etiqueta}`)
-    //   .join(" ; ");
-    //   setPayload({
-    //     precargaSelects: stirngtopost,
-    //     nombre: selectName,
-    //   });
-    const stringToPost = optionsWithDefaultValues
-      .map((option) => `${option.value} - ${option.etiqueta}`)
-      .join(" ; ");
+    valido = true;
+    return valido;
+  }
 
-    setPayload({
-      precargaSelects: stringToPost,
-      nombre: selectName,
-    });
-  };
 
-  useEffect(() => {
+  async function createSelectPrecargado() {
+    try {
+      if (await createSelectValidations()) {
+        const optionsWithDefaultValues = options.map((option) => ({
+          ...option,
+          value: option.value.trim() === "" ? option.etiqueta : option.value,
+        }));
+
+
+        const stringToPost = optionsWithDefaultValues
+          .map((option) => `${option.value} - ${option.etiqueta}`)
+          .join(" ; ");
+
+        setPayload({
+          precargaSelects: stringToPost,
+          nombre: selectName,
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  
+  useEffect( () => {
+
     if (payload) {
+      console.log("ENTRE AL IF");
       accessAPI(
         "POST",
         "admin/form/selectprecargado",
         payload,
-        (response) => {
+
+       async  (response) => {
+          console.log(response);
+          console.log(options);
+
           if (
             response &&
             response.selectPrecargado &&
             response.selectPrecargado.id
           ) {
-            onCreate(selectName, response.selectPrecargado.id);
-            alert("El select fue agregado exitosamente");
-            setOptions([{ etiqueta: "", value: "" }]);
-            setSelectName("");
-            setPayload(null);
+
+           await onCreate(selectName, response.selectPrecargado.id);
+            //alert("El select fue agregado exitosamente");
+            // setOptions([{ etiqueta: "", value: "" }]);
+            // setSelectName("");
+            // setPayload(null);
+
+
           } else {
             console.error(
               "Error:" + response.selectPrecargado.id + "is missing"
@@ -94,6 +119,7 @@ const CreateSelect = ({ onCreate }, ref) => {
           console.log(error);
         }
       );
+      console.log("ENTRE AL IF");
     }
   }, [payload]);
 
@@ -139,6 +165,7 @@ const CreateSelect = ({ onCreate }, ref) => {
             <InputField
               className="prettyInput"
               type="text"
+
               name="value"
               placeholder={`Valor ${index + 1} (opcional)`}
               value={option.value}
@@ -153,9 +180,10 @@ const CreateSelect = ({ onCreate }, ref) => {
         <Button onClick={addOption} text="Añadir opción" />
       </div>
 
-      <Button onClick={createSelectPrecargado} text="Crear Select" />
+
+
+      {/* <Button onClick={createSelectPrecargado} text="Crear Select"/>  */}
     </div>
   );
-};
-
+});
 export default CreateSelect;
