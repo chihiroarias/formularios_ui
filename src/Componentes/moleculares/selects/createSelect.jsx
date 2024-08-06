@@ -81,7 +81,6 @@ const CreateSelect = forwardRef(({ onCreate }, ref) => {
 
   useEffect(() => {
     if (payload) {
-      console.log("ENTRE AL IF");
       accessAPI(
         "POST",
         "admin/form/selectprecargado",
@@ -97,6 +96,7 @@ const CreateSelect = forwardRef(({ onCreate }, ref) => {
             response.selectPrecargado.id
           ) {
             await onCreate(selectName, response.selectPrecargado.id);
+            console.log(response.selectPrecargado.id);
           } else {
             console.error(
               "Error:" + response.selectPrecargado.id + "is missing"
@@ -154,8 +154,7 @@ const CreateSelect = forwardRef(({ onCreate }, ref) => {
               className="prettyInput"
               type="text"
               name="value"
-              placeholder={`Valor ${index+1} (opcional)`}
-
+              placeholder={`Valor ${index + 1} (opcional)`}
               value={option.value}
               onChange={(e) => handleOptionChange(index, e)}
             />
