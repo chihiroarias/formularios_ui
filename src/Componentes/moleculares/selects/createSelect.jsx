@@ -11,7 +11,10 @@ import { MdDelete } from "react-icons/md";
 import CustomInputField from "../CustomInputField/CustomInputField";
 import Button from "../../atomicos/Button/Button";
 
-const CreateSelect = forwardRef(({ onCreate }, ref) => {
+
+
+const CreateSelect = ({ onCreate }) => {
+
   const [options, setOptions] = useState([{ etiqueta: "", value: "" }]);
   const [selectName, setSelectName] = useState("");
   const [payload, setPayload] = useState(null);
@@ -33,13 +36,13 @@ const CreateSelect = forwardRef(({ onCreate }, ref) => {
     }
   };
 
-  useImperativeHandle(ref, () => ({
-    triggerCreateSelect: async () => {
-      await createSelectPrecargado();
-    },
-  }));
+  // useImperativeHandle(ref, () => ({
+  //   triggerCreateSelect: async () => {
+  //     await createSelectPrecargado();
+  //   },
+  // }));
 
-  async function createSelectValidations() {
+  function createSelectValidations() {
     let valido = false;
 
     if (!selectName.trim()) {
@@ -57,9 +60,12 @@ const CreateSelect = forwardRef(({ onCreate }, ref) => {
     return valido;
   }
 
-  async function createSelectPrecargado() {
+
+
+  function createSelectPrecargado() {
+
     try {
-      if (await createSelectValidations()) {
+      if (createSelectValidations()) {
         const optionsWithDefaultValues = options.map((option) => ({
           ...option,
           value: option.value.trim() === "" ? option.etiqueta : option.value,
@@ -168,8 +174,12 @@ const CreateSelect = forwardRef(({ onCreate }, ref) => {
         <Button onClick={addOption} text="Añadir opción" />
       </div>
 
-      {/* <Button onClick={createSelectPrecargado} text="Crear Select"/>  */}
+
+
+
+      <Button onClick={createSelectPrecargado} text="Crear Select"/>  
     </div>
   );
-});
+};
 export default CreateSelect;
+
