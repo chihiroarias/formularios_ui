@@ -26,7 +26,7 @@ export default function CreateDato({ addField, indice, setIndice }) {
     type: "",
     agrupacionRadio: "",
     selectName: "",
-    selectPrecargadoId: "",
+    selectId: "",
     endpoint: "",
     ordenCampo: 0,
   });
@@ -38,7 +38,7 @@ export default function CreateDato({ addField, indice, setIndice }) {
   const [errorAgruparRadio, setErrorAgruparRadio] = useState("");
   const [errorIdCampo, setErrorIdCampo] = useState("");
 
-  const createSelectRef = useRef(null);
+//  const createSelectRef = useRef(null);
 
   function handleSelectCreate(selectName, selectId) {
     console.log(
@@ -47,8 +47,8 @@ export default function CreateDato({ addField, indice, setIndice }) {
 
     setFieldData((fieldData) => ({
       ...fieldData,
-      labelForm: selectName,
-      selectPrecargadoId: selectId,
+      selectName,
+      selectId,
     }));
   }
 
@@ -97,12 +97,12 @@ export default function CreateDato({ addField, indice, setIndice }) {
     return esValido;
   }
 
-  async function crearCampoString() {
+  function crearCampoString() {
     if (validar) {
-      if (fieldData.type === "select") {
-        await createSelectRef.current.triggerCreateSelect();
-        console.log("ENTRE AL CREAR CAMPO Y VALIDO");
-      }
+      // if (fieldData.type === "select") {
+      //   await createSelectRef.current.triggerCreateSelect();
+      //   console.log("ENTRE AL CREAR CAMPO Y VALIDO");
+      // }
 
       setOrdenCampo(ordenCampo + 1);
 
@@ -125,7 +125,7 @@ export default function CreateDato({ addField, indice, setIndice }) {
         checkbox: false,
         agrupacionRadio: "",
         selectName: "",
-        selectPrecargadoId: "",
+        selectId: "",
         endpoint: "",
         ordenCampo: ordenCampo,
       });
@@ -261,7 +261,7 @@ export default function CreateDato({ addField, indice, setIndice }) {
 
       {fieldData.type === "select" && (
         <div>
-          <CreateSelect ref={createSelectRef} onCreate={handleSelectCreate} />
+          <CreateSelect onCreate={handleSelectCreate} />
         </div>
       )}
 

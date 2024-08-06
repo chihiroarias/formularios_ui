@@ -52,21 +52,21 @@ function Formulario() {
     return esValido;
   }
 
-  function addField (field) {
-    console.log("Adding field:", field);
-    if(field.type === "select" && field.selectId) {
-    setFields([...fields, { ...field, indice }]);
-    }
-    if (field.type !=="select") {
-      setFields([...fields, { ...field, indice }]);
-    }
+  // function addField (field) {
+  //   console.log("Adding field:", field);
+  //   if(field.type === "select" && field.selectId) {
+  //   setFields([...fields, { ...field, indice }]);
+  //   }
+  //   if (field.type !=="select") {
+  //     setFields([...fields, { ...field, indice }]);
+  //   }
 
-  /*
+  
   const addField = (field) => {
     setFields([...fields, { ...field, indice }]);
     setIndice(indice + 1);
   
-  */
+  
 
   };
 
