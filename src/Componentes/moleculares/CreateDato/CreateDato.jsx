@@ -11,8 +11,7 @@ import CreateSelect from "../selects/createSelect.jsx";
 import SelectsPrecargado from "../selects/selectsPrecarga.jsx";
 
 export default function CreateDato({ addField, indice, setIndice }) {
-
-  const [ordenCampo,setOrdenCampo]= useState(0);
+  const [ordenCampo, setOrdenCampo] = useState(0);
   const [fieldData, setFieldData] = useState({
     htmlFor: "",
     id: "",
@@ -27,9 +26,9 @@ export default function CreateDato({ addField, indice, setIndice }) {
     type: "",
     agrupacionRadio: "",
     selectName: "",
-    selectId: "",
-    selectEndpoint: "",
-    ordenCampo:0
+    selectPrecargadoId: "",
+    endpoint: "",
+    ordenCampo: 0,
   });
 
 
@@ -41,21 +40,25 @@ export default function CreateDato({ addField, indice, setIndice }) {
   const [errorAgruparRadio, setErrorAgruparRadio] = useState("");
   const [errorIdCampo, setErrorIdCampo] = useState("");
 
+
   const createSelectRef = useRef(null);
 
   function handleSelectCreate (selectName, selectId)  {
     console.log("Entre al HandleSelectCreat con name:"+selectName+" y "+selectId)
+
     setFieldData((fieldData) => ({
       ...fieldData,
-      selectName,
-      selectId,
+      labelForm: labelForm,
+      selectPrecargadoId: selectPrecargadoId,
     }));
   };
 
+
   function handleSelectPrecarga (selectEndpoint) {
+
     setFieldData((fieldData) => ({
       ...fieldData,
-      selectEndpoint,
+      endpoint: endpoint,
     }));
   };
 
@@ -74,7 +77,7 @@ export default function CreateDato({ addField, indice, setIndice }) {
     if (!fieldData.type) {
       setErrorTipoDato("Debe elegir un tipo de campo");
       esValido = false;
-    }else{
+    } else {
       if (!fieldData.indexadoForm) {
         setErrorIndexado("El índice no puede estar vacío");
         esValido = false;
@@ -103,9 +106,10 @@ export default function CreateDato({ addField, indice, setIndice }) {
         await createSelectRef.current.triggerCreateSelect();
         console.log("ENTRE AL CREAR CAMPO Y VALIDO")
       }
+
       setOrdenCampo(ordenCampo + 1);
-     
-      addField({ ...fieldData, indice, ordenCampo:ordenCampo });
+
+      addField({ ...fieldData, indice, ordenCampo: ordenCampo });
 
       setIndice(indice + 1);
 
@@ -124,9 +128,9 @@ export default function CreateDato({ addField, indice, setIndice }) {
         checkbox: false,
         agrupacionRadio: "",
         selectName: "",
-        selectId: "",
-        selectEndpoint: "",
-        ordenCampo:ordenCampo,
+        selectPrecargadoId: "",
+        endpoint: "",
+        ordenCampo: ordenCampo,
       });
     }
   }
@@ -134,7 +138,6 @@ export default function CreateDato({ addField, indice, setIndice }) {
   return (
     <>
       <div className="mt-5">
-        
         <Label labelForm={"Tipo de Campo *"} htmlFor={"dato"} />
         <SelectOptionGroup
           id="dato"
@@ -142,7 +145,7 @@ export default function CreateDato({ addField, indice, setIndice }) {
           onChange={(e) => setFieldData({ ...fieldData, type: e.target.value })}
           options={selectDato}
           error={errorTipoDato ? errorTipoDato : ""}
-          />
+        />
       </div>
 
       {fieldData.type === "radio" && (
