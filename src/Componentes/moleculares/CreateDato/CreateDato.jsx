@@ -31,8 +31,6 @@ export default function CreateDato({ addField, indice, setIndice }) {
     ordenCampo: 0,
   });
 
-
-
   // Sección ERRORES
   const [errorNombreCampo, setErrorNombreCampo] = useState("");
   const [errorIndexado, setErrorIndexado] = useState("");
@@ -40,27 +38,26 @@ export default function CreateDato({ addField, indice, setIndice }) {
   const [errorAgruparRadio, setErrorAgruparRadio] = useState("");
   const [errorIdCampo, setErrorIdCampo] = useState("");
 
-
   const createSelectRef = useRef(null);
 
-  function handleSelectCreate (selectName, selectId)  {
-    console.log("Entre al HandleSelectCreat con name:"+selectName+" y "+selectId)
+  function handleSelectCreate(selectName, selectId) {
+    console.log(
+      "Entre al HandleSelectCreat con name:" + selectName + " y " + selectId
+    );
 
     setFieldData((fieldData) => ({
       ...fieldData,
-      labelForm: labelForm,
-      selectPrecargadoId: selectPrecargadoId,
+      labelForm: selectName,
+      selectPrecargadoId: selectId,
     }));
-  };
+  }
 
-
-  function handleSelectPrecarga (selectEndpoint) {
-
+  function handleSelectPrecarga(selectEndpoint) {
     setFieldData((fieldData) => ({
       ...fieldData,
-      endpoint: endpoint,
+      endpoint: selectEndpoint,
     }));
-  };
+  }
 
   function validar() {
     let esValido = true;
@@ -102,9 +99,9 @@ export default function CreateDato({ addField, indice, setIndice }) {
 
   async function crearCampoString() {
     if (validar) {
-      if (fieldData.type === "select") {        
+      if (fieldData.type === "select") {
         await createSelectRef.current.triggerCreateSelect();
-        console.log("ENTRE AL CREAR CAMPO Y VALIDO")
+        console.log("ENTRE AL CREAR CAMPO Y VALIDO");
       }
 
       setOrdenCampo(ordenCampo + 1);
@@ -328,8 +325,8 @@ export default function CreateDato({ addField, indice, setIndice }) {
           </div>
         )}
 
-          {/* {fieldData.type === "select"?"":<Button type="submit" onClick={crearCampoString} text="Crear Campo" />} */}
-          <Button type="submit" onClick={crearCampoString} text="Crear Campo" />
+        {/* {fieldData.type === "select"?"":<Button type="submit" onClick={crearCampoString} text="Crear Campo" />} */}
+        <Button type="submit" onClick={crearCampoString} text="Crear Campo" />
       </div>
       <br />
     </>
