@@ -7,6 +7,8 @@ import "./formularios.css";
 import MuestraCampoForm from "../../moleculares/MuestraCampoForm/MuestraCampoForm";
 import EditFieldData from "./EditFieldData";
 import { MdEdit } from "react-icons/md";
+import { MdDelete } from "react-icons/md"; // Importa el icono de eliminación
+import Swal from "sweetalert2"; // Importa SweetAlert2
 
 export default function Formularios() {
   const [loader, setLoader] = useState(true);
@@ -15,6 +17,7 @@ export default function Formularios() {
   const [formularios, setFormularios] = useState([]);
   const [formulario, setFormulario] = useState(null);
   const [campoEnEdicion, setCampoEnEdicion] = useState(null);
+  const [campoEnEliminacion, setCampoEnEliminacion] = useState(false); // Estado para manejar la eliminación de un campo
 
   const { formularioId } = useParams();
 
@@ -35,12 +38,6 @@ export default function Formularios() {
   }, [formularioId]);
 
   useEffect(() => {
-    if (formularios) {
-      setLoader(false);
-    }
-  }, [formularios]);
-
-  useEffect(() => {
     if (formularioSeleccionado) {
       setFormulario(null);
       setLoaderFormulario(true);
@@ -49,18 +46,19 @@ export default function Formularios() {
         `admin/form/formversion/${formularioSeleccionado}`,
         null,
         (response) => {
-          console.log(response);
           setFormulario(response);
           setLoaderFormulario(false);
+          setCampoEnEliminacion(false);
         },
         (response) => {
           console.log(response);
           setLoaderFormulario(false);
           setFormularioSeleccionado(null);
+          setCampoEnEliminacion(false);
         }
       );
     }
-  }, [formularioSeleccionado]);
+  }, [formularioSeleccionado, campoEnEliminacion]);
 
   const updateField = (updatedField) => {
     setFormulario((prevForm) => {
@@ -74,6 +72,42 @@ export default function Formularios() {
 
   const cancelEdit = () => {
     setCampoEnEdicion(null);
+  };
+
+  // Función para eliminar un campo
+  const eliminarCampo = (campoId) => {
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "¡No podrás revertir esto!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#56638a",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, eliminarlo",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        accessAPI(
+          "DELETE",
+          `admin/form/formversion/${campoId}`,
+          { formvid: formularioSeleccionado },
+          (response) => {
+            // Actualizar la lista de campos después de la eliminación
+            setFormulario((prevForm) => ({
+              ...prevForm,
+              campos: prevForm.campos.filter((campo) => campo.id !== campoId),
+            }));
+            setCampoEnEliminacion(true);
+            Swal.fire("¡Eliminado!", "El campo ha sido eliminado.", "success");
+          },
+          (error) => {
+            console.log(error);
+
+            Swal.fire("Error", "No se pudo eliminar el campo.", "error");
+          }
+        );
+      }
+    });
   };
 
   return (
@@ -129,7 +163,7 @@ export default function Formularios() {
                             <br />
                           </div>
                         ) : (
-                          <div key={campo.id}>
+                          <div key={campo.campoid}>
                             <div className="flex items-center grid grid-cols-2 gap-3">
                               <MuestraCampoForm
                                 formversionid={campo.formversionid}
@@ -147,10 +181,16 @@ export default function Formularios() {
                                 id={campo.id}
                                 type={campo.type}
                               />
-                              <MdEdit
-                                className={"edit-icon ml-5"}
-                                onClick={() => setCampoEnEdicion(campo)}
-                              />
+                              <div>
+                                <MdEdit
+                                  className={"edit-icon ml-5"}
+                                  onClick={() => setCampoEnEdicion(campo)}
+                                />
+                                <MdDelete
+                                  className={"delete-icon ml-5"}
+                                  onClick={() => eliminarCampo(campo.campoid)}
+                                />
+                              </div>
                             </div>
                           </div>
                         )
