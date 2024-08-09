@@ -9,7 +9,6 @@ import { styleCampo } from "../../../Utils/styleCampo";
 import ShowInformation from "../../atomicos/Info/ShowInformation";
 
 const MuestraCampoForm = (props) => {
-  console.log(props.type);
   return (
     <div className="form-group">
       {props.type === "textarea" && (
