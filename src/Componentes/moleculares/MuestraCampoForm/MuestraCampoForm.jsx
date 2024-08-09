@@ -8,6 +8,7 @@ import MuestraSelectPrecargado from "../selects/MuestraSelectPrecargado";
 import { styleCampo } from "../../../Utils/styleCampo";
 
 const MuestraCampoForm = (props) => {
+  console.log(props.type);
   return (
     <div className="form-group">
       {props.type === "textarea" && (
@@ -29,14 +30,13 @@ const MuestraCampoForm = (props) => {
         />
       )}
 
-      {(props.type === "select" || props.type === "sExistentes") &&
-        props.selectName && (
-          <MuestraSelectDelSistema
-            estiloCampo={styleCampo}
-            selectPrecargadoId={props.selectPrecargadoId}
-            {...props}
-          />
-        )}
+      {(props.type === "select" || props.type === "sExistentes") && (
+        <MuestraSelectDelSistema
+          estiloCampo={styleCampo}
+          selectPrecargadoId={props.selectPrecargadoId}
+          {...props}
+        />
+      )}
 
       {props.type === "sPrecargado" && props.selectEndpoint && (
         <MuestraSelectPrecargado
