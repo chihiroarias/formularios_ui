@@ -6,6 +6,7 @@ import SeccionField from "../../atomicos/SectionField/SectionField";
 import MuestraSelectDelSistema from "../selects/MuestraSelectDelSistema";
 import MuestraSelectPrecargado from "../selects/MuestraSelectPrecargado";
 import { styleCampo } from "../../../Utils/styleCampo";
+import ShowInformation from "../../atomicos/Info/ShowInformation";
 
 const MuestraCampoForm = (props) => {
   console.log(props.type);
@@ -45,6 +46,8 @@ const MuestraCampoForm = (props) => {
           {...props}
         />
       )}
+
+      {props.info && <ShowInformation info={props.info} />}
     </div>
   );
 };
@@ -66,6 +69,7 @@ MuestraCampoForm.propTypes = {
   selectName: PropTypes.string,
   selectPrecargadoId: PropTypes.string,
   selectEndpoint: PropTypes.string,
+  info: PropTypes.string,
 };
 
 MuestraCampoForm.defaultProps = {
