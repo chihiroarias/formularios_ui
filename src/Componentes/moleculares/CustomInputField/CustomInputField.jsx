@@ -18,6 +18,7 @@ const 	CustomInputField = ({
 	placeholder,
 	error,
 	required,
+	regex,
 	indexadoForm,
 	...props
 }) => {
@@ -43,6 +44,8 @@ const 	CustomInputField = ({
 					placeholder={placeholder}
 					required={required}
 					value={value}
+					regex={regex} 
+					error={error}
 					{...props}
 				/>
 
@@ -77,6 +80,8 @@ CustomInputField.propTypes = {
 	placeholder: PropTypes.string,
 	required: PropTypes.bool,
 	error: PropTypes.string,
+	errorMsg: PropTypes.string,
+	regex: PropTypes.string,  
 };
 
 

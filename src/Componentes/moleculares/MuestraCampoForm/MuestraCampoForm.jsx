@@ -8,6 +8,14 @@ import MuestraSelectPrecargado from "../selects/MuestraSelectPrecargado";
 import {styleCampo} from "../../../Utils/styleCampo"
 
 const MuestraCampoForm = (props) => {
+  const { errors, name, errorMsg } = props;
+
+  const renderError = () => {
+    if (errors && errors[name] && errors[name].type === "pattern") {
+      return <div className="text-red-500 text-sm">{errorMsg || "Formato incorrecto"}</div>;
+    }
+    return null;
+  };
   return (
    
     <div
@@ -21,7 +29,7 @@ const MuestraCampoForm = (props) => {
           />
         </div>
       ) : (
-        ""
+        null
       )}
 
       {props.type !== "textarea" 
@@ -32,11 +40,14 @@ const MuestraCampoForm = (props) => {
         <div >
           <CustomInputField    
            estiloCampo={styleCampo}       
+           regex={props.regex}  
+           errorMsg={props.errorMsg}  
             {...props}
           />
+           {renderError()}
         </div>
       ) : (
-        ""
+        null
       )}
       {props.type === "section" ? (
         <div>
@@ -46,7 +57,7 @@ const MuestraCampoForm = (props) => {
           />
         </div>
       ) : (
-        ""
+        null
       )}
 
       {(props.type === "select" || props.type==="sExistentes") && props.selectName ? (
@@ -58,7 +69,7 @@ const MuestraCampoForm = (props) => {
           />
         </div>
       ) : (
-        ""
+        null
       )}
 
       {props.type==="sPrecargado" && props.selectEndpoint ? (
@@ -70,7 +81,7 @@ const MuestraCampoForm = (props) => {
           />
         </div>
       ) : (
-        ""
+        null
       )}
 
     </div>
@@ -90,6 +101,7 @@ MuestraCampoForm.propTypes = {
   required: PropTypes.bool,
   indexadoForm: PropTypes.string,
   selectedType: PropTypes.string,
+  regex: PropTypes.string,
   content: PropTypes.string,
 };
 

@@ -203,7 +203,7 @@ function Formulario() {
             <p>{description}</p>
             {fields.map((field) => (
               <div
-                className="grid grid-cols-2 gap-3"
+                className="grid grid-cols-3 gap-3"
                 key={field.indice-field.ordenCampo} // Usar una key única y estable
                 style={{
                   display: "flex",
@@ -212,7 +212,7 @@ function Formulario() {
                 }}
               >
                 <MuestraCampoForm {...field} />
-                <div>
+                <div  className="grid grid-cols-2 gap-3">
                   <MdEdit
                     className={"edit-icon ml-5"}
                     onClick={() => editField(field)}

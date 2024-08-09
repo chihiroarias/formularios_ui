@@ -6,6 +6,7 @@ import Loader from "../../../elementos/loader/Loader";
 import "./formularios.css";
 import MuestraCampoForm from "../../moleculares/MuestraCampoForm/MuestraCampoForm";
 import EditFieldData from "./EditFieldData";
+import { MdEdit } from "react-icons/md";
 
 export default function Formularios() {
   const [loader, setLoader] = useState(true);
@@ -121,26 +122,32 @@ export default function Formularios() {
                             updateField={updateField}
                           />
                         ) : (
-                          <div key={campo.id}>
-                            <MuestraCampoForm
-                              formversionid={campo.formversionid}
-                              labelForm={campo.labelForm}
-                              htmlFor={campo.htmlFor}
-                              placeholder={campo.placeholder}
-                              agrupacionRadio={campo.agrupacionRadio}
-                              regex={campo.regex}
-                              info={campo.info}
-                              indexadoForm={campo.indexadoForm}
-                              endpoint={campo.endpoint}
-                              condicional={campo.condicional}
-                              required={campo.required}
-                              selectPrecargadoId={campo.selectPrecargadoId}
-                              id={campo.id.toString()}
-                              type={campo.type}
-                            />
-                            <button onClick={() => setCampoEnEdicion(campo)}>
+                          <div key={campo.id} >
+                            <div className=" flex items-center grid grid-cols-2 gap-3 ">
+                              <MuestraCampoForm
+                                formversionid={campo.formversionid}
+                                labelForm={campo.labelForm}
+                                htmlFor={campo.htmlFor}
+                                placeholder={campo.placeholder}
+                                agrupacionRadio={campo.agrupacionRadio}
+                                regex={campo.regex}
+                                info={campo.info}
+                                indexadoForm={campo.indexadoForm}
+                                endpoint={campo.endpoint}
+                                condicional={campo.condicional}
+                                required={campo.required}
+                                selectPrecargadoId={campo.selectPrecargadoId}
+                                id={campo.id}
+                                type={campo.type}
+                              />
+                              <MdEdit
+                                className={"edit-icon ml-5 "}
+                                onClick={() => setCampoEnEdicion(campo)}
+                              />
+                            </div>
+                            {/* <button onClick={() => setCampoEnEdicion(campo)}>
                               Editar
-                            </button>
+                            </button> */}
                           </div>
                         )
                       )
