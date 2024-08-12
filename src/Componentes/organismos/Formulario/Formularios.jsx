@@ -7,6 +7,7 @@ import "./formularios.css";
 import MuestraCampoForm from "../../moleculares/MuestraCampoForm/MuestraCampoForm";
 import EditFieldData from "./EditFieldData";
 import { MdEdit } from "react-icons/md";
+
 import { MdDelete } from "react-icons/md"; // Importa el icono de eliminación
 import Swal from "sweetalert2"; // Importa SweetAlert2
 
@@ -154,17 +155,16 @@ export default function Formularios() {
                     {formulario.campos && formulario.campos.length > 0 ? (
                       formulario.campos.map((campo) =>
                         campoEnEdicion && campoEnEdicion.id === campo.id ? (
-                          <div key={campo.id}>
-                            <EditFieldData
-                              fieldData={campoEnEdicion}
-                              updateField={updateField}
-                              cancelEdit={cancelEdit}
-                            />
-                            <br />
-                          </div>
+
+                          <EditFieldData
+                            key={campo.id}
+                            fieldData={campoEnEdicion}
+                            updateField={updateField}
+                          />
                         ) : (
-                          <div key={campo.campoid}>
-                            <div className="flex items-center grid grid-cols-2 gap-3">
+                          <div key={campo.id} >
+                            <div className=" flex items-center grid grid-cols-2 gap-3 ">
+
                               <MuestraCampoForm
                                 formversionid={campo.formversionid}
                                 labelForm={campo.labelForm}
@@ -181,6 +181,7 @@ export default function Formularios() {
                                 id={campo.id}
                                 type={campo.type}
                               />
+
                               <div>
                                 <MdEdit
                                   className={"edit-icon ml-5"}
@@ -192,6 +193,7 @@ export default function Formularios() {
                                 />
                               </div>
                             </div>
+
                           </div>
                         )
                       )

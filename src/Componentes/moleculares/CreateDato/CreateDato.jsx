@@ -55,10 +55,10 @@ export default function CreateDato({ addField, indice, setIndice }) {
     }));
   }
 
-  function handleSelectPrecarga(selectEndpoint) {
+  function handleSelectPrecarga(endpoint) {
     setFieldData((fieldData) => ({
       ...fieldData,
-      endpoint: selectEndpoint,
+      endpoint,
     }));
   }
 
@@ -101,12 +101,12 @@ export default function CreateDato({ addField, indice, setIndice }) {
   }
 
   function crearCampoString() {
-    if (validar) {
+    if (validar()) {
       // if (fieldData.type === "select") {
       //   await createSelectRef.current.triggerCreateSelect();
       //   console.log("ENTRE AL CREAR CAMPO Y VALIDO");
       // }
-
+      console.log("ENTRE AL CREAR CAMPO");
       setOrdenCampo(ordenCampo + 1);
 
       addField({ ...fieldData, indice, ordenCampo: ordenCampo });

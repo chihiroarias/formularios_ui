@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
 
@@ -11,10 +12,30 @@ const InputField = ({
   placeholder,
   value,
   hight,
+  regex,
   obl,
+  error,
   ...props
 }) => {
  // if (type) type = type.trim().toLowerCase();
+ const [errorMsg, setErrorMsg] = useState("");
+
+//  useEffect(() => {
+//    if (regex && value && !new RegExp(regex).test(value)) {
+//      setError("Formato inválido");
+//    } else {
+//      setError("");
+//    }
+//  }, [value, regex]);
+const handleChange = (e) => {
+  const val = e.target.value;
+  if (regex && !new RegExp(regex).test(val)) {
+    setErrorMsg(error || "Formato incorrecto");
+  } else {
+    setErrorMsg("");
+  }
+  onChange(e);
+};
 
   const validTypes = [
     "email",
@@ -38,14 +59,15 @@ const InputField = ({
         id={id}
         name={name??id}
         type={inputType}
-        onChange={onChange}
+        onChange={handleChange}
         placeholder={placeholder}
-        className={`input-field ${type} ${hight} prettyInput`}
+        className={`input-field ${type} ${hight} ${error ? "input-error" : ""} prettyInput`}
         value={value}
         required={obl}
         {...(register && { ...register(name, validation) })}
         {...props}
       />
+      {errorMsg && <div style={{ color: "red", fontSize: "0.75em" }}>{errorMsg}</div>}
     </div>
   );
 };
@@ -69,6 +91,8 @@ InputField.propTypes = {
   id: PropTypes.string,
   value: PropTypes.string,
   hight: PropTypes.string,
+  regex: PropTypes.string,
+  error: PropTypes.string,
 };
 
 // specifies the default values for type prop
