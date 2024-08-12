@@ -7,6 +7,8 @@ import "./formularios.css";
 import MuestraCampoForm from "../../moleculares/MuestraCampoForm/MuestraCampoForm";
 import EditFieldData from "./EditFieldData";
 import { MdEdit } from "react-icons/md";
+import { MdDelete } from "react-icons/md"; // Importa el icono de eliminación
+import Swal from "sweetalert2"; // Importa SweetAlert2
 
 import { MdDelete } from "react-icons/md"; // Importa el icono de eliminación
 import Swal from "sweetalert2"; // Importa SweetAlert2
@@ -162,8 +164,9 @@ export default function Formularios() {
                             updateField={updateField}
                           />
                         ) : (
-                          <div key={campo.id} >
-                            <div className=" flex items-center grid grid-cols-2 gap-3 ">
+
+                          <div key={campo.campoid}>
+                            <div className="flex items-center grid grid-cols-2 gap-3">
 
                               <MuestraCampoForm
                                 formversionid={campo.formversionid}

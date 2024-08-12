@@ -85,7 +85,6 @@ const CreateSelect = ({ onCreate }) => {
         async (response) => {
           console.log(response);
           console.log(options);
-
           if (
             response &&
             response.selectPrecargado &&

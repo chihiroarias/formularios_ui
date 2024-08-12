@@ -5,7 +5,10 @@ import CustomTextArea from "../CustomTextArea/CustomTextArea";
 import SeccionField from "../../atomicos/SectionField/SectionField";
 import MuestraSelectDelSistema from "../selects/MuestraSelectDelSistema";
 import MuestraSelectPrecargado from "../selects/MuestraSelectPrecargado";
-import {styleCampo} from "../../../Utils/styleCampo"
+
+import { styleCampo } from "../../../Utils/styleCampo";
+import ShowInformation from "../../atomicos/Info/ShowInformation";
+
 
 const MuestraCampoForm = (props) => {
   const { errors, name, errorMsg } = props;
@@ -72,18 +75,23 @@ const MuestraCampoForm = (props) => {
         null
       )}
 
-      {props.type==="sPrecargado" && props.selectEndpoint ? (
-        <div>
-          <MuestraSelectPrecargado
-            estiloCampo={styleCampo}
-
-            selectPrecargadoId={props.selectPrecargadoId}
-            {...props}
-          />
-        </div>
-      ) : (
-        null
+      {(props.type === "select" || props.type === "sExistentes") && (
+        <MuestraSelectDelSistema
+          estiloCampo={styleCampo}
+          selectPrecargadoId={props.selectPrecargadoId}
+          {...props}
+        />
       )}
+
+      {props.type === "sPrecargado" && props.selectEndpoint && (
+        <MuestraSelectPrecargado
+          estiloCampo={styleCampo}
+          selectEndpoint={props.selectEndpoint}
+          {...props}
+        />
+      )}
+
+      {props.info && <ShowInformation info={props.info} />}
 
     </div>
   );
@@ -108,6 +116,7 @@ MuestraCampoForm.propTypes = {
   selectName: PropTypes.string,
   selectPrecargadoId: PropTypes.string,
   selectEndpoint: PropTypes.string,
+  info: PropTypes.string,
 };
 
 MuestraCampoForm.defaultProps = {

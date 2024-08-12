@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import Label from "../../atomicos/Label/Label.jsx";
 import Button from "../../atomicos/Button/Button.jsx";
 import CustomInputField from "../CustomInputField/CustomInputField.jsx";
-//import Select from "../../atomicos/Select/Select.jsx";
+// import Select from "../../atomicos/Select/Select.jsx";
 import SelectsExistentes from "../selects/selectsDelSistema.jsx";
 import { selectDato } from "../../../Utils/selectDatoUtils.js";
 import SelectOptionGroup from "../../atomicos/Select/SelectOptionGroup.jsx";
-//import ConfigureSelect from "../../moleculares/selects/configureSelect.jsx";
+// import ConfigureSelect from "../../moleculares/selects/configureSelect.jsx";
 import CreateSelect from "../selects/createSelect.jsx";
 import SelectsPrecargado from "../selects/selectsPrecarga.jsx";
 
@@ -38,16 +38,7 @@ export default function CreateDato({ addField, indice, setIndice }) {
   const [errorAgruparRadio, setErrorAgruparRadio] = useState("");
   const [errorIdCampo, setErrorIdCampo] = useState("");
 
-  //  const createSelectRef = useRef(null);
-
   function handleSelectCreate(selectName, selectPrecargadoId) {
-    console.log(
-      "Entre al HandleSelectCreat con name:" +
-        selectName +
-        " y " +
-        selectPrecargadoId
-    );
-
     setFieldData((fieldData) => ({
       ...fieldData,
       selectName,
@@ -73,7 +64,6 @@ export default function CreateDato({ addField, indice, setIndice }) {
     setErrorIdCampo("");
 
     // buscar errores
-
     if (!fieldData.type) {
       setErrorTipoDato("Debe elegir un tipo de campo");
       esValido = false;
@@ -102,14 +92,10 @@ export default function CreateDato({ addField, indice, setIndice }) {
 
   function crearCampoString() {
     if (validar()) {
-      // if (fieldData.type === "select") {
-      //   await createSelectRef.current.triggerCreateSelect();
-      //   console.log("ENTRE AL CREAR CAMPO Y VALIDO");
-      // }
-      console.log("ENTRE AL CREAR CAMPO");
+
       setOrdenCampo(ordenCampo + 1);
 
-      addField({ ...fieldData, indice, ordenCampo: ordenCampo });
+      addField({ ...fieldData, indice, ordenCampo });
 
       setIndice(indice + 1);
 
@@ -130,7 +116,7 @@ export default function CreateDato({ addField, indice, setIndice }) {
         selectName: "",
         selectPrecargadoId: "",
         endpoint: "",
-        ordenCampo: ordenCampo,
+        ordenCampo,
       });
     }
   }
@@ -308,30 +294,30 @@ export default function CreateDato({ addField, indice, setIndice }) {
         {fieldData.type !== "" && fieldData.type !== "section" && (
           <div
             style={{
-              //border: '1px solid red',
               display: "flex",
               alignItems: "center",
               justifyContent: "start",
             }}
           >
-            <CustomInputField
-              id={"campoObligatorio"}
-              labelForm={"Obligatorio"}
-              name={"campoObligatorio"}
-              htmlFor={"campoObligatorio"}
+            <Label htmlFor={"required"} labelForm={"Obligatorio"} />
+            <input
+              className="mb-2"
               type={"checkbox"}
-              checked={fieldData.required}
+              id={"required"}
               onChange={(e) =>
                 setFieldData({ ...fieldData, required: e.target.checked })
               }
+              checked={fieldData.required}
             />
           </div>
         )}
-
-        {/* {fieldData.type === "select"?"":<Button type="submit" onClick={crearCampoString} text="Crear Campo" />} */}
-        <Button type="submit" onClick={crearCampoString} text="Crear Campo" />
       </div>
-      <br />
+      <Button
+        text="Agregar Campo"
+        onClick={() => {
+          crearCampoString();
+        }}
+      />
     </>
   );
 }
