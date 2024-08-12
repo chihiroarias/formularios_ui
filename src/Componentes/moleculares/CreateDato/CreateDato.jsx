@@ -46,10 +46,10 @@ export default function CreateDato({ addField, indice, setIndice }) {
     }));
   }
 
-  function handleSelectPrecarga(selectEndpoint) {
+  function handleSelectPrecarga(endpoint) {
     setFieldData((fieldData) => ({
       ...fieldData,
-      endpoint: selectEndpoint,
+      endpoint,
     }));
   }
 
@@ -92,6 +92,7 @@ export default function CreateDato({ addField, indice, setIndice }) {
 
   function crearCampoString() {
     if (validar()) {
+
       setOrdenCampo(ordenCampo + 1);
 
       addField({ ...fieldData, indice, ordenCampo });
