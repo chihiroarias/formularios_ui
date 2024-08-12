@@ -10,6 +10,7 @@ import Notificacion from "../../../elementos/notificacion/Notificacion.js";
 import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import Swal from "sweetalert2";
+import ShowInformation from "../../atomicos/Info/ShowInformation";
 
 export default function Formularios() {
   const [loader, setLoader] = useState(true);
@@ -173,7 +174,10 @@ export default function Formularios() {
                           />
                         ) : (
                           <div key={campo.campoid}>
-                            <div className="flex items-center grid grid-cols-2 gap-3">
+                            <div className="flex items-center grid grid-cols-3 gap-1">
+
+                              {campo.info && <ShowInformation info={campo.info} />}
+
                               <MuestraCampoForm
                                 formversionid={campo.formversionid}
                                 labelForm={campo.labelForm}
@@ -191,7 +195,7 @@ export default function Formularios() {
                                 type={campo.type}
                               />
 
-                              <div>
+                              <div className="grid grid-cols-2 gap-1">
                                 <MdEdit
                                   className={"edit-icon ml-5"}
                                   onClick={() => setCampoEnEdicion(campo)}

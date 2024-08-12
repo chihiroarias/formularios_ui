@@ -5,11 +5,11 @@ export default function ShowInformation({ info }) {
   const [showInfo, setShowInfo] = useState(false);
 
   return (
-    <div style={{ position: "relative", display: "inline-block" }}>
+    <div style={{position: "relative", display: "inline-block", justifyContent:"end"}}>
       <FaQuestionCircle
         onMouseEnter={() => setShowInfo(true)}
         onMouseLeave={() => setShowInfo(false)}
-        style={{ cursor: "pointer", color: "#007BFF" }}
+        style={{ cursor: "pointer", color: "#000000" }}
       />
       {showInfo && (
         <div
@@ -18,7 +18,7 @@ export default function ShowInformation({ info }) {
             backgroundColor: "#f9f9f9",
             border: "1px solid #ddd",
             padding: "8px",
-            borderRadius: "4px",
+            borderRadius: "10px",
             top: "100%",
             left: "50%",
             transform: "translateX(-50%)",

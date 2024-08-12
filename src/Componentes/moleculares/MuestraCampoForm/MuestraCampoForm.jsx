@@ -7,7 +7,7 @@ import MuestraSelectDelSistema from "../selects/MuestraSelectDelSistema";
 import MuestraSelectPrecargado from "../selects/MuestraSelectPrecargado";
 
 import { styleCampo } from "../../../Utils/styleCampo";
-import ShowInformation from "../../atomicos/Info/ShowInformation";
+//import ShowInformation from "../../atomicos/Info/ShowInformation";
 
 
 const MuestraCampoForm = (props) => {
@@ -91,7 +91,7 @@ const MuestraCampoForm = (props) => {
         />
       )}
 
-      {props.info && <ShowInformation info={props.info} />}
+     {/* {props.info && <ShowInformation info={props.info} />} */}
 
     </div>
   );

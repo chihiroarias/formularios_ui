@@ -8,10 +8,11 @@ import Swal from "sweetalert2";
 
 import Button from "../../atomicos/Button/Button.jsx";
 import CreateDato from "../../moleculares/CreateDato/CreateDato.jsx";
-import EditFormData from "./EditFormData.jsx"; // Asegúrate de importar el componente EditFormData
+import EditFormData from "./EditFormData.jsx";
 import { accessAPI } from "../../../Utils/utils.js";
 import CustomInputField from "../../moleculares/CustomInputField/CustomInputField.jsx";
 import MenuNavegacion from "../menuNavegacion/menuNavegacion.js";
+import ShowInformation from "../../atomicos/Info/ShowInformation";
 
 function Formulario() {
   const [title, setTitle] = useState("");
@@ -191,20 +192,22 @@ function Formulario() {
             <p>{description}</p>
             {fields.map((field) => (
               <div
-                className="grid grid-cols-3 gap-3"
+                className="grid grid-cols-3 gap-1"
                 
-                key={field.indice-field.ordenCampo} // Usar una key única y estable
+                key={field.indice-field.ordenCampo} 
 
                 style={{
                   display: "flex",
-                  justifyContent: "space-between",
+                  justifyContent: "end",
                   alignItems: "center",
                 }}
               >
+                {field.info && <ShowInformation info={field.info} />}
+
                 <MuestraCampoForm {...field} />
 
-                <div  className="grid grid-cols-2 gap-3">
-
+                <div  className="grid grid-cols-2 gap-1">             
+               
                   <MdEdit
                     className={"edit-icon ml-5"}
                     onClick={() => editField(field)}
