@@ -6,12 +6,10 @@ import Loader from "../../../elementos/loader/Loader";
 import "./formularios.css";
 import MuestraCampoForm from "../../moleculares/MuestraCampoForm/MuestraCampoForm";
 import EditFieldData from "./EditFieldData";
+import Notificacion from "../../../elementos/notificacion/Notificacion.js";
 import { MdEdit } from "react-icons/md";
-import { MdDelete } from "react-icons/md"; // Importa el icono de eliminación
-import Swal from "sweetalert2"; // Importa SweetAlert2
-
-import { MdDelete } from "react-icons/md"; // Importa el icono de eliminación
-import Swal from "sweetalert2"; // Importa SweetAlert2
+import { MdDelete } from "react-icons/md";
+import Swal from "sweetalert2";
 
 export default function Formularios() {
   const [loader, setLoader] = useState(true);
@@ -20,7 +18,8 @@ export default function Formularios() {
   const [formularios, setFormularios] = useState([]);
   const [formulario, setFormulario] = useState(null);
   const [campoEnEdicion, setCampoEnEdicion] = useState(null);
-  const [campoEnEliminacion, setCampoEnEliminacion] = useState(false); // Estado para manejar la eliminación de un campo
+  const [campoEnEliminacion, setCampoEnEliminacion] = useState(false);
+  const [mensajeNotificacion, setMensajeNotificacion] = useState();
 
   const { formularioId } = useParams();
 
@@ -34,7 +33,11 @@ export default function Formularios() {
         setLoader(false);
       },
       (response) => {
-        console.log(response);
+        setMensajeNotificacion({
+          mensaje: response[0].msg,
+          temporal: true,
+          error: true,
+        });
       }
     );
     setFormularioSeleccionado(formularioId);
@@ -103,8 +106,12 @@ export default function Formularios() {
             setCampoEnEliminacion(true);
             Swal.fire("¡Eliminado!", "El campo ha sido eliminado.", "success");
           },
-          (error) => {
-            console.log(error);
+          (response) => {
+            setMensajeNotificacion({
+              mensaje: response[0].msg,
+              temporal: true,
+              error: true,
+            });
 
             Swal.fire("Error", "No se pudo eliminar el campo.", "error");
           }
@@ -116,6 +123,7 @@ export default function Formularios() {
   return (
     <div className="seccion laboratorio">
       <MenuNavegacion submenuSeleccionado="formularios" />
+      <Notificacion config={mensajeNotificacion} />
       <div className="contenido">
         {loader && <Loader>Cargando formulario</Loader>}
         {!loader && formularios && (
@@ -157,17 +165,15 @@ export default function Formularios() {
                     {formulario.campos && formulario.campos.length > 0 ? (
                       formulario.campos.map((campo) =>
                         campoEnEdicion && campoEnEdicion.id === campo.id ? (
-
                           <EditFieldData
                             key={campo.id}
                             fieldData={campoEnEdicion}
                             updateField={updateField}
+                            cancelEdit={cancelEdit}
                           />
                         ) : (
-
                           <div key={campo.campoid}>
                             <div className="flex items-center grid grid-cols-2 gap-3">
-
                               <MuestraCampoForm
                                 formversionid={campo.formversionid}
                                 labelForm={campo.labelForm}
@@ -196,7 +202,6 @@ export default function Formularios() {
                                 />
                               </div>
                             </div>
-
                           </div>
                         )
                       )
