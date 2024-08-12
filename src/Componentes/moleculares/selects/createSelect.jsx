@@ -1,9 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  forwardRef,
-  useImperativeHandle,
-} from "react";
+import React, { useState, useEffect } from "react";
 import { accessAPI } from "../../../Utils/utils";
 import InputField from "../../atomicos/InputField/InputField";
 import Label from "../../atomicos/Label/Label";
@@ -11,10 +6,7 @@ import { MdDelete } from "react-icons/md";
 import CustomInputField from "../CustomInputField/CustomInputField";
 import Button from "../../atomicos/Button/Button";
 
-
-
 const CreateSelect = ({ onCreate }) => {
-
   const [options, setOptions] = useState([{ etiqueta: "", value: "" }]);
   const [selectName, setSelectName] = useState("");
   const [payload, setPayload] = useState(null);
@@ -60,10 +52,7 @@ const CreateSelect = ({ onCreate }) => {
     return valido;
   }
 
-
-
   function createSelectPrecargado() {
-
     try {
       if (createSelectValidations()) {
         const optionsWithDefaultValues = options.map((option) => ({
@@ -103,6 +92,10 @@ const CreateSelect = ({ onCreate }) => {
             response.selectPrecargado.id
           ) {
             await onCreate(selectName, response.selectPrecargado.id);
+            //alert("El select fue agregado exitosamente");
+            // setOptions([{ etiqueta: "", value: "" }]);
+            // setSelectName("");
+            // setPayload(null);
           } else {
             console.error(
               "Error:" + response.selectPrecargado.id + "is missing"
@@ -113,9 +106,9 @@ const CreateSelect = ({ onCreate }) => {
           console.log(error);
         }
       );
-      console.log("ENTRE AL IF");
+      setPayload(null);
     }
-  }, [payload, selectName, onCreate, options]);
+  }, [payload, onCreate, options, selectName]);
 
   return (
     <div>
@@ -160,8 +153,7 @@ const CreateSelect = ({ onCreate }) => {
               className="prettyInput"
               type="text"
               name="value"
-              placeholder={`Valor ${index+1} (opcional)`}
-
+              placeholder={`Valor ${index + 1} (opcional)`}
               value={option.value}
               onChange={(e) => handleOptionChange(index, e)}
             />
@@ -174,12 +166,8 @@ const CreateSelect = ({ onCreate }) => {
         <Button onClick={addOption} text="Añadir opción" />
       </div>
 
-
-
-
-      <Button onClick={createSelectPrecargado} text="Crear Select"/>  
+      <Button onClick={createSelectPrecargado} text="Crear Select" />
     </div>
   );
 };
 export default CreateSelect;
-

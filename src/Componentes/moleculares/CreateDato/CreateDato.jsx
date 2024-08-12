@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import Label from "../../atomicos/Label/Label.jsx";
 import Button from "../../atomicos/Button/Button.jsx";
 import CustomInputField from "../CustomInputField/CustomInputField.jsx";
@@ -26,7 +26,7 @@ export default function CreateDato({ addField, indice, setIndice }) {
     type: "",
     agrupacionRadio: "",
     selectName: "",
-    selectId: "",
+    selectPrecargadoId: "",
     endpoint: "",
     ordenCampo: 0,
   });
@@ -40,15 +40,18 @@ export default function CreateDato({ addField, indice, setIndice }) {
 
   //  const createSelectRef = useRef(null);
 
-  function handleSelectCreate(selectName, selectId) {
+  function handleSelectCreate(selectName, selectPrecargadoId) {
     console.log(
-      "Entre al HandleSelectCreat con name:" + selectName + " y " + selectId
+      "Entre al HandleSelectCreat con name:" +
+        selectName +
+        " y " +
+        selectPrecargadoId
     );
 
     setFieldData((fieldData) => ({
       ...fieldData,
       selectName,
-      selectId,
+      selectPrecargadoId,
     }));
   }
 
@@ -125,7 +128,7 @@ export default function CreateDato({ addField, indice, setIndice }) {
         checkbox: false,
         agrupacionRadio: "",
         selectName: "",
-        selectId: "",
+        selectPrecargadoId: "",
         endpoint: "",
         ordenCampo: ordenCampo,
       });

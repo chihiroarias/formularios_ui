@@ -1,15 +1,25 @@
 import React, { useState, useEffect } from "react";
 import CampoEditable from "../../../elementos/campoEditable/CampoEditable.js";
 
-export default function EditFieldData({ fieldData, updateField }) {
+export default function EditFieldData({ fieldData, updateField, cancelEdit }) {
   const [localData, setLocalData] = useState(fieldData || {});
 
   useEffect(() => {
     setLocalData(fieldData || {});
   }, [fieldData]);
 
+  const handleCancelEdit = () => {
+    cancelEdit();
+  };
+
   return (
-    <>
+    <div>
+      <h4>
+        Tipo de dato:{" "}
+        {localData.type === "sExistente"
+          ? "Select del sistema"
+          : localData.type}
+      </h4>
       {localData.type === "radio" && (
         <div>
           <CampoEditable
@@ -148,7 +158,10 @@ export default function EditFieldData({ fieldData, updateField }) {
           </div>
         )}
       </div>
-      <br />
-    </>
+
+      <div className="edit-buttons">
+        <button onClick={handleCancelEdit}>Dejar de editar</button>
+      </div>
+    </div>
   );
 }

@@ -76,7 +76,8 @@ const MuestraCampoForm = (props) => {
         <div>
           <MuestraSelectPrecargado
             estiloCampo={styleCampo}
-            selectEndpoint={props.selectEndpoint} 
+
+            selectPrecargadoId={props.selectPrecargadoId}
             {...props}
           />
         </div>
@@ -103,6 +104,10 @@ MuestraCampoForm.propTypes = {
   selectedType: PropTypes.string,
   regex: PropTypes.string,
   content: PropTypes.string,
+
+  selectName: PropTypes.string,
+  selectPrecargadoId: PropTypes.string,
+  selectEndpoint: PropTypes.string,
 };
 
 MuestraCampoForm.defaultProps = {
