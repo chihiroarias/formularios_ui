@@ -9,49 +9,42 @@ import MuestraSelectPrecargado from "../selects/MuestraSelectPrecargado";
 import { styleCampo } from "../../../Utils/styleCampo";
 import ShowInformation from "../../atomicos/Info/ShowInformation";
 
-
 const MuestraCampoForm = (props) => {
   const { errors, name, errorMsg } = props;
 
   const renderError = () => {
     if (errors && errors[name] && errors[name].type === "pattern") {
-      return <div className="text-red-500 text-sm">{errorMsg || "Formato incorrecto"}</div>;
+      return (
+        <div className="text-red-500 text-sm">
+          {errorMsg || "Formato incorrecto"}
+        </div>
+      );
     }
     return null;
   };
   return (
-   
-    <div
-      className="form-group"
-     >
+    <div className="form-group">
       {props.type === "textarea" ? (
         <div>
-          <CustomTextArea
-            estiloCampo={styleCampo}
-            {...props}
-          />
+          <CustomTextArea estiloCampo={styleCampo} {...props} />
         </div>
-      ) : (
-        null
-      )}
+      ) : null}
 
-      {props.type !== "textarea" 
-        && props.type !== "section"
-        && props.type !== "select" 
-        && props.type !== "sExistentes"
-        && props.type !== "sPrecargado"? (
-        <div >
-          <CustomInputField    
-           estiloCampo={styleCampo}       
-           regex={props.regex}  
-           errorMsg={props.errorMsg}  
+      {props.type !== "textarea" &&
+      props.type !== "section" &&
+      props.type !== "select" &&
+      props.type !== "sExistentes" &&
+      props.type !== "sPrecargado" ? (
+        <div>
+          <CustomInputField
+            estiloCampo={styleCampo}
+            regex={props.regex}
+            errorMsg={props.errorMsg}
             {...props}
           />
-           {renderError()}
+          {renderError()}
         </div>
-      ) : (
-        null
-      )}
+      ) : null}
       {props.type === "section" ? (
         <div>
           <SeccionField
@@ -59,21 +52,7 @@ const MuestraCampoForm = (props) => {
             {...props}
           />
         </div>
-      ) : (
-        null
-      )}
-
-      {(props.type === "select" || props.type==="sExistentes") && props.selectName ? (
-        <div>
-          <MuestraSelectDelSistema 
-            estiloCampo={styleCampo}  
-            selectId={props.selectId} 
-            {...props}
-          />
-        </div>
-      ) : (
-        null
-      )}
+      ) : null}
 
       {(props.type === "select" || props.type === "sExistentes") && (
         <MuestraSelectDelSistema
@@ -92,7 +71,6 @@ const MuestraCampoForm = (props) => {
       )}
 
       {props.info && <ShowInformation info={props.info} />}
-
     </div>
   );
 };

@@ -91,10 +91,6 @@ const CreateSelect = ({ onCreate }) => {
             response.selectPrecargado.id
           ) {
             await onCreate(selectName, response.selectPrecargado.id);
-            //alert("El select fue agregado exitosamente");
-            // setOptions([{ etiqueta: "", value: "" }]);
-            // setSelectName("");
-            // setPayload(null);
           } else {
             console.error(
               "Error:" + response.selectPrecargado.id + "is missing"
@@ -105,8 +101,8 @@ const CreateSelect = ({ onCreate }) => {
           console.log(error);
         }
       );
-      setPayload(null);
     }
+    setPayload(null);
   }, [payload, onCreate, options, selectName]);
 
   return (
