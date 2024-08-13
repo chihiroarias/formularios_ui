@@ -1,9 +1,6 @@
 export const selectDato = [
   {
-    
-    options: [
-      { name: "Elija tipo", value: "" },
-    ],
+    options: [{ name: "Elija tipo", value: "" }],
   },
   {
     label: "Campos destacados",
@@ -21,7 +18,6 @@ export const selectDato = [
       { name: "Checkbox", value: "checkbox" },
       { name: "Radio", value: "radio" },
       { name: "Select", value: "select" },
-      { name: "Select anidado", value: "sAnidado" },
       { name: "Selects existentes", value: "sExistentes" },
       { name: "Select precargado", value: "sPrecargado" },
     ],
