@@ -1,7 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Formulario from "./Componentes/organismos/Formulario/Formulario";
-import FormContainer from "./Componentes/atomicos/FormContainer/FormContainer";
 import Home from "./elementos/Home";
 import Formularios from "./Componentes/organismos/Formulario/Formularios";
 import EditorFormulario from "./Componentes/organismos/Formulario/EditorFormulario";
@@ -21,7 +20,3 @@ class Router extends React.Component {
   }
 }
 export default Router;
-
-/* 
- *    {/* <Route path="/proceso/:procesoId" element={<Proceso />} />
-        <Route path="*" element={<NotFound />} /> */

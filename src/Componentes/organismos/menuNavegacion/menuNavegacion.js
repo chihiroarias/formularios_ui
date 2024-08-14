@@ -1,32 +1,7 @@
-import { useState, useEffect } from "react";
 import "./menuNavegacion.css";
 import { NavLink } from "react-router-dom";
 import logoHorizontalBlanco from "../../../elementos/Images/logoHorizontalBlanco.png";
 export default function MenuNavegacion(props) {
-  const [botonesSubmenu, setBotonesSubmenu] = useState([]);
-
-  useEffect(() => {
-    if (props.submenuSeleccionado) {
-      switch (props.submenuSeleccionado) {
-        case "formulario":
-          setBotonesSubmenu([
-            { etiqueta: "Home", uri: "/" },
-            { etiqueta: "Crear Formulario", uri: "/form/create" },
-            {
-              etiqueta: "Listado de formularios",
-              uri: "/formulario/form/list",
-            },
-          ]);
-          break;
-        case "proveedores":
-          setBotonesSubmenu([]);
-          break;
-
-        default:
-      }
-    }
-  }, [props.submenuSeleccionado]);
-
   return (
     <header>
       <div className="mainMenuContainer">
@@ -60,7 +35,7 @@ export default function MenuNavegacion(props) {
               Listado de Formularios
             </NavLink>
             <NavLink
-              to={"/formulario/form/list"}
+              to={"/"}
               className={
                 props.submenuSeleccionado === "formulario"
                   ? "boton seleccionado"

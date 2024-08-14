@@ -10,6 +10,7 @@ import Notificacion from "../../../elementos/notificacion/Notificacion.js";
 import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import Swal from "sweetalert2";
+import Footer from "../../atomicos/Footer/Footer.jsx";
 
 export default function Formularios() {
   const [loader, setLoader] = useState(true);
@@ -215,6 +216,7 @@ export default function Formularios() {
           </>
         )}
       </div>
+      <Footer />
     </div>
   );
 }
