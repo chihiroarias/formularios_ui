@@ -5,11 +5,12 @@ import MenuNavegacion from "../menuNavegacion/menuNavegacion.js";
 import Loader from "../../../elementos/loader/Loader";
 import "./formularios.css";
 import CamposEditables from "./EditFieldData.jsx";
+import Notificacion from "../../../elementos/notificacion/Notificacion.js";
 
 export default function EditorFormulario() {
   const [loader, setLoader] = useState(true);
   const [formulario, setFormulario] = useState(null);
-
+  const [mensajeNotificacion, setMensajeNotificacion] = useState();
   const { formularioId } = useParams();
 
   useEffect(() => {
@@ -23,7 +24,11 @@ export default function EditorFormulario() {
           setLoader(false);
         },
         (response) => {
-          console.log(response);
+          setMensajeNotificacion({
+            mensaje: response[0].msg,
+            temporal: true,
+            error: true,
+          });
         }
       );
       setLoader(false);
@@ -40,6 +45,7 @@ export default function EditorFormulario() {
   return (
     <div className="seccion laboratorio">
       <MenuNavegacion submenuSeleccionado="formularios" />
+      <Notificacion config={mensajeNotificacion} />
       <div className="contenido">
         {loader && <Loader>Cargando formularios</Loader>}
         <CamposEditables formularioId={formularioId} />

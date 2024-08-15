@@ -58,7 +58,11 @@ export default function Formularios() {
           setCampoEnEliminacion(false);
         },
         (response) => {
-          console.log(response);
+          setMensajeNotificacion({
+            mensaje: response[0].msg,
+            temporal: true,
+            error: true,
+          });
           setLoaderFormulario(false);
           setFormularioSeleccionado(null);
           setCampoEnEliminacion(false);

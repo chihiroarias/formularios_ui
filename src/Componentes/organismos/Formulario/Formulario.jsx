@@ -12,6 +12,7 @@ import EditFormData from "./EditFormData.jsx"; // Asegúrate de importar el comp
 import { accessAPI } from "../../../Utils/utils.js";
 import CustomInputField from "../../moleculares/CustomInputField/CustomInputField.jsx";
 import MenuNavegacion from "../menuNavegacion/menuNavegacion.js";
+import Notificacion from "../../../elementos/notificacion/Notificacion.js";
 
 function Formulario() {
   const [title, setTitle] = useState("");
@@ -25,6 +26,7 @@ function Formulario() {
   const [errorTitle, setErrorTitle] = useState("");
   const [errorCodigo, setErrorCodigo] = useState("");
   const [errorField, setErrorField] = useState("");
+  const [mensajeNotificacion, setMensajeNotificacion] = useState();
 
   function validarForm() {
     let esValido = true;
@@ -51,15 +53,6 @@ function Formulario() {
     return esValido;
   }
 
-  // function addField (field) {
-  //   console.log("Adding field:", field);
-  //   if(field.type === "select" && field.selectId) {
-  //   setFields([...fields, { ...field, indice }]);
-  //   }
-  //   if (field.type !=="select") {
-  //     setFields([...fields, { ...field, indice }]);
-  //   }
-
   const addField = (field) => {
     setFields([...fields, { ...field, indice }]);
     setIndice(indice + 1);
@@ -75,7 +68,11 @@ function Formulario() {
           agregarCampos(response.id);
         },
         (response) => {
-          console.log(response);
+          setMensajeNotificacion({
+            mensaje: response[0].msg,
+            temporal: true,
+            error: true,
+          });
         }
       );
       setFields([]);
@@ -92,10 +89,18 @@ function Formulario() {
         `admin/form/campo/${id}`,
         field,
         (response) => {
-          console.log(response);
+          setMensajeNotificacion({
+            mensaje: "Campo Agregado Correctamente",
+            temporal: true,
+            error: false,
+          });
         },
         (response) => {
-          console.log(response);
+          setMensajeNotificacion({
+            mensaje: response[0].msg,
+            temporal: true,
+            error: true,
+          });
         }
       );
     });
@@ -140,6 +145,7 @@ function Formulario() {
       }}
     >
       <MenuNavegacion submenuSeleccionado="formulario" />
+      <Notificacion config={mensajeNotificacion} />
       <div className="mt-24 px-10">
         <div className="grid grid-cols-2 gap-12">
           <div className="mr-12">
@@ -192,9 +198,7 @@ function Formulario() {
             {fields.map((field) => (
               <div
                 className="grid grid-cols-3 gap-3"
-                
-                key={field.indice-field.ordenCampo} // Usar una key única y estable
-
+                key={field.indice - field.ordenCampo} // Usar una key única y estable
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
@@ -203,8 +207,7 @@ function Formulario() {
               >
                 <MuestraCampoForm {...field} />
 
-                <div  className="grid grid-cols-2 gap-3">
-
+                <div className="grid grid-cols-2 gap-3">
                   <MdEdit
                     className={"edit-icon ml-5"}
                     onClick={() => editField(field)}

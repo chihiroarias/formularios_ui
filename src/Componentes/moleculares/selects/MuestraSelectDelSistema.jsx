@@ -8,14 +8,12 @@ const MuestraSelectDelSistema = ({ selectPrecargadoId, ...props }) => {
   const labelText = props.required ? `${props.labelForm} *` : props.labelForm;
 
   useEffect(() => {
-    console.log(selectPrecargadoId);
     if (selectPrecargadoId) {
       accessAPI(
         "GET",
         `admin/form/${selectPrecargadoId}`,
         null,
         (response) => {
-          console.log(response);
           setSelectConfig(
             <div style={props.estiloCampo ? props.estiloCampo : {}}>
               <Label

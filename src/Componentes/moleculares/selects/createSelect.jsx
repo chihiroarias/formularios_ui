@@ -5,11 +5,14 @@ import Label from "../../atomicos/Label/Label";
 import { MdDelete } from "react-icons/md";
 import CustomInputField from "../CustomInputField/CustomInputField";
 import Button from "../../atomicos/Button/Button";
+import Notificacion from "../../../elementos/notificacion/Notificacion";
 
 const CreateSelect = ({ onCreate }) => {
   const [options, setOptions] = useState([{ etiqueta: "", value: "" }]);
   const [selectName, setSelectName] = useState("");
   const [payload, setPayload] = useState(null);
+
+  const [mensajeNotificacion, setMensajeNotificacion] = useState();
 
   const handleOptionChange = (index, event) => {
     const newOptions = [...options];
@@ -27,12 +30,6 @@ const CreateSelect = ({ onCreate }) => {
       setOptions([...options, { etiqueta: "", value: "" }]);
     }
   };
-
-  // useImperativeHandle(ref, () => ({
-  //   triggerCreateSelect: async () => {
-  //     await createSelectPrecargado();
-  //   },
-  // }));
 
   function createSelectValidations() {
     let valido = false;
@@ -70,21 +67,22 @@ const CreateSelect = ({ onCreate }) => {
         });
       }
     } catch (error) {
-      console.error(error);
+      setMensajeNotificacion({
+        mensaje: error,
+        temporal: true,
+        error: true,
+      });
     }
   }
 
   useEffect(() => {
     if (payload) {
-      console.log("ENTRE AL IF");
       accessAPI(
         "POST",
         "admin/form/selectprecargado",
         payload,
 
         async (response) => {
-          console.log(response);
-          console.log(options);
           if (
             response &&
             response.selectPrecargado &&
@@ -92,13 +90,19 @@ const CreateSelect = ({ onCreate }) => {
           ) {
             await onCreate(selectName, response.selectPrecargado.id);
           } else {
-            console.error(
-              "Error:" + response.selectPrecargado.id + "is missing"
-            );
+            setMensajeNotificacion({
+              mensaje: "Ocurrió un error",
+              temporal: true,
+              error: true,
+            });
           }
         },
-        (error) => {
-          console.log(error);
+        (response) => {
+          setMensajeNotificacion({
+            mensaje: response[0].msg,
+            temporal: true,
+            error: true,
+          });
         }
       );
     }
@@ -107,6 +111,7 @@ const CreateSelect = ({ onCreate }) => {
 
   return (
     <div>
+      <Notificacion config={mensajeNotificacion} />
       <div>
         <div>
           <CustomInputField
