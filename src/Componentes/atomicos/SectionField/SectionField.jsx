@@ -9,12 +9,12 @@ const SectionField = ({
 
   return (
     <div 
-    className="mt-5"
-    style={{fontFamily: "Montserrat", textAlign:"left"}}
+    className="mt-5 justify-start"
+    // style={{fontFamily: "Montserrat", textAlign:"left"}}
     required={obl}
     {...props}
     >
-      <p>
+      <p className="justify-start">
         <b>
           {content}
         </b>

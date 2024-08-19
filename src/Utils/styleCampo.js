@@ -1,9 +1,10 @@
 const styleCampo={
-    //border: '1px solid red',  
+   // border: '1px solid red',  
     display: 'flex',
     alignItems:'center',
     justifyContent: 'space-between',
     margin:'5px 0 5px 10px',
+    width:'25em'
   }
 
 export {styleCampo}

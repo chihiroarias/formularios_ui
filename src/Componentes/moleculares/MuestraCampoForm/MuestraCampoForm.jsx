@@ -7,7 +7,7 @@ import MuestraSelectDelSistema from "../selects/MuestraSelectDelSistema";
 import MuestraSelectPrecargado from "../selects/MuestraSelectPrecargado";
 
 import { styleCampo } from "../../../Utils/styleCampo";
-import ShowInformation from "../../atomicos/Info/ShowInformation";
+//import ShowInformation from "../../atomicos/Info/ShowInformation";
 
 const MuestraCampoForm = (props) => {
   const { errors, name, errorMsg } = props;
@@ -40,13 +40,15 @@ const MuestraCampoForm = (props) => {
             estiloCampo={styleCampo}
             regex={props.regex}
             errorMsg={props.errorMsg}
+            placeholder={props.ordenCampo}
             {...props}
           />
+         {props.ordenCampo}
           {renderError()}
         </div>
       ) : null}
       {props.type === "section" ? (
-        <div>
+        <div className="flex justify-start">
           <SeccionField
             content={props.indexadoForm + " " + props.labelForm}
             {...props}
@@ -70,7 +72,7 @@ const MuestraCampoForm = (props) => {
         />
       )}
 
-      {props.info && <ShowInformation info={props.info} />}
+      {/* {props.info && <ShowInformation info={props.info} />} */}
     </div>
   );
 };
@@ -94,7 +96,7 @@ MuestraCampoForm.propTypes = {
   selectName: PropTypes.string,
   selectPrecargadoId: PropTypes.string,
   selectEndpoint: PropTypes.string,
-  info: PropTypes.string,
+  //info: PropTypes.string,
 };
 
 MuestraCampoForm.defaultProps = {

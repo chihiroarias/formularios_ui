@@ -11,6 +11,7 @@ import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import Swal from "sweetalert2";
 import Footer from "../../atomicos/Footer/Footer.jsx";
+import ShowInformation from "../../atomicos/Info/ShowInformation";
 
 export default function Formularios() {
   const [loader, setLoader] = useState(true);
@@ -132,7 +133,6 @@ export default function Formularios() {
       <div className="contenido">
         {loader && <Loader>Cargando formulario</Loader>}
         {!loader && formularios && (
-          <>
             <div className="tarjetasLaboratoriosContainer flexContainer">
               <div className="tarjeta listadoLaboratorios mt-24 px-10">
                 <h1>Listado de formularios</h1>
@@ -159,65 +159,76 @@ export default function Formularios() {
                 <Loader>Cargando detalles del formulario</Loader>
               )}
               {formulario && (
-                <div>
-                  <div className="tarjeta laboratorioSeleccionado mt-24 px-10">
-                    <h1 className="pt-2">
-                      {formulario.formulario.codigo} -{" "}
-                      {formulario.formulario.titulo}
-                      {" - "}{" "}
-                    </h1>
-                    <p>Descripción: {formulario.formulario.descripcion}</p>
-                    {formulario.campos && formulario.campos.length > 0 ? (
-                      formulario.campos.map((campo) =>
-                        campoEnEdicion && campoEnEdicion.id === campo.id ? (
-                          <EditFieldData
-                            key={campo.id}
-                            fieldData={campoEnEdicion}
-                            updateField={updateField}
-                            cancelEdit={cancelEdit}
-                          />
-                        ) : (
-                          <div key={campo.campoid}>
-                            <div className="flex items-center grid grid-cols-2 gap-3">
-                              <MuestraCampoForm
-                                formversionid={campo.formversionid}
-                                labelForm={campo.labelForm}
-                                htmlFor={campo.htmlFor}
-                                placeholder={campo.placeholder}
-                                agrupacionRadio={campo.agrupacionRadio}
-                                regex={campo.regex}
-                                info={campo.info}
-                                indexadoForm={campo.indexadoForm}
-                                endpoint={campo.endpoint}
-                                condicional={campo.condicional}
-                                required={campo.required}
-                                selectPrecargadoId={campo.selectPrecargadoId}
-                                id={campo.id}
-                                type={campo.type}
-                              />
+                <div className="tarjeta laboratorioSeleccionado mt-24 px-10">
+                  <h2 className="text-xl">
+                    <strong>
+                      {formulario.formulario.codigo
+                        ? `${formulario.formulario.codigo} - ${formulario.formulario.titulo}`
+                        : formulario.formulario.titulo}
+                    </strong>
+                  </h2>
+                  <p className={"mb-7"}>{formulario.formulario.descripcion}</p>
+                  {formulario.campos && formulario.campos.length > 0 ? (
+                    formulario.campos.map((campo) =>
+                      campoEnEdicion && campoEnEdicion.id === campo.id ? (
+                        <EditFieldData
+                          key={campo.id}
+                          fieldData={campoEnEdicion}
+                          updateField={updateField}
+                          cancelEdit={cancelEdit}
+                        />
+                      ) : (
+                        <div key={campo.campoid}>
+                          <div
+                            className="grid grid-cols-3 gap-1"
+                            style={{
+                              display: "flex",
+                              justifyContent: "end",
+                              alignItems: "center",
+                            }}
+                          >
+                            {campo.info && (
+                              <ShowInformation info={campo.info} />
+                            )}
 
-                              <div>
-                                <MdEdit
-                                  className={"edit-icon ml-5"}
-                                  onClick={() => setCampoEnEdicion(campo)}
-                                />
-                                <MdDelete
-                                  className={"delete-icon ml-5"}
-                                  onClick={() => eliminarCampo(campo.campoid)}
-                                />
-                              </div>
+                            <MuestraCampoForm
+                              formversionid={campo.formversionid}
+                              labelForm={campo.labelForm}
+                              htmlFor={campo.htmlFor}
+                              placeholder={campo.placeholder}
+                              agrupacionRadio={campo.agrupacionRadio}
+                              regex={campo.regex}
+                              info={campo.info}
+                              indexadoForm={campo.indexadoForm}
+                              endpoint={campo.endpoint}
+                              condicional={campo.condicional}
+                              required={campo.required}
+                              selectPrecargadoId={campo.selectPrecargadoId}
+                              id={campo.id}
+                              type={campo.type}
+                            />
+
+                            <div className="grid grid-cols-2 gap-1">
+                              <MdEdit
+                                className={"edit-icon ml-5"}
+                                onClick={() => setCampoEnEdicion(campo)}
+                              />
+                              <MdDelete
+                                className={"delete-icon ml-5"}
+                                onClick={() => eliminarCampo(campo.campoid)}
+                              />
                             </div>
                           </div>
-                        )
+                        </div>
                       )
-                    ) : (
-                      <p>No hay campos disponibles para este formulario.</p>
-                    )}
-                  </div>
+                    )
+                  ) : (
+                    <p>No hay campos disponibles para este formulario.</p>
+                  )}
                 </div>
               )}
             </div>
-          </>
+
         )}
       </div>
       <Footer />

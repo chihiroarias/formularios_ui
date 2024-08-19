@@ -59,7 +59,7 @@ form p {
 
 .prettyInput::placeholder {
   font-family: 'Montserrat', sans-serif;
-  color: #a0a0a0; /* Puedes cambiar el color según tus necesidades */
+  color: #a0a0a0; 
 }
 
 input.error {

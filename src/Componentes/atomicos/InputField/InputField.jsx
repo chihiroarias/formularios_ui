@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 
@@ -17,16 +17,9 @@ const InputField = ({
   error,
   ...props
 }) => {
- // if (type) type = type.trim().toLowerCase();
+
  const [errorMsg, setErrorMsg] = useState("");
 
-//  useEffect(() => {
-//    if (regex && value && !new RegExp(regex).test(value)) {
-//      setError("Formato inválido");
-//    } else {
-//      setError("");
-//    }
-//  }, [value, regex]);
 const handleChange = (e) => {
   const val = e.target.value;
   if (regex && !new RegExp(regex).test(val)) {
@@ -55,7 +48,6 @@ const handleChange = (e) => {
   return (
     <div >
       <input
-        //style={{fontFamily: "Montserrat"}}
         id={id}
         name={name??id}
         type={inputType}
