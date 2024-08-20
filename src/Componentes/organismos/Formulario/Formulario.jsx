@@ -84,6 +84,7 @@ function Formulario() {
 
   function agregarCampos(id) {
     fields.forEach((field) => {
+      console.log(field);
       accessAPI(
         "POST",
         `admin/form/campo/${id}`,
