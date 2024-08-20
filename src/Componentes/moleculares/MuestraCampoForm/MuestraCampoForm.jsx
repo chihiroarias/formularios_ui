@@ -40,10 +40,9 @@ const MuestraCampoForm = (props) => {
             estiloCampo={styleCampo}
             regex={props.regex}
             errorMsg={props.errorMsg}
-            placeholder={props.ordenCampo}
+ 
             {...props}
           />
-         {props.ordenCampo}
           {renderError()}
         </div>
       ) : null}
