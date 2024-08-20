@@ -15,7 +15,7 @@ const MuestraSelectDelSistema = ({ selectPrecargadoId, ...props }) => {
         null,
         (response) => {
           setSelectConfig(
-            <div style={props.estiloCampo ? props.estiloCampo : {}}>
+            <div style={props.estiloCampo?props.estiloCampo:{margin: "5px 0 5px 0px"}}>
               <Label
                 labelForm={
                   props.indexadoForm

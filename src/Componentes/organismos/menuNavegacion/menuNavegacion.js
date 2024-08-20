@@ -4,14 +4,14 @@ import logoHorizontalBlanco from "../../../elementos/Images/logoHorizontalBlanco
 export default function MenuNavegacion(props) {
   return (
     <header>
-      <div className="mainMenuContainer">
+      <div className="mainMenuContainer pt-2">
         <div className="mainMenu flexContainer spaceBetween">
           <div className="logoContainer flexContainer vertical">
             <NavLink to={"/"}>
               <img src={logoHorizontalBlanco} alt="logo" />
             </NavLink>
           </div>
-          <div className="bordeLogo"></div>
+          <div className="bordeLogo mr-5"></div>
 
           <menu className="flexContainer">
             <NavLink
