@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import FormTitle from "../../moleculares/FormTitle/FormTitle.jsx";
 import FormDescription from "../../moleculares/FormDescription/FormDescription.jsx";
 import MuestraCampoForm from "../../moleculares/MuestraCampoForm/MuestraCampoForm.jsx";
-import Footer from "../../atomicos/Footer/Footer.jsxf";
+import Footer from "../../atomicos/Footer/Footer.jsx";
 import { MdDelete, MdEdit } from "react-icons/md";
 import Swal from "sweetalert2";
 
