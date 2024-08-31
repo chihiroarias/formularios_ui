@@ -223,7 +223,7 @@ function Formulario() {
                 </div>
               </div>
             ))}
-            {fields.length > 0 && title && codigo && description && (
+            {fields.length > 0 && title && codigo && (
               <Button onClick={generateForm} text={"Generar Formulario"} />
             )}
           </div>
