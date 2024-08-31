@@ -92,7 +92,6 @@ export default function CreateDato({ addField, indice, setIndice }) {
 
   function crearCampoString() {
     if (validar()) {
-
       setOrdenCampo(ordenCampo + 1);
 
       addField({ ...fieldData, indice, ordenCampo });
@@ -215,6 +214,7 @@ export default function CreateDato({ addField, indice, setIndice }) {
         fieldData.type !== "file" &&
         fieldData.type !== "radio" &&
         fieldData.type !== "date" &&
+        fieldData.type !== "sPrecargado" &&
         fieldData.type !== "section" &&
         fieldData.type !== "" && (
           <div>
