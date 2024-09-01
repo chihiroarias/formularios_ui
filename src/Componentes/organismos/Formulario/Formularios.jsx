@@ -133,102 +133,102 @@ export default function Formularios() {
       <div className="contenido">
         {loader && <Loader>Cargando formulario</Loader>}
         {!loader && formularios && (
-            <div className="tarjetasLaboratoriosContainer flexContainer">
-              <div className="tarjeta listadoLaboratorios mt-24 px-10">
-                <h1>Listado de formularios</h1>
-                {formularios.map((form) => (
+          <div className="tarjetasLaboratoriosContainer flexContainer">
+            <div className="tarjeta listadoLaboratorios mt-24 px-10">
+              <h1>Listado de formularios</h1>
+              {formularios.map((form) => (
+                <div
+                  className={
+                    formularioSeleccionado === form.formid
+                      ? "laboratorio seleccionado"
+                      : "laboratorio"
+                  }
+                  key={form.formid}
+                >
                   <div
-                    className={
-                      formularioSeleccionado === form.formid
-                        ? "laboratorio seleccionado"
-                        : "laboratorio"
-                    }
-                    key={form.formid}
+                    onClick={() => {
+                      setFormularioSeleccionado(form.formid);
+                    }}
                   >
-                    <div
-                      onClick={() => {
-                        setFormularioSeleccionado(form.formid);
-                      }}
-                    >
-                      {form.formulario.codigo + " - " + form.formulario.titulo}
-                    </div>
+                    {form.formulario.codigo + " - " + form.formulario.titulo}
                   </div>
-                ))}
-              </div>
-              {!formulario && loaderFormulario && (
-                <Loader>Cargando detalles del formulario</Loader>
-              )}
-              {formulario && (
-                <div className="tarjeta laboratorioSeleccionado mt-24 px-10">
-                  <h2 className="text-xl">
-                    <strong>
-                      {formulario.formulario.codigo
-                        ? `${formulario.formulario.codigo} - ${formulario.formulario.titulo}`
-                        : formulario.formulario.titulo}
-                    </strong>
-                  </h2>
-                  <p className={"mb-7"}>{formulario.formulario.descripcion}</p>
-                  {formulario.campos && formulario.campos.length > 0 ? (
-                    formulario.campos.map((campo) =>
-                      campoEnEdicion && campoEnEdicion.id === campo.id ? (
-                        <EditFieldData
-                          key={campo.id}
-                          fieldData={campoEnEdicion}
-                          updateField={updateField}
-                          cancelEdit={cancelEdit}
-                        />
-                      ) : (
-                        <div key={campo.campoid}>
-                          <div
-                            className="grid grid-cols-3 gap-1"
-                            style={{
-                              display: "flex",
-                              justifyContent: "end",
-                              alignItems: "center",
-                            }}
-                          >
-                            {campo.info && (
-                              <ShowInformation info={campo.info} />
-                            )}
+                </div>
+              ))}
+            </div>
+            {!formulario && loaderFormulario && (
+              <Loader>Cargando detalles del formulario</Loader>
+            )}
+            {formulario && (
+              <div className="tarjeta laboratorioSeleccionado mt-24 px-10">
+                <h2 className="text-xl">
+                  <strong>
+                    {formulario.formulario.codigo
+                      ? `${formulario.formulario.codigo} - ${formulario.formulario.titulo}`
+                      : formulario.formulario.titulo}
+                  </strong>
+                </h2>
+                <p className={"mb-7"}>{formulario.formulario.descripcion}</p>
+                {formulario.campos && formulario.campos.length > 0 ? (
+                  formulario.campos.map((campo) =>
+                    campoEnEdicion && campoEnEdicion.id === campo.id ? (
+                      <EditFieldData
+                        key={campo.id}
+                        fieldData={campoEnEdicion}
+                        updateField={updateField}
+                        cancelEdit={cancelEdit}
+                      />
+                    ) : (
+                      <div key={campo.campoid}>
+                        <div
+                          className="grid grid-cols-3 gap-1"
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                          }}
+                        >
+                          <MuestraCampoForm
+                            formversionid={campo.formversionid}
+                            labelForm={campo.labelForm}
+                            htmlFor={campo.htmlFor}
+                            placeholder={campo.placeholder}
+                            agrupacionRadio={campo.agrupacionRadio}
+                            regex={campo.regex}
+                            info={campo.info}
+                            indexadoForm={campo.indexadoForm}
+                            endpoint={campo.endpoint}
+                            condicional={campo.condicional}
+                            required={campo.required}
+                            selectPrecargadoId={campo.selectPrecargadoId}
+                            id={campo.id}
+                            type={campo.type}
+                          />
 
-                            <MuestraCampoForm
-                              formversionid={campo.formversionid}
-                              labelForm={campo.labelForm}
-                              htmlFor={campo.htmlFor}
-                              placeholder={campo.placeholder}
-                              agrupacionRadio={campo.agrupacionRadio}
-                              regex={campo.regex}
-                              info={campo.info}
-                              indexadoForm={campo.indexadoForm}
-                              endpoint={campo.endpoint}
-                              condicional={campo.condicional}
-                              required={campo.required}
-                              selectPrecargadoId={campo.selectPrecargadoId}
-                              id={campo.id}
-                              type={campo.type}
-                            />
-
-                            <div className="grid grid-cols-2 gap-1">
-                              <MdEdit
-                                className={"edit-icon ml-5"}
-                                onClick={() => setCampoEnEdicion(campo)}
-                              />
-                              <MdDelete
-                                className={"delete-icon ml-5"}
-                                onClick={() => eliminarCampo(campo.campoid)}
-                              />
+                          <div className="grid grid-cols-3 gap-1">
+                            <div className={"edit-icon ml-2"}>
+                              {campo.info && (
+                                <ShowInformation info={campo.info} />
+                              )}
                             </div>
+                            <MdEdit
+                              className={"edit-icon ml-2"}
+                              onClick={() => setCampoEnEdicion(campo)}
+                            />
+                            <MdDelete
+                              className={"delete-icon ml-2"}
+                              onClick={() => eliminarCampo(campo.campoid)}
+                            />
                           </div>
                         </div>
-                      )
+                      </div>
                     )
-                  ) : (
-                    <p>No hay campos disponibles para este formulario.</p>
-                  )}
-                </div>
-              )}
-            </div>
-
+                  )
+                ) : (
+                  <p>No hay campos disponibles para este formulario.</p>
+                )}
+              </div>
+            )}
+          </div>
         )}
       </div>
       <Footer />
