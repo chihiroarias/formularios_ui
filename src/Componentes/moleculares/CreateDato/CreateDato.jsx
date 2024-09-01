@@ -76,7 +76,7 @@ export default function CreateDato({ addField, indice, setIndice }) {
         setErrorNombreCampo("Nombre Campo no puede estar vacío");
         esValido = false;
       }
-      if (!fieldData.id) {
+      if (!fieldData.id && fieldData.type !== "section") {
         setErrorIdCampo("Debe ingresar un identificador para el campo");
         esValido = false;
       }
@@ -169,26 +169,29 @@ export default function CreateDato({ addField, indice, setIndice }) {
               error={errorIndexado ? errorIndexado : ""}
             />
           </div>
-          <div>
-            <CustomInputField
-              id={"idCampo"}
-              labelForm={"Identificador Campo"}
-              name={"idCampo"}
-              htmlFor={"idCampo"}
-              placeholder={"Asigne un id al campo"}
-              type={"text"}
-              required={true}
-              value={fieldData.id}
-              onChange={(e) =>
-                setFieldData({
-                  ...fieldData,
-                  id: e.target.value,
-                  htmlFor: e.target.value,
-                })
-              }
-              error={errorIdCampo ? errorIdCampo : ""}
-            />
-          </div>
+
+          {fieldData.type !== "section" && (
+            <div>
+              <CustomInputField
+                id={"idCampo"}
+                labelForm={"Identificador Campo"}
+                name={"idCampo"}
+                htmlFor={"idCampo"}
+                placeholder={"Asigne un id al campo"}
+                type={"text"}
+                required={true}
+                value={fieldData.id}
+                onChange={(e) =>
+                  setFieldData({
+                    ...fieldData,
+                    id: e.target.value,
+                    htmlFor: e.target.value,
+                  })
+                }
+                error={errorIdCampo ? errorIdCampo : ""}
+              />
+            </div>
+          )}
           <div>
             <CustomInputField
               id={"fieldName"}
@@ -232,7 +235,8 @@ export default function CreateDato({ addField, indice, setIndice }) {
           </div>
         )}
 
-      {fieldData.type !== "" && (
+      {fieldData.type !== "" &&
+       fieldData.type !== "section" && (
         <div>
           <CustomInputField
             id={"info"}

@@ -149,7 +149,7 @@ function Formulario() {
     >
       <MenuNavegacion submenuSeleccionado="formulario" />
       <Notificacion config={mensajeNotificacion} />
-      <div className="mt-24 px-10">
+      <div className="mt-24 mb-10 px-10">
         <div className="grid grid-cols-2 gap-12">
           <div className="mr-12">
             <h1 className="mb-5">Generador de Formularios</h1>
@@ -194,13 +194,13 @@ function Formulario() {
           </div>
           <div className="ml-12">
             <h1 className="mb-5">Previsualizador de Formulario</h1>
-            <h2 className="text-xl">
+            <h2 className="text-xl justify-center items-center text-center">
               <strong>{codigo ? `${codigo} - ${title}` : title}</strong>
             </h2>
             <p className={"mb-10"}>{description}</p>
             {fields.map((field) => (
               <div
-                className="grid grid-cols-3 gap-3"
+                className="grid grid-cols-3 gap-1"
                 key={field.indice - field.ordenCampo} // Usar una key única y estable
                 style={{
                   display: "flex",
@@ -208,16 +208,18 @@ function Formulario() {
                   alignItems: "center",
                 }}
               >
-                {field.info && <ShowInformation info={field.info} />}
                 <MuestraCampoForm {...field} />
 
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-3 gap-1">
+                  <div className={"edit-icon ml-2"}>
+                    {field.info && <ShowInformation info={field.info} />}
+                  </div>
                   <MdEdit
-                    className={"edit-icon ml-5"}
+                    className={"edit-icon ml-2"}
                     onClick={() => editField(field)}
                   />
                   <MdDelete
-                    className={"delete-icon ml-5"}
+                    className={"delete-icon ml-2"}
                     onClick={() => deleteField(field.indice)}
                   />
                 </div>
