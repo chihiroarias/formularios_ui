@@ -20,7 +20,7 @@ export default function Home() {
           <div className="mt-24 mb-10 flex justify-center">
             <p>
               Entregado como requisito para la obtención del título de Analista
-              Programador/Analista en Tecnologías de la Información
+              Programador
             </p>
           </div>
           <div className=" justify-center mt-20">
